@@ -24,7 +24,7 @@ github_username:  Rickylss
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-clean-blog
+#theme: jekyll-theme-clean-blog
 plugins:
   - jekyll-feed
 
