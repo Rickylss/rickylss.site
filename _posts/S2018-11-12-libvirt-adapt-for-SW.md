@@ -3,7 +3,7 @@ layout: post
 title:  "libvirt申威平台适配"
 subtitle: ""
 date:   2018-11-12 08:26:06 +0800
-categories: [libvirt]
+categories: [libvirt, SW]
 ---
 
 # libvirt申威平台适配
