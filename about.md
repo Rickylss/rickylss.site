@@ -2,17 +2,13 @@
 layout: page
 title: About
 permalink: /about/
+description: 
+background: '/background/home3.jpg'
 ---
+> 目前公开的情报
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+hello，我是肖海飚，你也可以叫我Ricky。
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+目前从事与虚拟化相关的工作。
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+Email: <a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a>
