@@ -11,4 +11,4 @@ hello，我是肖海飚，你也可以叫我Ricky。
 
 目前从事与虚拟化相关的工作。
 
-Email: <a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a>
+Email: <a class="u-email" href="mailto:{{ site.email }}?subject=Hello%20xiaohaibiao" style="text-decoration:none;color:lightskyblue">{{ site.email }}</a>
