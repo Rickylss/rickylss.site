@@ -37,6 +37,16 @@
             </a>
           </li>
           {% endif %}
+          {% if site.email %}
+          <li class="list-inline-item">
+            <a href="mailto:{{ site.email }}">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          {% endif %}
           <li class="list-inline-item">
             <a href="{{ site.url }}/feed.xml">
               <span class="fa-stack fa-lg">
