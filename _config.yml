@@ -19,7 +19,7 @@ email: xiaohaibiao331@outlook.com
 description: >- # this means to ignore newlines until "baseurl:"
   正是因为你为你的玫瑰，花费了时间，才使得你的花儿变得那么重要
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://rickylss.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  Rickylss
 
 # Build settings
