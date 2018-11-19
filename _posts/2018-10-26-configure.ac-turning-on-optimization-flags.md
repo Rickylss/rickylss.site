@@ -3,7 +3,7 @@ layout: post
 title:  "configure.ac中开启gdb优化选项"
 subtitle: ""
 date:   2018-10-26 11:23:06 +0800
-categories: [libvirt]
+categories: [libvirt, gcc]
 ---
 
 # 优化调试选项

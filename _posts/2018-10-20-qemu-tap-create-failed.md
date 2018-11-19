@@ -3,7 +3,7 @@ layout: post
 title:  "qemu创建tap设备时/dev/net/tun读取失败"
 subtitle: ""
 date:   2018-10-20 16:45:16 +0800
-categories: [libvirt]
+categories: [libvirt, qemu]
 ---
 
 # qemu创建tap设备时/dev/net/tun读取失败

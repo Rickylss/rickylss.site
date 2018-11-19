@@ -3,7 +3,7 @@ layout: post
 title:  "gcc预定义宏"
 subtitle: ""
 date:   2018-10-12 20:13:45 +0800
-categories: [libvirt]
+categories: [libvirt, gcc, SW]
 ---
 
 # gcc预定义宏
