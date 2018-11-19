@@ -70,9 +70,10 @@ PLATFORMS
 
 DEPENDENCIES
   jekyll (~> 3.8.5)
-  jekyll-feed (~> 0.6)
+  jekyll-feed (~> 0.11.0)
   jekyll-sitemap (~> 1.2.0)
-  jekyll-theme-clean-blog
+  jekyll-theme-clean-blog (~> 4.0.1)
+  rouge (~> 3.3.0)
   tzinfo-data
   wdm (~> 0.1.0)
 
