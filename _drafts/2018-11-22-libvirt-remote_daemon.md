@@ -59,7 +59,7 @@ libvirt management daemon:
 
 ## 2、源码分析
 
-> 概述：该程序做的主要工作包括：获取option，设置环境变量开启国际化编程语言转换，读取配置文件，设置log，将进程转换为守护进程（设置信号，pid，多次fork等），注册远程HypervisorDrivers，开启套接字端口，开启事件循环，开启监听。
+> 概述：该程序做的主要工作包括：获取options，设置环境变量开启国际化编程语言转换，读取配置文件，设置logger，将进程转换为守护进程（设置信号，pid，多次fork等），注册远程HypervisorDrivers，开启套接字端口，开启事件循环，开启监听。
 
 ### 2.1、getoption读取参数
 
