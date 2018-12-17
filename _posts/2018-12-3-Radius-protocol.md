@@ -14,7 +14,7 @@ categories: [DK]
 
 ## 1、协议简介
 
-RADIUS是一种C/S结构的网络应用层协议，工作在1812端口上，它是目前应用最广泛的AAA(认证Authentication、授权Authorization、计费Accounting)协议。
+RADIUS是一种C/S结构的网络应用层协议，工作在1812、1813端口上，它是目前应用最广泛的AAA(认证Authentication、授权Authorization、计费Accounting)协议。
 
 Radius协议主要针对的远程登陆类型：SLIP、PPP、telnet和rlogin等。Radius协议应用范围很广，包括普通电话、上网业务计费，对VPN的支持可以使不同的拨入服务器的用户具有不同权限。
 
@@ -28,7 +28,7 @@ Radius协议主要针对的远程登陆类型：SLIP、PPP、telnet和rlogin等�
 
 ​	用户在接入网络之前，需要将用户信息（用户名密码）发送给NAS，NAS再将信息发送给对应的AAA服务器，通过AAA服务器的验证之后，AAA服务器通知NAS该用户已被验证，之后NAS准许用户接入网络。NAS扮演了一个gateway的角色，守护着受保护资源的访问。**需要注意的是，NAS不保存客户端能连接哪些网络资源或者哪些证书是有效的，这方面的信息。** 
 
-​	通常NAS种包含了一个Radius client组件，它通过和Radius server通信进行验证。Radius就是常见于NAS的AAA协议了，在讲解协议内容时，我们以NAS做为例子讲解。
+​	通常NAS中包含了一个Radius client组件，它通过和Radius server通信进行验证。Radius就是常见于NAS的AAA协议了，在讲解协议内容时，我们以NAS做为例子讲解。
 
 ## 3、协议内容
 
@@ -50,7 +50,7 @@ RADIUS使用两个包类型来管理完整的AAA进程：管理认证和授权�
 
    2. Access Challenge（可理解为盘问）
 
-      要求提供额外的用户信息，例如次要密码、PIN、token或者card；一般出现在更复杂的认证会话中，当一个安全隧道在用户机器和Radius server中是既定的，换而言之credentials在NAS中被隐藏了；
+      要求提供额外的用户信息，例如次要密码、PIN、token或者card；一般出现在更复杂的认证会话中；
 
    3. Acccess Accept
 

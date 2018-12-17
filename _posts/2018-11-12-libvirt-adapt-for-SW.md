@@ -52,7 +52,7 @@ $ systemctl restart libvirtd
 $ systemctl status libvirtd
 ```
 
-​	查看libvirtd状态，若需要，则安装dnsmasq和防火墙iptables或ebtables（目前iptable创建网卡相关部分依然存在部分问题，在[libvirt与virbr0](G:\博客产出\libvirt\libvir与virbr0.md) 中我们会进行详细讨论）。
+​	查看libvirtd状态，若需要，则安装dnsmasq和防火墙iptables或ebtables（目前iptable创建网卡相关部分依然存在部分问题，在[libvirt与virbr0]中我们会进行详细讨论）。
 
 
 
