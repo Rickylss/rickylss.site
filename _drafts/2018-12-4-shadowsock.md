@@ -14,12 +14,12 @@ yum install python-setuptools libevent python-devel openssl-devel swig
 easy_install pip 
 pip install gevent shadowsocks
 
-array_port =("9010" 
-             "9011"
-             "9012"
-             "9013"
-             "9014"
-             "9015")
+array_port=("9010" 
+            "9011"
+            "9012"
+            "9013"
+            "9014"
+            "9015")
 
 for i in ${array_port[@]}
 do
