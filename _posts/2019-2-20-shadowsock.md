@@ -2,7 +2,7 @@
 layout: post
 title:  "科学上网"
 subtitle: ""
-date:   2019-2-20 17:56:09 +0800
+date:   2019-2-20 16:56:09 +0800
 categories: [shadowsock]
 ---
 
@@ -26,7 +26,7 @@ Digital Ocean：[https://m.do.co/c/d1698500bee0](https://m.do.co/c/d1698500bee0)
 
 以vultr为例，机房位置以美国居多，日本和新加坡虽然看起来物理距离相对较近，但是实际效果却未必有那么好。
 
-![](\pictures\vultr_serverlocation.png)
+<img class="col-lg-12 col-md-12 mx-auto" src="\pictures\vultr_serverlocation.png"/>
 
 要判断你所居住的地方购买那个机房的服务比较好，可以访问官方的[测速网站](https://www.vultrvps.com/test-server)，但是这个网站测出来的速度到底几分真假，我就不清楚了，**自己动手ping出来的才是最真实的**。
 
@@ -38,7 +38,7 @@ Digital Ocean：[https://m.do.co/c/d1698500bee0](https://m.do.co/c/d1698500bee0)
 
 使用这个工具就可以跟踪你到固定ip地址的路由信息，并且查看延迟（直接ping也行）。
 
-![](\pictures\17inodb_trac.png)
+<img class="col-lg-12 col-md-12 mx-auto" src="\pictures\17inodb_trac.png"/>
 
 ### 1.2服务器价格
 
@@ -46,7 +46,7 @@ Digital Ocean：[https://m.do.co/c/d1698500bee0](https://m.do.co/c/d1698500bee0)
 
 以vultr为例：
 
-![](\pictures\vultr_create.png)
+<img class="col-lg-12 col-md-12 mx-auto" src="\pictures\vultr_create.png"/>
 
 最便宜的每个月$5，但是带宽有1T/mo，这个够你用了。注意：*vultr曾推出过$2.5每月的机器，但是只有IPv6*。
 
@@ -54,13 +54,13 @@ Digital Ocean：[https://m.do.co/c/d1698500bee0](https://m.do.co/c/d1698500bee0)
 
 挑选好了地址和配置，最好能够添加一个ssh key 这样下次使用ssh连接服务器的时候就不用去敲那段又臭又长的密码了。
 
-![](\pictures\vultr_sshkey.png)
+<img class="col-lg-12 col-md-12 mx-auto" src="\pictures\vultr_sshkey.png"/>
 
 ## 2.创建并连接远程服务器
 
 使用MobaXterm连接远程服务器
 
-![](\pictures\mobaXterm_ssh.png)
+<img class="col-lg-12 col-md-12 mx-auto" src="\pictures\mobaXterm_ssh.png"/>
 
 如图所示创建一个ssh连接，设置ip和private key（1.3里的ssh private key），可指定用户名，也可连接后再指定。点击确定连接远程服务器。若连接不上，先ping一下远程服务器，确保网络通畅。
 
