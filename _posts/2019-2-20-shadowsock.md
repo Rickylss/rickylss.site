@@ -2,7 +2,7 @@
 layout: post
 title:  "科学上网"
 subtitle: ""
-date:   2018-12-4 19:56:09 +0800
+date:   2019-2-20 17:56:09 +0800
 categories: [shadowsock]
 ---
 
@@ -18,9 +18,9 @@ categories: [shadowsock]
 
 大家在注册账号的时候可以通过下面链接注册，类似一个推广活动，这样我们都能够获得奖励：
 
-vultr：https://www.vultr.com/?ref=7791816-4F
+vultr：[https://www.vultr.com/?ref=7791816-4F](https://www.vultr.com/?ref=7791816-4F)
 
-Digital Ocean：https://m.do.co/c/d1698500bee0
+Digital Ocean：[https://m.do.co/c/d1698500bee0](https://m.do.co/c/d1698500bee0)
 
 ### 1.1机房位置
 
@@ -32,7 +32,7 @@ Digital Ocean：https://m.do.co/c/d1698500bee0
 
 下面给大家提供一个好用的工具——17monipdb。
 
-> 链接: https://pan.baidu.com/s/1ViYNKE4ugLSQZguPtiD18w 
+> 链接: [https://pan.baidu.com/s/1ViYNKE4ugLSQZguPtiD18w](https://pan.baidu.com/s/1ViYNKE4ugLSQZguPtiD18w ) 
 >
 > 提取码: 1s36 
 
@@ -129,4 +129,4 @@ shadowsocks的客户端可到github下载，其他下载渠道大多已被屏蔽
 
 直接搜索shadowsocks，可找到安卓、windows、linux、mac、ios等基本上所有系统的安装包，进入项目选择relleases下载最新的版本。
 
-https://github.com/search?utf8=%E2%9C%93&q=shadowsocks&type=
+[https://github.com/search?utf8=%E2%9C%93&q=shadowsocks&type=](https://github.com/search?utf8=%E2%9C%93&q=shadowsocks&type=)
