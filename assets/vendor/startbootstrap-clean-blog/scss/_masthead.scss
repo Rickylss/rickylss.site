@@ -22,19 +22,19 @@ header.masthead {
     padding: 200px 0 150px;
     color: white;
     @media only screen and (min-width: 768px) {
-      padding: 200px 0;
+      padding: 140px 0;
     }
   }
   .page-heading,
   .site-heading {
     text-align: center;
     h1 {
-      font-size: 50px;
+      font-size: 40px;
       margin-top: 0;
     }
     .subheading {
-      font-size: 24px;
-      font-weight: 300;
+      font-size: 20px;
+      font-weight: 150;
       line-height: 1.1;
       display: block;
       margin: 10px 0 0;
@@ -42,7 +42,7 @@ header.masthead {
     }
     @media only screen and (min-width: 768px) {
       h1 {
-        font-size: 80px;
+        font-size: 70px;
       }
     }
   }
