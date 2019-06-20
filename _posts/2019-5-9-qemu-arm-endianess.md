@@ -113,3 +113,14 @@ static const MemoryRegionOps pl011_ops = {
 
 这个问题在邮件中也有提到，但是patch中并没有修改，因此需要格外注意。
 
+## 4、tms570大端be8与be32之谜
+
+tms570是大端机，但是它属于大端的那个模式呢，在tms570手册中，它可以使用be32模式，但是在cortexr4f的文档中，我发现，它是不能使用be32模式，只能使用be8模式。
+
+![cortexr4f手册](E:\bitbucket-code\Rickylss.github.io\pictures\cortexr4f-bigendian.png)
+
+同时，当我在网上查询这个问题的时候，发现早也有人对此提出疑问，在QMEU[开发邮件](<https://lists.gnu.org/archive/html/qemu-devel/2013-03/msg00033.html>)中可看到详细信息。
+
+同时，长期使用在tms570上开发的朋友却告诉我，在真实硬件上使用be32是可以使用的。
+
+因此这里应该是手册描述错误。
