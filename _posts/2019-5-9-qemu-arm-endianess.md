@@ -124,3 +124,8 @@ tms570是大端机，但是它属于大端的那个模式呢，在tms570手册�
 同时，长期使用在tms570上开发的朋友却告诉我，在真实硬件上使用be32是可以使用的。
 
 因此这里应该是手册描述错误。
+
+这里不是错误。。。。。这是由于TI对be32做了转换，把它转换成了be8
+
+[官方答复](https://e2e.ti.com/support/microcontrollers/hercules/f/312/t/672512?TMS570LS3137-TMS570-Endianess-BE32)
+
