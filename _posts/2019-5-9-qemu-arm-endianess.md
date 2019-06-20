@@ -14,13 +14,13 @@ categories: [qemu, arm]
 
 - 目前PC上以x86体系结构为代表的小端机为主，因此在qemu最初的实现里只考虑到了对小端机的支持。但是目前仍有一部分以arm为核心的板子采用大端序。
 - 因此在2016年，qemu增加了对arm大端的支持，详细的内容可以查看[qemu开发邮件]( https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg03025.html) 
-- 即便如此，在开发时依旧遇到了一些问题，包括：gdb调试地址大小端出错，数据顺序颠倒等。
+- 即便如此，我在开发时依旧遇到了一些问题，包括：gdb调试地址大小端出错，数据顺序颠倒等。
 
 ## 2、qemu中arm大小端解决方式
 
-arm芯片是可以切换大小端模式的，可以通过设置sctlr和cpsr来实现，具体的内容可以查看芯片手册。对一块板子的大小端限制一般来自于外设。
+在真实硬件中arm芯片是可以通过设置sctlr和cpsr寄存器切换大小端模式的，详细内容可以查看芯片手册。对一块板子来说大小端限制一般来自于外设。
 
-在启动qemu程序时，首先会读取elf文件的header从而判断该文件是大端或是小端，得知elf文件的大小端信息后，qemu会去设置cpu的sctlr和cpsr，从而切换到想要的模式，这样就使qemu上的armcpu即可运行小端程序也可运行大端程序。如果想要在自己实现的板子上限制大小端，则可将外设中的MemoryRegionOps.endianness设置为想要的字节序。
+QEMU启动虚拟板级设备时首先会读取elf文件的header从而判断该文件是大端或是小端，在得知elf文件的大小端信息后，QEMU会去设置arm cpu的sctlr和cpsr，从而切换到想要的模式并设置`info->endiannes`，这样就使QEMU上的arm cpu即可运行小端程序也可运行大端程序。如果想要在自己实现的板子上限制大小端，则可设置外设中的`MemoryRegionOps.endianness`属性。
 
 关键代码`/qemu2.7.1/hw/arm/boot.c`
 
@@ -95,11 +95,23 @@ static const MemoryRegionOps pl011_ops = {
 - 使用x命令打印时大小端正常；
 - 数据的顺序出错，如：HelloWorld变成了 lleHlroW；
 
+根据[邮件列表](https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg04386.html)中的patch将代码加上，就可以了。
 
+**注意**：在添加玩patch之后，还需要注意修改一个地方，否则在发生中断之后大小端依然会出错。
 
+在`qemu/target-arm/helper.c`文件中
+
+```c
+@ -6418,7 +6418,7 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
+    /* Set new mode endianness */
+    env->uncached_cpsr &= ~CPSR_E;
+    if (env->cp15.sctlr_el[arm_current_el(env)] & SCTLR_EE) {
+-       env->uncached_cpsr |= ~CPSR_E; //set new mode endianness
++       env->uncached_cpsr |= CPSR_E;
+    }
+    env->daif |= mask;
+    /* this is a lie, as the was no c1_sys on V4T/V5, but who cares
 ```
 
-```
-
-
+这个问题在邮件中也有提到，但是patch中并没有修改，因此需要格外注意。
 
