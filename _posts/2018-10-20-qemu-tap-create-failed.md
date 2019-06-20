@@ -6,8 +6,6 @@ date:   2018-10-20 16:45:16 +0800
 categories: [libvirt, qemu]
 ---
 
-# qemu创建tap设备时/dev/net/tun读取失败
-
 ​	在申威平台上移植libvirt4.5时，遇到一个奇怪的问题，在虚拟机定义文件中无法使用-netdev tap选项。但是将命令行复制出来手动执行时，却没有问题。
 
 ``` 

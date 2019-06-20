@@ -6,8 +6,6 @@ date:   2018-12-4 10:02:09 +0800
 categories: [DK]
 ---
 
-# Radius协议
-
 > RADIUS(Remote Authentication Dial-In User Service)，即用户远程拨入认证服务，直译过来是远程身份验证拨入用户服务，后者更有助于理解该协议的原理。
 >
 > 本文基于[Wikipedia](https://en.wikipedia.org/wiki/RADIUS)，只做学习了解目的。

@@ -6,8 +6,6 @@ date:   2018-12-4 19:56:09 +0800
 categories: [dk, github, otp]
 ---
 
-# github上使用双因子验证
-
 > 本节介绍如何在GitHub上使用双因子验证，让大家对双因子验证有一个客观的认识。
 
 ## 1、在手机上下载谷歌Authenticator

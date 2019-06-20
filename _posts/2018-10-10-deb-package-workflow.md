@@ -6,8 +6,6 @@ date:   2018-10-10 14:15:38 +0800
 categories: [debain]
 ---
 
-# deb打包工作流
-
 > 本文介绍从源码打包deb的主要流程，对debain文件夹内容的配置细节不做深究，只对规则做介绍。
 
 ## 依然是HelloWorld
