@@ -97,7 +97,7 @@ static const MemoryRegionOps pl011_ops = {
 
 根据[邮件列表](https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg04386.html)中的patch将代码加上，就可以了。
 
-**注意**：在添加玩patch之后，还需要注意修改一个地方，否则在发生中断之后大小端依然会出错。
+**注意**：在添加完patch之后，还需要修改一个地方，否则在发生中断之后大小端依然会出错。
 
 在`qemu/target-arm/helper.c`文件中
 
