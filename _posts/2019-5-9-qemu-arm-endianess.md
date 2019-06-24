@@ -121,11 +121,26 @@ tms570是大端机，但是它属于大端的那个模式呢，在tms570手册�
 
 同时，当我在网上查询这个问题的时候，发现早也有人对此提出疑问，在QMEU[开发邮件](<https://lists.gnu.org/archive/html/qemu-devel/2013-03/msg00033.html>)中可看到详细信息。
 
-同时，长期使用在tms570上开发的朋友却告诉我，在真实硬件上使用be32是可以使用的。
+同时，长期使用在tms570上开发的朋友却告诉我，在真实硬件上是使用be32模式。
 
 因此这里应该是手册描述错误。
 
 这里不是错误。。。。。这是由于TI对be32做了转换，把它转换成了be8
 
 [官方答复](https://e2e.ti.com/support/microcontrollers/hercules/f/312/t/672512?TMS570LS3137-TMS570-Endianess-BE32)
+
+## 5、tms570实现be32转be8
+
+在第4节里，发现了tms570大端模式中描述冲突的问题，官方老哥回复的比较简单
+
+`We don't modify the Cortex-R4 core, but add a bridge to convert BE32 to BE8.`
+
+没办法，只能自己实现be32到be8的转换了。
+
+实现这个功能的思路有两个：
+
+1. 将be32文件转换为be8；
+2. 基于已有的le、be32和be8模型，在qemu内部单独实现一个针对tms570的内存读写控制；
+
+目前我根据思路2，实现了该功能。
 
