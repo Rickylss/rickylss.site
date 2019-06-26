@@ -70,7 +70,7 @@ $ telnet localhost 9000
 
 开启telnet连接后，可以看到telnet窗口如下输出：
 
-```telnet
+```
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
@@ -92,13 +92,13 @@ Escape character is '^]'.
 
 表示连接成功。想要进入QMP命令模式需要先发送一个*qmp_capabilities*
 
-```telnet
+```
 { "execute": "qmp_capabilities" }
 ```
 
 如果return为空则命令运行成功
 
-```telnet
+```
 {
     "return": {
     }
@@ -125,7 +125,7 @@ $ qmp-shell ./qmp-sock
 
 创建配置文件
 
-```c
+```
 [chardev "qmp"]
   backend = "socket"
   port = "9000"
@@ -146,7 +146,7 @@ $ qmp-shell ./qmp-sock
 
 或者通过本地socket连接
 
-```c
+```
 [chardev "qmp"]
   backend = "socket"
   path = "/root/qemu-install/bin/qmp-sock"
