@@ -13,16 +13,16 @@ categories: [debain]
 我们创建一个简单的helloworld程序来做打包，简化细枝末节，突出主流程。
 
 ``` shell
-# mkdir -p hello-sh/hello-sh-1.0
-# cd hello-sh/hello-sh-1.0
-# cat > hello <<EOF
+$ mkdir -p hello-sh/hello-sh-1.0
+$ cd hello-sh/hello-sh-1.0
+$ cat > hello <<EOF
 #!/bin/sh
 # (C) 2018 Foo Bar, GPL2+
 echo "HELLO!"
 EOF
-# chmod 775 hello
-# cd ..
-# tar -cvzf hello-sh-1.0.tar.gz hello-sh-1.0
+$ chmod 775 hello
+$ cd ..
+$ tar -cvzf hello-sh-1.0.tar.gz hello-sh-1.0
 ```
 
 假装我们下载了一个helloworld程序源码包，现在开始将它打包。
@@ -32,12 +32,12 @@ EOF
 在对程序进行打包之前，我们先设置两个环境变量，这两个环境变量可以让大多数Debian维护工具（前面说过，debian有很多维护工具）正确识别你用于维护该软件包的姓名与电子邮件地址
 
 ``` shell
-# cat >> ~/.bashrc <<EOF
+$ cat >> ~/.bashrc <<EOF
 DEBEMAIL="your.email.address@example.org"
 DEBFULLNAME="Firstname Lastname"
 export DEBEMAIL DEBFULLNAME
 EOF
-# source ~/.bashrc
+$ source ~/.bashrc
 ```
 
 ## 初始化Debian软件包
@@ -45,9 +45,9 @@ EOF
 当你想要使用源码创建一个debian软件包，你可以在它的基础上对它进行初始化（如果是已有的deb包，则不需要初始化，可以下载对应的三个文件）：
 
 ``` shell
-# cd ~/hello-sh
-# cd hello-sh-1.0
-# dh_make -f ../hello-sh-1.0.tar.gz
+$ cd ~/hello-sh
+$ cd hello-sh-1.0
+$ dh_make -f ../hello-sh-1.0.tar.gz
 ```
 
 接下来会询问你想要创建什么类型的软件包，这里有四种类型：
@@ -179,7 +179,7 @@ rules文件是dpkg-buildpackage(后文将提及)需要使用的实际创建软�
 ## dpkg-buildpackage
 
 ``` shell
-# dpkg-buildpackage -rfakeroot
+$ dpkg-buildpackage -rfakeroot
 ```
 
 运行dpkg-buildpackage命令生产deb安装包。
