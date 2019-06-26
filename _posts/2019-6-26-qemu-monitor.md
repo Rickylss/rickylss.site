@@ -125,7 +125,7 @@ $ qmp-shell ./qmp-sock
 
 创建配置文件
 
-```
+```c
 [chardev "qmp"]
   backend = "socket"
   port = "9000"
@@ -146,7 +146,7 @@ $ qmp-shell ./qmp-sock
 
 或者通过本地socket连接
 
-```
+```c
 [chardev "qmp"]
   backend = "socket"
   path = "/root/qemu-install/bin/qmp-sock"
@@ -184,7 +184,7 @@ void qmp_hello_qemu(Error **errp)
 
 ### 3.3、修改qmp-commands.hx
 
-```haxe
+```
 {
     .name  = "hello qemu",
     .args_type  = "",
