@@ -6,14 +6,6 @@ date:   2019-6-25 16:56:09 +0800
 categories: [qemu, qmp]
 ---
 
-https://www.ibm.com/developerworks/cn/linux/l-cn-qemu-monitor/index.html
-
-https://en.wikibooks.org/wiki/QEMU/Monitor#commit
-
-https://blog.csdn.net/wangwei222/article/details/80055615
-
-https://wiki.qemu.org/Documentation/QMP
-
 ## 1、QEMU monitor
 
 当用户启动一个QEMU进程之后，QEMU进程会为用户提供一个monitor用于交互。通过使用一些命令，用户可以监控正在运行的guestOS，更改可移除的媒体设备和USB设备，截图或者捕获音频，甚至控制虚拟机。
@@ -200,5 +192,4 @@ void qmp_hello_qemu(Error **errp)
 },
 ```
 
-
-
+更多内容可以查看[官网](https://wiki.qemu.org/Documentation/QMP)
