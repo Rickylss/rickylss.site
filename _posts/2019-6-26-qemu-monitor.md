@@ -6,6 +6,8 @@ date:   2019-6-25 16:56:09 +0800
 categories: [qemu, qmp]
 ---
 
+>由于QEMU版本不同可能会导致具体的内容不同，因此本文只介绍QEMU monitor和QMP的概念与使用，详细的命令建议查阅相应版本的指导手册。
+
 ## 1、QEMU monitor
 
 当用户启动一个QEMU进程之后，QEMU进程会为用户提供一个monitor用于交互。通过使用一些命令，用户可以监控正在运行的guestOS，更改可移除的媒体设备和USB设备，截图或者捕获音频，甚至控制虚拟机。
@@ -38,7 +40,7 @@ $ ./qemu-system-arm -M tms570-ls3137 -kernel /mnt/hgfs/code/ccs/tms570/Debug/tms
 
 ### 1.3、将monitor重定向到网络设备
 
-安装前面的思路同样可以将monitor重定向到telnet中
+按照前面的思路同样可以将monitor重定向到telnet中
 
 ```shell
 $ ./qemu-system-arm -M tms570-ls3137 -kernel /mnt/hgfs/code/ccs/tms570/Debug/tms570.out -monitor telnet:localhost:9000,server
@@ -52,7 +54,7 @@ $ ./qemu-system-arm -M tms570-ls3137 -kernel /mnt/hgfs/code/ccs/tms570/Debug/tms
 
 在许多情况下，我们希望在外部将控制命令输入到QEMU monitor中，但是原有的机制太麻烦（需要重定向等绕圈子的操作），幸而QEMU为我们提供了一个叫QMP的东西。
 
-QMP全程QEMU monitor protocol顾名思义就是用于QEMU monitor的协议啦。QEMU协议以JSON格式传输命令与返回信息，许多基于qemu的应用都使用了这个功能，比如著名的虚拟化中间件libvirt，它在对QEMU虚拟机做操作时，就是使用的QMP。
+QMP全称QEMU monitor protocol顾名思义就是用于QEMU monitor的协议啦。QEMU协议以JSON格式传输命令与返回信息，许多基于qemu的应用都使用了这个功能，比如著名的虚拟化中间件libvirt，它在对QEMU虚拟机做操作时，就是使用的QMP。
 
 ### 2.1、通过telnet启用QMP
 
@@ -90,7 +92,7 @@ Escape character is '^]'.
 }
 ```
 
-表示连接成功。想要进入QMP命令模式需要先发送一个*qmp_capabilities*
+表示连接成功。想要进入QMP命令模式需要先发送一个*qmp_capabilities*，进入到命令模式。
 
 ```
 { "execute": "qmp_capabilities" }
@@ -105,7 +107,7 @@ Escape character is '^]'.
 }
 ```
 
-现在你就可以开心地通过telnet控制VM了，之后要怎么做就任君发挥了。
+现在你就可以开心地通过telnet控制VM了，之后要怎么做就任君发挥了。在这里[可以](https://qemu.weilnetz.de/doc/qemu-qmp-ref.html)找到更多最新的命令和使用方法。
 
 ### 2.2、通过qmp-shell script使用qmp
 
@@ -192,4 +194,4 @@ void qmp_hello_qemu(Error **errp)
 },
 ```
 
-更多内容可以查看[官网](https://wiki.qemu.org/Documentation/QMP)
+更多内容可以查看[官网教程](https://wiki.qemu.org/Documentation/QMP)
