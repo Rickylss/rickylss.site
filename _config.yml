@@ -23,7 +23,9 @@ url: "https://rickylss.github.io" # the base hostname & protocol for your site, 
 github_username:  Rickylss
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
+redcarpet:
+  extensions: [with_toc_data]
 highlighter: rouge
 #theme: jekyll-theme-clean-blog
 plugins:
