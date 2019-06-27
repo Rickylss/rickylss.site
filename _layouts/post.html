@@ -26,8 +26,9 @@ layout: default
   </div>
 </header>
 
-<div class="container">
-  <div id="toc"></div>
+{% include toc.html %}
+
+<div class="container" data-spy="scroll" data-target=".toc" data-offset="20">
   <div class="row">
     <div class="col-lg-9 col-md-12 mx-auto">
 
