@@ -19,16 +19,16 @@ $ git checkout -t origin/vxx.xx
 $ git checkout -b vxx.xx-sw
 ```
 
-​	编译源码（由于申威平台编译器的原因，需要添加--werror-disable）：
+​	编译源码（由于申威平台编译器的原因，需要添加--disable-werror）：
 
 ``` shell
-$ ./autogen.sh --system --werror-disable 
+$ ./autogen.sh --system --disable-werror
 ```
 
 ​	如果只想编译申威平台支持的hypervisor，而不想编译其他driver，可以添加如下参数，减少编译时间：
 
 ``` shell
-$ ./autogen.sh --system --werror-disable --without-vmware --without-openvz --without-esx --without-vbox
+$ ./autogen.sh --system --disable-werror --without-vmware --without-openvz --without-esx --without-vbox
 ```
 
 > 如果在这一步遇到了xdr相关的报错，并且确定依赖已安装完成，则可能是libc动态连接库有问题，需要将/lib/libc-2.23.so文件替换（目前符合我们需求的libc-2.23.so文件的md5码后几位是*08bb82，后续或有更新，须与申威方确认）。
