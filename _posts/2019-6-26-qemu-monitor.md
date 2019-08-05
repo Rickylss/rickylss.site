@@ -195,3 +195,47 @@ void qmp_hello_qemu(Error **errp)
 ```
 
 更多内容可以查看[官网教程](https://wiki.qemu.org/Documentation/QMP)
+
+# 4、Human Monitor Interface（HMP）
+
+https://blog.csdn.net/dobell/article/details/8271140
+
+hmp即monitor界面使用的命令
+
+## 4.1、修改hmp-commands.hx
+
+```haxe
+
+    {
+        .name       = "hello qemu",
+        .args_type  = "",
+        .params     = "",
+        .help       = "print hello qemu",
+        .mhandler.cmd = hmp_input_hello_world,
+    },
+
+STEXI
+@item hello_qemu
+print hello qemu.
+ETEXI
+```
+
+注意：args_type中参数值不可使用下划线
+
+4.2、hmp.c中添加命令函数
+
+```c
+void hmp_input_hello_world(Monitor *mon, const QDict *qdict)
+{
+    Error *err = NULL;
+
+    qmp_hello_qemu(&err);
+}
+```
+
+## 4.3、hmp.h中添加声明
+
+```c
+void hmp_input_hello_world(Monitor *mon, const QDict *qdict);
+```
+

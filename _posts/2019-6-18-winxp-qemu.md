@@ -10,3 +10,5 @@ categories: [qemu，winxp]
 #set substitute-path /home/qemu c:/home/software/cygwin252/home/qemu
 ```
 
+使用eclipse调试时，可通过`edit source lookup path`添加映射。
+

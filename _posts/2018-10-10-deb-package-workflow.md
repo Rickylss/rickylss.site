@@ -110,25 +110,41 @@ rules文件是dpkg-buildpackage(后文将提及)需要使用的实际创建软�
 
    第16和17行使用了pattern rule，百分号意味着“任何target”，它会以 target 名称作参数调用单个程序 **dh**。**dh** 命令是一个包装脚本，它会根据参数执行妥当的 **dh_\*** 程序序列。
 
-   - `debian/rules clean` 运行了 `dh clean`，接下来实际执行的命令为：
+   ```
+0、清理源代码树(debian/rules clean)
+   
+   1、构建源代码包(dpkg-source -b)
+   
+   2、构建程序(debian/rules build)
+   
+   ```
 
-     ```
+3、构建二进制包(fakeroot debian/rules binary)
+
+4、使用 gpg 签署 .dsc 文件
+
+   5、使用 dpkg-genchanges 和 gpg 创建并签署上传用的 .changes 文件 
+   ```
+   
+   - `debian/rules clean` 运行了 `dh clean`，接下来实际执行的命令为：
+   
+   ```
      dh_testdir
-     dh_auto_clean
+  dh_auto_clean
      dh_clean
      ```
 
    - `debian/rules build` 运行了 `dh build`，其实际执行的命令为：
-
+   
      ```
      dh_testdir
      dh_auto_configure
      dh_auto_build
      dh_auto_test
      ```
-
+   
    - `fakeroot debian/rules binary` 执行了 `fakeroot dh binary`，其实际执行的命令为：
-
+   
      ```
      dh_testroot
      dh_prep
