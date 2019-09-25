@@ -3,6 +3,8 @@ layout: post
 title:  "初识libvirt"
 subtitle: ""
 date:   2018-11-30 14:12:33 +0800
+tags:
+  - libvirt
 categories: [libvirt]
 ---
 

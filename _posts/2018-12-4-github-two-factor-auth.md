@@ -3,7 +3,10 @@ layout: post
 title:  "github双因子验证"
 subtitle: ""
 date:   2018-12-4 19:56:09 +0800
-categories: [dk, github, otp]
+tags:
+  - github
+  - otp
+categories: [DK]
 ---
 
 > 本节介绍如何在GitHub上使用双因子验证，让大家对双因子验证有一个客观的认识。

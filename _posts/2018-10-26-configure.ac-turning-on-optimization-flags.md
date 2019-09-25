@@ -3,7 +3,11 @@ layout: post
 title:  "configure.ac中开启gdb优化选项"
 subtitle: ""
 date:   2018-10-26 11:23:06 +0800
-categories: [libvirt, gcc]
+tags:
+  - libvirt
+  - gcc
+  - C
+categories: [C]
 ---
 
 > 在使用gcc对C语言代码进行编译时，可使用调试编译参数以生成可供调试器使用的调试信息，使用编译优化选项选择关闭或者开启优化。

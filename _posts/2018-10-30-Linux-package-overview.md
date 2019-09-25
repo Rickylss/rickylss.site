@@ -3,7 +3,9 @@ layout: post
 title:  "Debain包概述"
 subtitle: ""
 date:   2018-10-30 15:18:40 +0800
-categories: [debain]
+tags:
+  - debain
+categories: [Linux]
 ---
 
 > 读者需要对rpm包管理体系和deb包管理体系有一定的了解，并且了解类unix系统下源码安装软件的操作过程及其工作流程，最好能够对autotools工具有一定的了解。

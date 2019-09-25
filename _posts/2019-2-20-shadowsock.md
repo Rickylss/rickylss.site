@@ -3,7 +3,9 @@ layout: post
 title:  "科学上网"
 subtitle: ""
 date:   2019-2-20 16:56:09 +0800
-categories: [shadowsock]
+tags:
+  - shadowsock
+categories: [others]
 ---
 
 > 本教程适合有相应知识、经验的同学参考。后续或补充细节，若有疑问可以给我发邮件，欢迎打扰。

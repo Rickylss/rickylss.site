@@ -3,7 +3,11 @@ layout: post
 title:  "QEMU monitor 与QMP"
 subtitle: "qemu控制台"
 date:   2019-6-25 16:56:09 +0800
-categories: [qemu, qmp]
+tags:
+  - qmp
+  - qemu
+  - monitor
+categories: [QEMU]
 ---
 
 >由于QEMU版本不同可能会导致具体的内容不同，因此本文只介绍QEMU monitor和QMP的概念与使用，详细的命令建议查阅相应版本的指导手册。

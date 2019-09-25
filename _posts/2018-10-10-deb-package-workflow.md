@@ -4,8 +4,8 @@ title:  "deb打包工作流"
 subtitle: ""
 date:   2018-10-10 14:15:38 +0800
 tags:
-  - Testing
-categories: [debain]
+  - debain
+categories: [Linux]
 ---
 
 > 本文介绍从源码打包deb的主要流程，对debain文件夹内容的配置细节不做深究，只对规则做介绍。

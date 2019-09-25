@@ -3,7 +3,10 @@ layout: post
 title:  "xilinx qemu"
 subtitle: ""
 date:   2019-8-6 10:23:45 +0800
-categories: [qemu, xilinx]
+tags:
+  - xilinx
+  - qemu
+categories: [QEMU]
 ---
 
 ## 1. xilinx是什么

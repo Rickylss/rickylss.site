@@ -3,6 +3,9 @@ layout: post
 title:  "secure access for libvirt"
 subtitle: ""
 date:   2018-11-12 09:26:06 +0800
+tags:
+  - libvirt
+  - SASL
 categories: [libvirt]
 ---
 

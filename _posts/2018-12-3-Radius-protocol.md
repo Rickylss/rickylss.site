@@ -3,6 +3,8 @@ layout: post
 title:  "Radius协议"
 subtitle: ""
 date:   2018-12-4 10:02:09 +0800
+tags:
+  - radius
 categories: [DK]
 ---
 

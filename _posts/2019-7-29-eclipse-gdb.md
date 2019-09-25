@@ -3,7 +3,11 @@ layout: post
 title:  "eclipse cdt调试问题"
 subtitle: ""
 date:   2019-7-29 10:23:45 +0800
-categories: [eclipse, cdt, gdb]
+tags:
+  - eclipse
+  - cdt
+  - gdb
+categories: [others]
 ---
 
 在测试集成eclipse客户端的时候发现两个添加断点的问题
@@ -14,11 +18,11 @@ categories: [eclipse, cdt, gdb]
 
 右键Debug项，选择`Edit Source Lookup`
 
-![](E:\bitbucket-code\Rickylss.github.io\pictures\eclipse_debug1.png)
+![](\pictures\eclipse_debug1.png)
 
 添加一个Path Mapping
 
-![](E:\bitbucket-code\Rickylss.github.io\pictures\eclipse_debug2.png)
+![](\pictures\eclipse_debug2.png)
 
 若需要在linux和windows环境下转换，则需要注意路径的写法“\”和“/”。这个时候需要添加Absolute File Path 和Path Relative to Source Folders 以及Program Relative File Path如图。
 
@@ -46,15 +50,15 @@ ciRX",file="../source/test_sci.c",fullname="E:\\code\\ccs\\tms570\\Debug/../sour
 
 同时，如果在项目debug之前打上断点，再开启调试那么这些断电就都可用了。。。。令人费解
 
-![](E:\bitbucket-code\Rickylss.github.io\pictures\emoji_naotou.jpg)
+![](\pictures\emoji_naotou.jpg)
 
 掏出百度
 
-![](E:\bitbucket-code\Rickylss.github.io\pictures\emoji_xixi.jpg)
+![](\pictures\emoji_xixi.jpg)
 
 没卵用，关掉
 
-![](E:\bitbucket-code\Rickylss.github.io\pictures\emoji_biechishi.jpg)
+![](\pictures\emoji_biechishi.jpg)
 
 打开蓝红黄蓝绿红，搜索`eclipse gdb breakpoint delete automatically`，第一个[链接](https://stackoverflow.com/questions/34821261/why-do-my-eclipse-cdt-breakpoints-get-deleted-immediately-after-they-are-added)就遇到了难兄难弟。
 

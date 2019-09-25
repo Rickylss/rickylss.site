@@ -3,7 +3,10 @@ layout: post
 title:  "qemu compile"
 subtitle: ""
 date:   2019-8-30 10:23:45 +0800
-categories: [qemu, linux]
+tags:
+  - qemu
+  - can
+categories: [QEMU]
 ---
 
 > ubuntu18.06中的qemu版本不带CAN，因此需要自己编译最新版的qemu。
@@ -186,7 +189,7 @@ categories: [qemu, linux]
 
    在目标机上可看到宿主机发送的内容：
 
-   ![](E:\bitbucket-code\Rickylss.github.io\pictures\qemu-can.png)
+   ![](\pictures\qemu-can.png)
 
 ### 2.2. 编译运行RTE
 

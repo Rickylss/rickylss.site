@@ -3,7 +3,10 @@ layout: post
 title:  "libvirt申威平台适配"
 subtitle: ""
 date:   2018-11-12 08:26:06 +0800
-categories: [libvirt, SW]
+tags:
+  - libvirt
+  - SW
+categories: [libvirt]
 ---
 
 > 本文主要讲解libvirt在申威平台上的移植方法和需要注意的一些细节。目前已完成基本适配的版本为libvirt3.2+swvm和libvirt4.5.0+qemu2.11.0。

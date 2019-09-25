@@ -3,7 +3,7 @@ layout: post
 title:  "可执行文件分析"
 subtitle: ""
 date:   2019-5-22 16:30:09 +0800
-categories: [qemu]
+categories: [QEMU]
 ---
 
 # BIN与ELF
