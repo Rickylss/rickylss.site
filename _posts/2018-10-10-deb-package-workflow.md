@@ -3,6 +3,8 @@ layout: post
 title:  "deb打包工作流"
 subtitle: ""
 date:   2018-10-10 14:15:38 +0800
+tags:
+  - Testing
 categories: [debain]
 ---
 
