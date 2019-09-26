@@ -9,7 +9,7 @@ tags:
 categories: [QEMU]
 ---
 
-> ubuntu18.06中的qemu版本不带CAN，因此需要自己编译最新版的qemu。
+  ubuntu18.06中的qemu版本不带CAN，因此需要自己编译最新版的qemu。
 
 ## 1. QEMU编译
 

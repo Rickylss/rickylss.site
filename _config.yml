@@ -19,7 +19,7 @@ baseurl:
 permalink: pretty
 
 # Pagination
-paginate: 10
+paginate: 5
 #paginate_path: "/page:num/"
 #archive:
   #paginate: 10
@@ -118,10 +118,10 @@ index_with_subtitle: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   home: /
-  categories: /categories/
-  about: /about/
   archives: /archives/
+  categories: /categories/
   tags: /tags/
+  about: /about/
   # sitemap: /sitemap.xml
   # commonweal: /404.html
 

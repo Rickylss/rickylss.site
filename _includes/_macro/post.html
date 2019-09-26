@@ -70,11 +70,11 @@
               </time>
             {% endif %}
 
-            {% if site.post_meta.created_at and site.post_meta.updated_at %}
+            {% if site.post_meta.created_at and site.post_meta.updated_at and post.updated %}
               <span class="post-meta-divider">|</span>
             {% endif %}
 
-            {% if site.post_meta.updated_at %}
+            {% if site.post_meta.updated_at and post.updated %}
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-check-o"></i>
               </span>

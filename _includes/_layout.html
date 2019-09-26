@@ -36,9 +36,13 @@
           <div id="content" class="content">
             {{ content }}
           </div>
+        </div>
+        {% if page.comments %}
+        <div class="comments-content-wrap">
           {% include _third-party/duoshuo-hot-articles.html %}
           {% include _partials/comments.html %}
         </div>
+        {% endif %}
         {% if site.sidebar.display != 'remove' %}
           {{ sidebar }}
         {% endif %}

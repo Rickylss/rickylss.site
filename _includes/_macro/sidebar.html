@@ -83,14 +83,6 @@
         {% if site.feed and site.feed.path and site.rss == '' or site.rss == nil %}
           {% assign site_rss = site.feed.path %}
         {% endif %}
-        {% if site_rss %}
-          <div class="feed-link motion-element">
-            <a href="{{ site_rss | relative_url }}" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        {% endif %}
 
         <div class="links-of-author motion-element">
           {% if site.social %}
@@ -108,6 +100,15 @@
             {% endfor %}
           {% endif %}
         </div>
+
+        {% if site_rss %}
+          <div class="feed-link motion-element">
+            <a href="{{ site_rss | relative_url }}" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        {% endif %}
 
         {% assign cc = 'by, by-nc, by-nc-nd, by-nc-sa, by-nd, by-sa, zero' | split: ', ' %}
         {% if cc contains site.creative_commons %}

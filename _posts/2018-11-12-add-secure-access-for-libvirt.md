@@ -9,7 +9,7 @@ tags:
 categories: [libvirt]
 ---
 
-> libvirt提供了安全访问的机制，TLS是典型的用来保护网络安全的方式，同时SASL则用来提供验证。[blog](http://blog.51cto.com/foxhound/2051024) 。在libvirt官网上有详细的使用教程[libvirt](https://libvirt.org/auth.html#ACL_server_sasl) 
+ libvirt提供了安全访问的机制，TLS是典型的用来保护网络安全的方式，同时SASL则用来提供验证。[blog](http://blog.51cto.com/foxhound/2051024) 。在libvirt官网上有详细的使用教程[libvirt](https://libvirt.org/auth.html#ACL_server_sasl) 
 
 ## 0、准备工作
 

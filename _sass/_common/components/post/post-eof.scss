@@ -2,9 +2,9 @@
   .post-eof {
     display: block;
     margin: $post-eof-margin-top auto $post-eof-margin-bottom;
-    width: 8%;
+    width: 100%;
     height: 1px;
-    background: $grey-light;
+    background: #ef4e7b;
     text-align: center;
   }
 }

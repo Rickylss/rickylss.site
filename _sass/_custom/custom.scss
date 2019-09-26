@@ -1,5 +1,38 @@
 // Custom styles.
 
+//评论内容
+.comments-content-wrap {
+    background: rgba(255, 255, 255, 0.8);
+    float: right;
+    box-sizing: border-box;
+    padding: $content-desktop-padding;
+    padding-top: 0px;
+    width: $content-desktop;
+    background: white;
+    min-height: 400px;
+    box-shadow: $box-shadow-inner;
+    border-radius: $border-radius-inner;
+    margin-top: 30px;
+  
+    @include tablet() {
+      width: 100%;
+      padding: 20px;
+    }
+    @include mobile() {
+      width: 100%;
+      padding: 20px;
+      min-height: auto;
+    }
+}
+
+.site-meta {
+    background: #1098ad;
+}
+
+.headband {
+    background: #1098ad;
+}
+
 //文章内容背景改成了半透明
 .content-wrap {
     background: rgba(255, 255, 255, 0.8);
@@ -13,7 +46,8 @@
 }
 .sidebar-inner {
 	background: rgba(255, 255, 255, 0.8);
-	box-shadow: 0 2px 6px #dbdbdb;
+    box-shadow: 0 2px 6px #dbdbdb;
+    border-radius: $border-radius-inner;
 }
 .header-inner {
     background: rgba(255, 255, 255, 0.8);
@@ -91,5 +125,5 @@
     animation: heartAnimate 1.33s ease-in-out infinite;
 }
 .with-love {
-    color: rgb(255, 61, 136);
+    color: #c7195c;
 }
