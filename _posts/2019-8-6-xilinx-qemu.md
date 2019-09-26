@@ -3,11 +3,14 @@ layout: post
 title:  "xilinx qemu"
 subtitle: ""
 date:   2019-8-6 10:23:45 +0800
+updated: 2019-8-8 12:24:55 +0800
 tags:
   - xilinx
   - qemu
 categories: [QEMU]
+comment: true
 ---
+>本文描述如何在QEMU中启动xilinx设备，并启动xilinx官方提供的系统镜像
 
 ## 1. xilinx是什么
 

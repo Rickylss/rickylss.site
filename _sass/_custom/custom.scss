@@ -42,12 +42,12 @@
 
 // 时间轴左边线条圆点颜色
 .posts-collapse .collection-title::before {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(66, 66, 66);
 }
 
 // 时间轴文章标题左边圆点颜色
 .posts-collapse .post-header:hover::before {
-    background-color: rgb(161, 102, 171);
+    background-color: rgb(167, 99, 179);
 }
 
 // 时间轴年份
@@ -57,15 +57,15 @@
 
 // 时间轴文章标题
 .posts-collapse .post-title a {
-    color: rgb(80, 115, 184);
+    color: rgb(75, 113, 189);
 }
 .posts-collapse .post-title a:hover {
-    color: rgb(161, 102, 171);
+    color: rgb(167, 99, 179);
 }
 
 // 时间轴文章标题底部虚线
 .posts-collapse .post-header:hover {
-    border-bottom-color: rgb(161, 102, 171);
+    border-bottom-color: rgb(167, 99, 179);
 }
 
 // archives页面顶部文字

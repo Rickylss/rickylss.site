@@ -76,7 +76,7 @@ plugins:
 # ---------------------------------------------------------------
 
 # Put your favicon.ico into `assets/` directory.
-favicon: /assets/images/favicon.ico
+favicon: /assets/images/favicon.png
 
 # Set default keywords (Use a comma to separate)
 keywords: "Jekyll, NexT"
@@ -311,7 +311,7 @@ auto_excerpt:
 post_meta:
   item_text: true
   created_at: true
-  updated_at: false
+  updated_at: true
   categories: true
 
 # Post wordcount display settings
@@ -435,12 +435,12 @@ changyan:
 
 # Support for gitalk comments system.
 gitalk:
-  enable: false
-  clientID: # 54730ddf7b9420460c03
-  clientSecret: # c05684701b25ff1c19ea0c01ce4d80c125e0707d
-  repo: # colingpt.github.io
-  owner: # colingpt
-  admin: # colingpt
+  enable: true
+  clientID: adf6ec8f6b7fc85495b3
+  clientSecret: 190302851932e34866490c60ef477258aabf7e78
+  repo: Rickylss.github.io
+  owner: Rickylss
+  admin: Rickylss
 
 # Baidu Share
 # Available value:
