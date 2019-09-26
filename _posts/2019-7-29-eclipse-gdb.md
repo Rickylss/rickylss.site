@@ -3,6 +3,7 @@ layout: post
 title:  "eclipse cdt调试问题"
 subtitle: ""
 date:   2019-7-29 10:23:45 +0800
+updated:   2019-9-26 14:56:45 +0800
 tags:
   - eclipse
   - cdt
@@ -48,7 +49,7 @@ ciRX",file="../source/test_sci.c",fullname="E:\\code\\ccs\\tms570\\Debug/../sour
 
 显然在这种情况下断点无法正常工作。
 
-同时，如果在项目debug之前打上断点，再开启调试那么这些断电就都可用了。。。。令人费解
+同时，如果在项目debug之前打上断点，再开启调试那么这些断点就都可用了。。。。令人费解
 
 ![](\pictures\emoji_naotou.jpg)
 
@@ -58,11 +59,11 @@ ciRX",file="../source/test_sci.c",fullname="E:\\code\\ccs\\tms570\\Debug/../sour
 
 没卵用，关掉
 
-![](\pictures\emoji_biechishi.jpg)
+![](\pictures\emoji_biechishi.jpeg)
 
-打开蓝红黄蓝绿红，搜索`eclipse gdb breakpoint delete automatically`，第一个[链接](https://stackoverflow.com/questions/34821261/why-do-my-eclipse-cdt-breakpoints-get-deleted-immediately-after-they-are-added)就遇到了难兄难弟。
+打开蓝红黄蓝绿红，搜索`eclipse gdb breakpoint delete automatically`，第一个[链接里](https://stackoverflow.com/questions/34821261/why-do-my-eclipse-cdt-breakpoints-get-deleted-immediately-after-they-are-added)就遇到了难兄难弟。
 
-说是CDT8.6有一个众所周知的bug，在cdt8.7中解决了也就是Eclipse Mars。
+说是CDT8.6有一个~~众所周知的~~bug，这个bug在cdt8.7中解决了，也就是Eclipse Mars版本。
 
-也就是说，要换版本。
+也就是说，要换版本才能解决问题。
 
