@@ -100,8 +100,6 @@ $ ./aarch64-softmmu/qemu-system-aarch64 \
 
 示例中的镜像可在[http://www.wiki.xilinx.com/Zynq+Releases](https://xilinx-wiki.atlassian.net/wiki/display/A/Zynq+Releases)找到。
 
-
-
 ## 4.文件传输
 
 1. 使用dd创建一个文件，作为虚拟机和宿主机之间传输桥梁

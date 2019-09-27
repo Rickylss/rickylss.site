@@ -12,7 +12,7 @@ https://wiki.qemu.org/Features/QOM
 
 ## 1、QDev
 
-QDev中核心的两个不久
+QDev中核心的两个步骤
 
 ### 1.1、devices and busses
 
