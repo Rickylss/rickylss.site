@@ -63,18 +63,16 @@ static char test[] = "this is string1" "and" "this is string2";
 char test2[] = "this is string3" "and" "this is string4";
 
 int main() {
-    //char test3[33];
-    //strcpy(test3, "this is string5" "and" "this is string6");
+    char test3[34];
+    strcpy(test3, "this is string5" "and" "this is string6");
 
 
     printf("%s\n", test);
     printf("%s\n", test2);
-    //printf("%s\n", test3);
+    printf("%s\n", test3);
 
     return 0;
 }
 ```
 
-只有在初始化的时候才可以这么使用，在使用strcpy的时候是不可以这样传值的。与java中`+`连接字符串不同。
-
-有个这个诡吊的操作，就可以实现像设置options时一样用宏定义来根据不同的编译选项生成不同的字符串。
+在函数中也同样可以使用，看来和java的`+`相似，具体的情况等以后深入使用再说。
