@@ -117,7 +117,7 @@ int function(void) {
 
 就这样，最简单的协程方案出来了。
 
-使用[coroutine.h](https://www.chiark.greenend.org.uk/~sgtatham/coroutine.h)头文件就行啦
+使用[coroutine.h](https://www.chiark.greenend.org.uk/~sgtatham/coroutine.h)头文件就行啦，或者使用[Protothreads](http://dunkels.com/adam/pt/index.html)，这是基于上文协程方案的一个最佳实现。
 
 # 3 可重入问题
 
