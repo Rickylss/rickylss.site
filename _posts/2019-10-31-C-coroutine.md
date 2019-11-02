@@ -75,7 +75,7 @@ int function(void) {
 
 ## 2.3 优化
 
-结合著名的[Duff's device]( https://rickylss.github.io/c/2019/10/31/c-duff-device/)使用到的`switch`的两个特性，程序可以修改如下：
+结合著名的[Duff's device]( https://rickylss.github.io/c/2019/10/31/C-Duff-device/# )使用到的`switch`的两个特性，程序可以修改如下：
 
 ```c
 int function(void) {
