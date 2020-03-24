@@ -117,3 +117,29 @@ clean_build:
 # msys2下编译并链接DLL
 
 与Cygwin相似，但是在这里注意要选用msys2-devel子系统。
+
+# 动态加载DLL
+
+注意，在这里需要动态加载DLL，加载方式和POSIX加载方式相同。
+
+```c
+void (*funcp)(void);        /* Pointer to function with no arguments */
+void* libHandle = dlopen("./A429DLL.dll", RTLD_LAZY);
+
+/* do something */
+funcp = (void (*)(void)) dlsym(libHandle, argv[2]);
+err = dlerror();
+if (err != NULL)
+    fatal("dlsym: %s", err);
+/* Try calling the address returned by dlsym() as a function
+   that takes no arguments */
+(*funcp)();
+
+dlclose(libHandle);
+```
+
+目前尝试静态加载的方式似乎是行不通的.
+
+使用`ProcessExplorer`查看DLL未能自动加载
+
+![](\pictures\cygwin_DLL.PNG)
