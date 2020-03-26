@@ -120,7 +120,7 @@ clean_build:
 
 # 动态加载DLL
 
-注意，在这里需要动态加载DLL，加载方式和POSIX加载方式相同。
+**注意**，在这里需要动态加载DLL，加载方式和POSIX加载方式相同。
 
 ```c
 void (*funcp)(void);        /* Pointer to function with no arguments */
