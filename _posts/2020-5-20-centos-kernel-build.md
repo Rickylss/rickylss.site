@@ -116,8 +116,8 @@ comment: true
    ```bash
    $ cp .config configs/kernel-3.10.0-`uname -m`.config
    $ cp configs/* ~/rpmbuild/SOURCES/
-```
-   
+   ```
+
 
 # 4、构建新内核
 
@@ -125,4 +125,9 @@ comment: true
 $ rpmbuild -bb --target=`uname -m` kernel.spec 2> build-err.log | tee build-out.log
 ```
 
-接下来你就可以在`~/rpmbuild/RPMS/`目录下找到你的安装包了
+接下来你就可以在`~/rpmbuild/RPMS/`目录下找到你的安装包了。
+
+```bash
+$ rpm -Uvh *.rpm
+```
+
