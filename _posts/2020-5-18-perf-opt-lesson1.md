@@ -128,8 +128,21 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
 思考题：
 
 1. 内核使用MMX指令实现memcpy()会更快吗？
+
+   > MMX是由[英特尔](https://zh.wikipedia.org/wiki/英特尔)开发的一种**[SIMD](https://zh.wikipedia.org/wiki/单指令流多数据流)**[多媒体](https://zh.wikipedia.org/wiki/多媒体)[指令集](https://zh.wikipedia.org/wiki/指令集)，共有57条指令。它于1996年集成在英特尔[奔腾](https://zh.wikipedia.org/wiki/奔腾)（Pentium）MMX[处理器](https://zh.wikipedia.org/wiki/处理器)上，以提高其多媒体数据的处理能力。
+   >
+   > MMX寄存器，称作MM0~7，实际上是对处理器内部80比特字长的浮点寄存器栈st0~7的尾数部分（64比特）的复用。由于浮点栈寄存器的高16位未被MMX技术使用，因此这16位都置为1，因此从栈寄存器的角度看，其浮点值为NaN或Infinities，这可用于区分寄存器是处于浮点栈状态还是MMX状态。
+   >
+   > MMX技术占用FPU寄存器进行运算，因此MMX指令和浮点数运算操作不能同时工作。
+
+   答：使用MMX指令实现memcpy()未必会更快。原因在于，在一般情况下，FPU指令集是很少被使用到的，即便被使用到也是非常简单且惰性的，并不会影响进程和线程的快速切换。若你使用FPU指令集做memcpy，那么每次进程或线程切换，你都需要保存/恢复一次i387，而这个开销是非常大的。即便你在用户程序中没有明确的使用i387指令，内核也会帮你调用。
+
 2. Zero Copy Xmit一定能够提高虚拟机网络性能么？
+
+   > 需要了解虚拟机网络的实现。
+
 3. 如何科学地测试I/O性能？
+
 4. 如何确定多线程程序的最佳线程数？
 
 参考阅读：
