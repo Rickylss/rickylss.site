@@ -9,22 +9,24 @@ categories: [OS, Linux]
 comment: true
 ---
 
-> Debian仓库本质上就是把一堆*.deb包放到一个文件夹里面，在此基础上，为了方便apt工具的管理，将这些deb包按照一定的格式要求存放，同时额外提供一些元数据文件来协助apt工具快速地读取deb包。
+> Debian仓库本质上就是把一堆*.deb包放到一个文件夹，在此基础上，为了方便apt工具的管理，将这些deb包按照一定的规则存放，并额外提供一些元数据文件来协助apt工具快速地访问deb包。
 
-Debian支持通过不同的协议访问，如http协议、ftp协议或者普通的file访问。所有访问的目录只需要满足[debian仓库格式](https://wiki.debian.org/DebianRepository/Format)即可。
+Debian仓库支持通过不同的协议访问，如http协议、ftp协议或者普通的file访问。所有访问的目录只需要满足[debian仓库格式](https://wiki.debian.org/DebianRepository/Format)即可。
 
 # 1、Debian仓库搭建
 
-构建Debian仓库有很多[工具](https://wiki.debian.org/DebianRepository/Setup#apt-ftparchive)，主要分类两类：生成Debian仓库的工具、制作Debian镜像的工具。制作镜像的工具主要用于复制其他仓库的源码，并更新到本地的仓库。
+构建Debian仓库有很多[工具](https://wiki.debian.org/DebianRepository/Setup#apt-ftparchive)，主要分为两类：生成Debian仓库的工具、制作Debian镜像库的工具。制作镜像库的工具从其他仓库复制，之后更新到本地的仓库。
 
 ## 1.1、Debian仓库的类型
 
-apt仓库有两种类型：
+Debian仓库有两种类型：
 
 - official archive，“deb http://example.org/debian unstable main”，支持apt-pinning，支持secure APT；
 - trivial archive， “deb http://example.org/debian ./”，不支持apt-pinning，支持secure APT。
 
-简单地来说，trivial archive就是简单的APT仓库，official archive是复杂的APT仓库，这里的简单和复杂是指仓库组织结构。trivial archive不采用pool结构，形式如下：
+总地来说，trivial archive就是简单的Debian仓库，official archive是复杂的Debian仓库，这里的简单和复杂是指仓库组织结构。
+
+trivial archive不采用pool结构，对trivial archive仓库文件夹使用`tree`命令，查看文件组织结构如下：
 
 ```
 .
@@ -42,7 +44,7 @@ apt仓库有两种类型：
 deb http://example.org/debian ./
 ```
 
-对应的official archive结构如下：
+而official archive文件组织结构如下：
 
 ```
 ├── dists/
@@ -81,7 +83,7 @@ deb http://example.org/debian jessie main
 
 ## 1.2、构建trivial archive仓库
 
-构建trivial archive类型仓库很简单，只需要将想要的deb包放到同一个目录下，再使用dpkg工具构建出Packages文件和Release文件，使用gpg工具创建密钥对，用于访问仓库的验证即可。
+构建trivial archive类型仓库很简单，将想要的deb包放仓库目录下，再使用dpkg工具构建出Packages文件和Release文件，使用gpg工具创建密钥对，用于访问仓库的验证即可。
 
 1. 将下载好的包放入仓库中：
 
@@ -96,7 +98,7 @@ deb http://example.org/debian jessie main
    $ dpkg-scanpackages -m .> Packages
    ```
 
-   APT会从每个软件源导入Packages文件（或者它的各种压缩）（若是二进制包的仓库）和Sources文件（若是软件包源的仓库）。APT将根据Packages文件中的内容了解仓库中包的版本状态。
+   APT工具会从每个软件源导入Packages文件（或者它的各种压缩）（若是二进制包的仓库）和Sources文件（若是软件包源的仓库）。APT将根据Packages文件中的内容了解仓库中包的版本状态。
 
 3. 创建Release文件：
 
@@ -127,7 +129,7 @@ deb http://example.org/debian jessie main
 
 ## 1.3、使用`reprepro`构建official archive仓库
 
-使用reprepro构建仓库的方式与1.2相似，只不过使用reprepro构建，让仓库使用official archive。
+使用reprepro构建仓库的方式与1.2相似，只不过使用reprepro构建，可以以official archive的文件组织结构存放软件包，将软件包信息存入对应的源文件。
 
 1. 创建私钥
 
