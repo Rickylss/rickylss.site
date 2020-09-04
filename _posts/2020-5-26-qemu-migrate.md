@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "libvirt->QEMU热迁移"
+title:  "libvirt&QEMU热迁移"
 subtitle: ""
 date:   2020-5-26 19:13:45 +0800
 tags:
@@ -36,11 +36,11 @@ qemu-monitor中提供了Migration命令。使用者可以通过该命令将VM从
 >
 > [-b] for migration without shared storage with full copy of disk
 >
-> ​		用于在没有共享存储的情况下迁移，但具有磁盘的完整副本
+> ​		用于在没有具有磁盘完整副本的共享存储时迁移。
 >
 > [-i] for migration without shared storage with incremental copy of disk (base image shared between src and destination)
 >
-> ​		用于在没有共享存储的情况下使用磁盘增量副本进行迁移(在src和目标之间共享基本映像)
+> ​		用于在没有具备磁盘增量副本的共享存储时迁移(在src和目标之间共享基本映像)
 
 >补充：新版本的QEMU编译时不支持老的blk、inc方法，提供了driver_mirror+NBD的方式（同时也是libvirt使用的方式）。
 >
@@ -120,7 +120,7 @@ $ ./scripts/analyze_migration.py -f mig
    $ firewall-cmd --reload
    $ systemctl restart rpcbind
    $ systemctl restart nfs
-   $ systemctl enable rpcbind && systemctl enable 
+   $ systemctl enable rpcbind && systemctl enable nfs
    $ exportfs -r
    $ showmount -e
    ```
@@ -298,9 +298,9 @@ https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainMigrateStartPostCo
    - 设置好迁移数据流带宽
    - 首先将整个内存迁移
    - 再迁移脏页数据
-3. 停止srcVM，在此时有一个短暂的服务暂停时间——downtime；
+3. 停止srcVM；
 4. 迁移虚拟机所有设备状态，所有剩下的设备状态和内存脏页都在此时传输，不限制迁移数据流带宽；
-5. 启动detVM，在此时有一个启动时间——setup；
+5. 启动detVM；
    - 广播”I'm over here“数据包，宣布虚拟机新网卡的位置；
 
 ## 6.1、QEMU源码分析

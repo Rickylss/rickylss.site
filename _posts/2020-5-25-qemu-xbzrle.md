@@ -1,6 +1,7 @@
 ---
+
 layout: post
-title:  "QEMU xbzrle功能"
+title:  "QEMU迁移xbzrle压缩"
 subtitle: ""
 date:   2020-5-25 19:13:45 +0800
 tags:

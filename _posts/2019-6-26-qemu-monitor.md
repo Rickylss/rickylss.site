@@ -38,7 +38,7 @@ $ ./qemu-system-arm -M tms570-ls3137 -kernel /mnt/hgfs/code/ccs/tms570/Debug/tms
 $ ./qemu-system-arm -M tms570-ls3137 -kernel /mnt/hgfs/code/ccs/tms570/Debug/tms570.out -monitor stdio
 ```
 
-将monitor重定向到标准输入输出后，依旧有QEMU弹窗，但是这个弹窗中只有serial0，而compact monitor0窗口重定向到当前的命令行窗口下了。(如果想要去除QEMU弹窗，可以添加参数-vnc :53，这样弹窗会被转到vnc的53端口)
+将monitor重定向到标准输入输出后，依旧有QEMU弹窗，但是这个弹窗中只有serial0，而compact monitor0窗口重定向到当前的命令行窗口下了。(如果想要去除QEMU弹窗，可以添加参数-vnc :53，这样弹窗会被转到vnc的53端口，使用工具连接时需要5900+53端口)
 
 <img class="col-lg-12 col-md-12 mx-auto" src="\pictures\qemu-monitor-stdio.png"/>
 

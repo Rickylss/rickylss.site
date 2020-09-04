@@ -19,7 +19,7 @@ categories: [QEMU]
    $ apt install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev git-email libaio-dev libbluetooth-dev libbrlapi-dev libbz2-dev libcap-dev libcap-ng-dev libcurl4-gnutls-dev libgtk-3-dev libibverbs-dev libjpeg8-dev libncurses5-dev libnuma-dev librbd-dev librdmacm-dev libsasl2-dev libsdl1.2-dev libseccomp-dev libsnappy-dev libssh2-1-dev libvde-dev libvdeplug-dev libvte-2.90-dev libxen-dev liblzo2-dev valgrind xfslibs-dev libnfs-dev libiscsi-dev
    ```
 
-2. 为了不污染系统和开发环境，编译安装到到固定目录下，build.sh内容如下：
+2. 为了不污染系统和开发环境，编译安装到固定目录下，build.sh内容如下：
 
    ```shell
    /code/qemu/configure --prefix='/code/qemu-compile/install' --target-list="aarch64-softmmu,microblazeel-softmmu,x86_64-softmmu" --enable-fdt --disable-xen
@@ -132,7 +132,7 @@ categories: [QEMU]
    $ dd if=/dev/zero of=/code/qemu-test/file.img bs=1M count=200
    $ mkfs.ext4 /code/qemu-test/file.img
    $ mkdir /code/qemu-test/file
-   $  mount -o loop /code/qemu-test/file.img /code/qemu-test/file
+   $ mount -o loop /code/qemu-test/file.img /code/qemu-test/file
    ```
 
 4. 等系统安装完成后，将file.img挂载到系统上
