@@ -105,7 +105,7 @@ copyright: true
 canonical: true
 
 # AdSense, add google AdSense
-adsense: true
+adsense:
   data-ad-client: ca-pub-8486812108421010
   async_src: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
 
