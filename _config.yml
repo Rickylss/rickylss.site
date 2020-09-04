@@ -106,7 +106,8 @@ canonical: true
 
 # AdSense, add google AdSense
 adsense: true
-adsense_link: <script data-ad-client="ca-pub-8486812108421010" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  data-ad-client: ca-pub-8486812108421010
+  async_src: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
 seo: false

@@ -133,7 +133,7 @@
 {% endif %}
 
 {% if site.adsense %}
-{% site.adsense_link %}
+  <script data-ad-client="{{ site.adsense.data-ad-client }}" async src="{{ site.adsense.async_src }}"></script>
 {% endif %}
 
 {% include _partials/head/custom-head.html %}
