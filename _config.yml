@@ -104,6 +104,10 @@ copyright: true
 # Tips: Before you open this tag, remember set up your URL in _config.yml ( ex. url: http://yourdomain.com )
 canonical: true
 
+# AdSense, add google AdSense
+adsense: true
+adsense_link: <script data-ad-client="ca-pub-8486812108421010" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
 seo: false
 
