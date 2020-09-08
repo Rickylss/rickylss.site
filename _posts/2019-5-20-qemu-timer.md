@@ -11,9 +11,9 @@ categories: [QEMU]
 
  qemu中所有的与时间相关的模块都基于`timer.h`和`qemu-timer.c`实现，包括arm的计时器`arm_timer.c`以及通用的倒数计时器`ptimer.c`，本文分析timer.h文件，探究qemu中timer的机制和原理，再实现一个自己的加数计时器`itimer.c`
 
-## QEMUClock
+# QEMUClock
 
-### QEMUClockType
+## QEMUClockType
 
 `QEMUClock`一共有四种类型，分别是：`QEMU_CLOCK_REALTIME`、`QEMU_CLOCK_VIRTUAL`、`QEMU_CLOCK_HOST`和`QEMU_CLOCK_VIRTUAL_RT`，下面分别解释。
 
@@ -51,7 +51,7 @@ host clock实际上使用的是`gettimeofday`函数，这个函数返回的是�
 
 icount在QEMU中全称为TCG Instruction Counting。它是TCG用于指令计数的一个组件，当CPU在icount模式下sleep时，通过它来计算时间。
 
-### qemu_clock_get_ns
+## qemu_clock_get_ns
 
 为了更好的理解前面提到的4中clock type的关系，可以直接看`/qemu/util/qemu-timer.c`文件下的`qemu_clock_get_ns`函数：
 
@@ -116,7 +116,7 @@ int64_t qemu_clock_get_ns(QEMUClockType type)
 }
 ```
 
-### 以autoconverge为例
+## 以autoconverge为例
 
 `migrate_auto_converge`是QEMU热迁移支持的一个特性，它可以通过自动降频CPU的方式来减少写内存的频率，而降频的方法就是通过计算需要降频的时间和执行时间的比例来halt cpu。
 
@@ -196,14 +196,14 @@ static void cpu_throttle_timer_tick(void *opaque)
 
 对每个cpu执行`cpu_throttle_thread`线程，用于将一部分cpu时间设置为halt（通过`pthread_cond_timedwait`函数）。
 
-### QEMUClock初始化流程
+## QEMUClock初始化流程
 
 ![QEMUClock](\pictures\QEMUClock.png)
 
 1. `qemu_init_main_loop`中调用`init_clocks`初始化4种Clock类型：
 2. `qemu_clock_init`初始化4种Clock类型，并且每种Clock下都有一个TimerList，将TimerList加入到全局的TimerListGroup(main_loop_tlg)中。
 
-### QEMUClock执行流程
+## QEMUClock执行流程
 
 简化一下前面提到的auto-converge的例子：
 
@@ -230,10 +230,10 @@ void timer_mod_ns(QEMUTimer *ts, int64_t expire_time)
 }
 ```
 
-## itimer设备实现
+# itimer设备实现
 
 <script src="https://gist.github.com/Rickylss/b69f1dc7749b73d6e6ad4a4e816a07e5.js"></script>
 
-## Reference
+# Reference
 
 [Prescaler除频器](https://en.wikipedia.org/wiki/Prescaler)
