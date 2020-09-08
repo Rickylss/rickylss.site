@@ -19,9 +19,7 @@ categories: [QEMU]
 
 - QEMU_CLOCK_REALTIME
 
-```
-The real time clock should be used only for stuff which does not change the virtual machine state, as it is run even if the virtual machine is stopped. The real time clock has a frequency of 1000 Hz.
-```
+> The real time clock should be used only for stuff which does not change the virtual machine state, as it is run even if the virtual machine is stopped. The real time clock has a frequency of 1000 Hz.
 
 real time clock可以理解为真实的（相对于虚拟的）时钟，即使虚拟机停止或者挂起了，这个时钟也会继续走，这就意味着这个时钟只能用在不涉及到虚拟机状态的地方，否则一旦挂起后恢复，虚拟机状态就会出问题。
 
@@ -29,23 +27,19 @@ real time clock可以理解为真实的（相对于虚拟的）时钟，即使�
 
 - QEMU_CLOCK_VIRTUAL
 
-```
-The virtual clock is only run during the emulation. It is stopped when the virtual machine is stopped. Virtual timers use a high precision clock, usually cpu cycles (use ticks_per_sec).
-```
+> The virtual clock is only run during the emulation. It is stopped when the virtual machine is stopped. Virtual timers use a high precision clock, usually cpu cycles (use ticks_per_sec).
 
 virtual clock与real time clock相反，虚拟时钟只会在虚拟机运行时运行，当虚拟机停止了，它也会停止。因为这种特性，它会被用于处理虚拟机硬件的一些状态，例如一些外设的定时器。它使用的是高精度的时钟，通常就是通过CPU的cycle来计算的。
 
-> 这其实很好理解，假设你在虚拟机上运行了一个定时程序，这个程序要求每隔60s打印一个“hello world”，如果你使用real time clock作为计时器，那么当你在程序运行到一半的时候将虚拟机挂起，等待一段时间后恢复，程序是无法从上一次停止的时刻开始继续倒计时。只有在使用virtual clock的情况下，虚拟机挂起时，会将程序的时间也冻结了，恢复时，程序会从上一次停止的时刻开始继续倒计时。
+这其实很好理解，假设你在虚拟机上运行了一个定时程序，这个程序要求每隔60s打印一个“hello world”，如果你使用real time clock作为计时器，那么当你在程序运行到一半的时候将虚拟机挂起，等待一段时间后恢复，程序是无法从上一次停止的时刻开始继续倒计时。只有在使用virtual clock的情况下，虚拟机挂起时，会将程序的时间也冻结了，恢复时，程序会从上一次停止的时刻开始继续倒计时。
 
 - QEMU_CLOCK_HOST
 
-```
-The host clock should be use for device models that emulate accurate real time sources. It will continue to run when the virtual machine is suspended, and it will reflect system time changes the host may undergo (e.g. due to NTP). The host clock has the same precision as the virtual clock.
-```
+> The host clock should be use for device models that emulate accurate real time sources. It will continue to run when the virtual machine is suspended, and it will reflect system time changes the host may undergo (e.g. due to NTP). The host clock has the same precision as the virtual clock.
 
 host clock 用于需要使用真实时间的设备，虚拟机挂起或者停止时它依然会运行，它反应的是系统时钟时间（你可以简单的理解为它用的就是date的时间），因此相比于real time clock它会收到系统时间的影响（例如，由于NTP时间同步导致的改变），host clock和virtual clock具有相同的精确度。
 
-> host clock实际上使用的是`gettimeofday`函数，这个函数返回的是一个日历时间，因此会因为宿主机系统的date改变而改变。real time clock在万不得已的情况下也会使用`gettimeofday`。
+host clock实际上使用的是`gettimeofday`函数，这个函数返回的是一个日历时间，因此会因为宿主机系统的date改变而改变。real time clock在万不得已的情况下也会使用`gettimeofday`。
 
 - QEMU_CLOCK_VIRTUAL_RT
 
@@ -53,9 +47,9 @@ host clock 用于需要使用真实时间的设备，虚拟机挂起或者停止
 
 在非icount模式下，这个clock和virtual clock是一样的，不同的在于，当该clock处于icount模式下，它会以纳秒来计数。当cpu sleep时，它被用来增加virtual clock，这样就不需要运行额外的指令了。
 
-> 要很好的理解virtual rt clock和virtual clock的关系和区别，需要对QEMU中的icount有一定的了解。
->
-> icount在QEMU中全称为TCG Instruction Counting。它是TCG用于指令计数的一个组件，当CPU在icount模式下sleep时，通过它来计算时间。
+要很好的理解virtual rt clock和virtual clock的关系和区别，需要对QEMU中的icount有一定的了解。
+
+icount在QEMU中全称为TCG Instruction Counting。它是TCG用于指令计数的一个组件，当CPU在icount模式下sleep时，通过它来计算时间。
 
 ### qemu_clock_get_ns
 
