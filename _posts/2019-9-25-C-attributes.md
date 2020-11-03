@@ -18,13 +18,13 @@ destructor
 
 使用constructor（构造）会使该方法在运行main()方法前被自动调用，相同的destructor会使该方法在main()方法运行后或者exit()方法运行之后被自动调用（注：atexit()方法也可做到main执行后调用）。
 
-linux 行 elf程序链接、启动过程如下图：
+linux运行 elf程序链接、启动过程如下图：
 
-![](\pictures\elf_callgraph.png)
+![](..\pictures\elf_callgraph.png)
 
 调试QEMU中对应部分程序：
 
-![](\pictures\C_constructor.jpg)
+![](..\pictures\C_constructor.jpg)
 
 实际上，使用constructor属性，使得该函数在`__libc_csu_init()`中被调用，在main方法被调用之前，由此可看出`__attributes__`机制可以影响编译器，是一个编译器相关的特性，需要编译器支持。
 
