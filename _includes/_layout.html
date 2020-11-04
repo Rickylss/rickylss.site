@@ -4,10 +4,6 @@
 {% include _blocks/sidebar.html %}
 {% include _blocks/script_extra.html %}
 
-{% if site.adsense.inner_ads %}
-<div> {% include _advertising/google_ads.html %} </div>
-{% endif %}
-
 {% assign html_class = 'theme-next ' | append: site.scheme %}
 {% if site.use_motion %}
   {% assign html_class = html_class | append: ' use-motion' %}
@@ -41,6 +37,11 @@
             {{ content }}
           </div>
         </div>
+        {% if site.adsense.inner_ads %}
+        <div class="ads-content-wrap">
+          {% include _advertising/google_ads.html %}
+        </div>
+        {% endif %}
         {% if page.comments %}
         <div class="comments-content-wrap">
           {% include _third-party/duoshuo-hot-articles.html %}
