@@ -16,11 +16,11 @@
   
     @include tablet() {
       width: 100%;
-      padding: 0px;
+      padding: 0px 0px 0px 0px;
     }
     @include mobile() {
       width: 100%;
-      padding: 0px;
+      padding: 0px 0px 0px 0px;
       min-height: auto;
     }
 }
