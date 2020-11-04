@@ -262,7 +262,7 @@ toc:
 
 sidebar:
   # Sidebar Position, available value: left | right
-  position: right
+  position: left
   #position: right
 
   # Sidebar Display, available value:
