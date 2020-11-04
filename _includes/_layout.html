@@ -37,6 +37,11 @@
             {{ content }}
           </div>
         </div>
+        {% if site.adsense.inner_ads %}
+        <div class="ads-content-wrap">
+          {% include _advertising/google_ads.html %}
+        </div>
+        {% endif %}
         {% if page.comments %}
         <div class="comments-content-wrap">
           {% include _third-party/duoshuo-hot-articles.html %}

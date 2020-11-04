@@ -108,6 +108,7 @@ canonical: true
 adsense:
   data-ad-client: ca-pub-8486812108421010
   async_src: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
+  inner_ads: true
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
 seo: false
@@ -261,7 +262,7 @@ toc:
 
 sidebar:
   # Sidebar Position, available value: left | right
-  position: left
+  position: right
   #position: right
 
   # Sidebar Display, available value:
@@ -271,7 +272,7 @@ sidebar:
   #  - remove  Totally remove sidebar including sidebar toggle.
   #display: post
   #display: always
-  display: hide
+  display: post
   #display: remove
 
   # Sidebar offset from top menubar in pixels.
