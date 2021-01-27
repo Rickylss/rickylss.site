@@ -53,7 +53,7 @@ v2.2.0~master中遇到的STT_GNU_IFUNC问题是由于`indirect function`导致�
 
    ```bash
    # 解压安装
-   $ rpm -i http://vault.centos.org/centos/
+   $ rpm -i http://vault.centos.org/centos/glibc.src.rpm
    # 修改spec文件，增加--enable-static-nss，替换--enable-nss-crypt为--disable-nss-crypt
    $ vim glibc.spec
    ../configure CC="$GCC" CXX="$GXX" CFLAGS="$configure_CFLAGS" \
