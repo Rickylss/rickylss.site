@@ -23,25 +23,25 @@ comment: true
 
 调试iso安装过程，首先选iso启动，进到安装界面，你可以选text mode（不带UI的字符安装界面）或者带UI的界面。
 
-![image-20210128121159661](../pictures/image-20210128121159661.png)
+![image-20210128121159661](/pictures/image-20210128121159661.png)
 
 按下`Alt+F2`切换到shell。
 
-![image-20210128121229975](../pictures/image-20210128121229975.png)
+![image-20210128121229975](/pictures/image-20210128121229975.png)
 
 进入了可以看到以anaconda开头的shell环境，现在看到的这个就是**安装系统用的系统**，这个系统非常简洁，只支持很少的与系统安装相关的一些命令，可以通过`help`命令查看。
 
 安装系统到硬盘的操作就是在这个环境下执行。首先会执行%pre，之后将你选择的硬盘（如/dev/vda）挂载到`/mnt/sysimage`目录下，并且将系统和rpm包安装到该目录下：
 
-![image-20210128122224980](../pictures/image-20210128122224980.png)
+![image-20210128122224980](/pictures/image-20210128122224980.png)
 
 这个时候切换到shell环境可以看到安装硬盘已经被分区并挂载到`/mnt/sysimage`目录下了。
 
-![image-20210128122745534](../pictures/image-20210128122745534.png)
+![image-20210128122745534](/pictures/image-20210128122745534.png)
 
 再切回main，等待rpm安装完成，
 
-![image-20210128122921882](../pictures/image-20210128122921882.png)
+![image-20210128122921882](/pictures/image-20210128122921882.png)
 
 可以看到在generating initramfs之后才真正执行%post
 
