@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "libvirt迁移实验"
+title:  "libvirt 迁移实验"
 subtitle: ""
 date:   2020-7-2 19:13:45 +0800
 tags:
@@ -9,7 +9,7 @@ categories: [libvirt]
 comment: true
 ---
 
-在zstack环境下，通过virsh直接迁移虚拟机，测试不同选项对虚拟机迁移的影响。
+在 zstack 环境下，通过 virsh 直接迁移虚拟机，测试不同选项对虚拟机迁移的影响。
 
 # 默认迁移
 
@@ -31,7 +31,7 @@ user    0m0.011s
 sys     0m0.006s
 ```
 
-# direct选项
+# direct 选项
 
 添加`--direct`选项对应`Unmanaged direct migration`方式，迁移命令：
 
@@ -44,9 +44,9 @@ user    0m0.006s
 sys     0m0.007s
 ```
 
-QEMU的feature中不支持`direct`方式迁移
+QEMU 的 feature 中不支持`direct`方式迁移
 
-# p2p选项
+# p2p 选项
 
 添加`--p2p`选项对应`managed peer to peer migration`方式，迁移命令：
 
@@ -60,9 +60,9 @@ sys     0m0.009s
 
 
 
-## tunnelled选项
+## tunnelled 选项
 
-添加`--tunnelled`可使用libvirt代理迁移，可使用加密功能，迁移命令：
+添加`--tunnelled`可使用 libvirt 代理迁移，可使用加密功能，迁移命令：
 
 ```bash
 $ time virsh migrate 83195712b6ce4368a8bd9d6dc65e438d qemu+tcp://172.31.6.11/system --p2p --tunnelled
@@ -74,15 +74,15 @@ sys     0m0.010s
 
 
 
-# 模拟zstack默认迁移方式
+# 模拟 zstack 默认迁移方式
 
 ```bash
 $ time virsh migrate 83195712b6ce4368a8bd9d6dc65e438d qemu+tcp://172.31.6.11/system --live --p2p --undefinesource
 ```
 
-在不开启converge的情况下添加xbzrle压缩
+在不开启 converge 的情况下添加 xbzrle 压缩
 
-```
+```plain
 virsh qemu-monitor-command uuid --hmp info migrate
 virsh domjobinfo uuid
 ```

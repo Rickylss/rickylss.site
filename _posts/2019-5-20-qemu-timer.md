@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "QEMU timer模块分析"
+title:  "QEMU timer 模块分析"
 subtitle: ""
 date:   2019-5-20 16:56:09 +0800
 updated: 2020-8-8 14:24:55 +0800
@@ -9,7 +9,7 @@ tags:
 categories: [QEMU]
 ---
 
- qemu中所有的与时间相关的模块都基于`timer.h`和`qemu-timer.c`实现，包括arm的计时器`arm_timer.c`以及通用的倒数计时器`ptimer.c`，本文分析timer.h文件，探究qemu中timer的机制和原理，再实现一个自己的加数计时器`itimer.c`
+ qemu 中所有的与时间相关的模块都基于`timer.h`和`qemu-timer.c`实现，包括 arm 的计时器`arm_timer.c`以及通用的倒数计时器`ptimer.c`，本文分析 timer.h 文件，探究 qemu 中 timer 的机制和原理，再实现一个自己的加数计时器`itimer.c`
 
 # QEMUClock
 
@@ -21,7 +21,7 @@ categories: [QEMU]
 
 > The real time clock should be used only for stuff which does not change the virtual machine state, as it is run even if the virtual machine is stopped. The real time clock has a frequency of 1000 Hz.
 
-real time clock可以理解为真实的（相对于虚拟的）时钟，即使虚拟机停止或者挂起了，这个时钟也会继续走，这就意味着这个时钟只能用在不涉及到虚拟机状态的地方，否则一旦挂起后恢复，虚拟机状态就会出问题。
+real time clock 可以理解为真实的（相对于虚拟的）时钟，即使虚拟机停止或者挂起了，这个时钟也会继续走，这就意味着这个时钟只能用在不涉及到虚拟机状态的地方，否则一旦挂起后恢复，虚拟机状态就会出问题。
 
 它实际上调用的是`clock_gettime()`和`CLOCK_MONOTONIC`，这是一个不可设定的恒定态时钟，从系统启动之后开始测量，并且不可修改，手动修改系统时间不会对其产生影响。
 
@@ -29,31 +29,31 @@ real time clock可以理解为真实的（相对于虚拟的）时钟，即使�
 
 > The virtual clock is only run during the emulation. It is stopped when the virtual machine is stopped. Virtual timers use a high precision clock, usually cpu cycles (use ticks_per_sec).
 
-virtual clock与real time clock相反，虚拟时钟只会在虚拟机运行时运行，当虚拟机停止了，它也会停止。因为这种特性，它会被用于处理虚拟机硬件的一些状态，例如一些外设的定时器。它使用的是高精度的时钟，通常就是通过CPU的cycle来计算的。
+virtual clock 与 real time clock 相反，虚拟时钟只会在虚拟机运行时运行，当虚拟机停止了，它也会停止。因为这种特性，它会被用于处理虚拟机硬件的一些状态，例如一些外设的定时器。它使用的是高精度的时钟，通常就是通过 CPU 的 cycle 来计算的。
 
-这其实很好理解，假设你在虚拟机上运行了一个定时程序，这个程序要求每隔60s打印一个“hello world”，如果你使用real time clock作为计时器，那么当你在程序运行到一半的时候将虚拟机挂起，等待一段时间后恢复，程序是无法从上一次停止的时刻开始继续倒计时。只有在使用virtual clock的情况下，虚拟机挂起时，会将程序的时间也冻结了，恢复时，程序会从上一次停止的时刻开始继续倒计时。
+这其实很好理解，假设你在虚拟机上运行了一个定时程序，这个程序要求每隔 60s 打印一个“hello world”，如果你使用 real time clock 作为计时器，那么当你在程序运行到一半的时候将虚拟机挂起，等待一段时间后恢复，程序是无法从上一次停止的时刻开始继续倒计时。只有在使用 virtual clock 的情况下，虚拟机挂起时，会将程序的时间也冻结了，恢复时，程序会从上一次停止的时刻开始继续倒计时。
 
 - QEMU_CLOCK_HOST
 
 > The host clock should be use for device models that emulate accurate real time sources. It will continue to run when the virtual machine is suspended, and it will reflect system time changes the host may undergo (e.g. due to NTP). The host clock has the same precision as the virtual clock.
 
-host clock 用于需要使用真实时间的设备，虚拟机挂起或者停止时它依然会运行，它反应的是系统时钟时间（你可以简单的理解为它用的就是date的时间），因此相比于real time clock它会收到系统时间的影响（例如，由于NTP时间同步导致的改变），host clock和virtual clock具有相同的精确度。
+host clock 用于需要使用真实时间的设备，虚拟机挂起或者停止时它依然会运行，它反应的是系统时钟时间（你可以简单的理解为它用的就是 date 的时间），因此相比于 real time clock 它会收到系统时间的影响（例如，由于 NTP 时间同步导致的改变），host clock 和 virtual clock 具有相同的精确度。
 
-host clock实际上使用的是`gettimeofday`函数，这个函数返回的是一个日历时间，因此会因为宿主机系统的date改变而改变。real time clock在万不得已的情况下也会使用`gettimeofday`。
+host clock 实际上使用的是`gettimeofday`函数，这个函数返回的是一个日历时间，因此会因为宿主机系统的 date 改变而改变。real time clock 在万不得已的情况下也会使用`gettimeofday`。
 
 - QEMU_CLOCK_VIRTUAL_RT
 
 > Outside icount mode, this clock is the same as @QEMU_CLOCK_VIRTUAL. In icount mode, this clock counts nanoseconds while the virtual machine is running.  It is used to increase @QEMU_CLOCK_VIRTUAL while the CPUs are sleeping and thus not executing instructions.
 
-在非icount模式下，这个clock和virtual clock是一样的，不同的在于，当该clock处于icount模式下，它会以纳秒来计数。当cpu sleep时，它被用来增加virtual clock，这样就不需要运行额外的指令了。
+在非 icount 模式下，这个 clock 和 virtual clock 是一样的，不同的在于，当该 clock 处于 icount 模式下，它会以纳秒来计数。当 cpu sleep 时，它被用来增加 virtual clock，这样就不需要运行额外的指令了。
 
-要很好的理解virtual rt clock和virtual clock的关系和区别，需要对QEMU中的icount有一定的了解。
+要很好的理解 virtual rt clock 和 virtual clock 的关系和区别，需要对 QEMU 中的 icount 有一定的了解。
 
-icount在QEMU中全称为TCG Instruction Counting。它是TCG用于指令计数的一个组件，当CPU在icount模式下sleep时，通过它来计算时间。
+icount 在 QEMU 中全称为 TCG Instruction Counting。它是 TCG 用于指令计数的一个组件，当 CPU 在 icount 模式下 sleep 时，通过它来计算时间。
 
 ## qemu_clock_get_ns
 
-为了更好的理解前面提到的4中clock type的关系，可以直接看`/qemu/util/qemu-timer.c`文件下的`qemu_clock_get_ns`函数：
+为了更好的理解前面提到的 4 中 clock type 的关系，可以直接看`/qemu/util/qemu-timer.c`文件下的`qemu_clock_get_ns`函数：
 
 ```c
 /* get host real time in nanosecond */
@@ -116,9 +116,9 @@ int64_t qemu_clock_get_ns(QEMUClockType type)
 }
 ```
 
-## 以autoconverge为例
+## 以 autoconverge 为例
 
-`migrate_auto_converge`是QEMU热迁移支持的一个特性，它可以通过自动降频CPU的方式来减少写内存的频率，而降频的方法就是通过计算需要降频的时间和执行时间的比例来halt cpu。
+`migrate_auto_converge`是 QEMU 热迁移支持的一个特性，它可以通过自动降频 CPU 的方式来减少写内存的频率，而降频的方法就是通过计算需要降频的时间和执行时间的比例来 halt cpu。
 
 启动虚拟机时，通过`cpu_throttle_init->timer_new_ns`注册收敛回调函数：
 
@@ -169,7 +169,7 @@ void cpu_throttle_set(int new_throttle_pct)
 }
 ```
 
-当timer modify到预设的值，调用回调函数`cpu_throttle_timer_tick`：
+当 timer modify 到预设的值，调用回调函数`cpu_throttle_timer_tick`：
 
 ```c
 static void cpu_throttle_timer_tick(void *opaque)
@@ -194,24 +194,24 @@ static void cpu_throttle_timer_tick(void *opaque)
 }
 ```
 
-对每个cpu执行`cpu_throttle_thread`线程，用于将一部分cpu时间设置为halt（通过`pthread_cond_timedwait`函数）。
+对每个 cpu 执行`cpu_throttle_thread`线程，用于将一部分 cpu 时间设置为 halt（通过`pthread_cond_timedwait`函数）。
 
-## QEMUClock初始化流程
+## QEMUClock 初始化流程
 
 ![QEMUClock](\pictures\QEMUClock.png)
 
-1. `qemu_init_main_loop`中调用`init_clocks`初始化4种Clock类型：
-2. `qemu_clock_init`初始化4种Clock类型，并且每种Clock下都有一个TimerList，将TimerList加入到全局的TimerListGroup(main_loop_tlg)中。
+1. `qemu_init_main_loop`中调用`init_clocks`初始化 4 种 Clock 类型：
+2. `qemu_clock_init`初始化 4 种 Clock 类型，并且每种 Clock 下都有一个 TimerList，将 TimerList 加入到全局的 TimerListGroup(main_loop_tlg)中。
 
-## QEMUClock执行流程
+## QEMUClock 执行流程
 
-简化一下前面提到的auto-converge的例子：
+简化一下前面提到的 auto-converge 的例子：
 
-```
+```plain
 timer_new_ns()->timer_mod()
 ```
 
-本质上就只有两个调用，`timer_new_ns`向`main_loop_tlg`下对应的type中添加一个QEMUTimer。`timer_mod`修改当前的计时器，当current_time >= expire_time的时候，就会调用在`timer_new_ns`时注册的callback。
+本质上就只有两个调用，`timer_new_ns`向`main_loop_tlg`下对应的 type 中添加一个 QEMUTimer。`timer_mod`修改当前的计时器，当 current_time >= expire_time 的时候，就会调用在`timer_new_ns`时注册的 callback。
 
 ```c
 void timer_mod_ns(QEMUTimer *ts, int64_t expire_time)
@@ -230,10 +230,10 @@ void timer_mod_ns(QEMUTimer *ts, int64_t expire_time)
 }
 ```
 
-# itimer设备实现
+# itimer 设备实现
 
 <script src="https://gist.github.com/Rickylss/b69f1dc7749b73d6e6ad4a4e816a07e5.js"></script>
 
 # Reference
 
-[Prescaler除频器](https://en.wikipedia.org/wiki/Prescaler)
+[Prescaler 除频器](https://en.wikipedia.org/wiki/Prescaler)

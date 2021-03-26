@@ -10,4 +10,4 @@ categories: [Linux]
 comment: true
 ---
 
-通过字符转义序列可以通过printf改变终端输出的颜色和显示方式
+通过字符转义序列可以通过 printf 改变终端输出的颜色和显示方式

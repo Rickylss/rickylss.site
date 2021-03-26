@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Centos7内核构建"
+title:  "Centos7 内核构建"
 subtitle: ""
 date:   2020-5-20 13:13:45 +0800
 tags:
@@ -9,11 +9,11 @@ categories: [OS]
 comment: true
 ---
 
-> 因为工作需求，要修改一下Centos7的内核，然后替换原有的内核。因为Centos7采用rpm包进行管理，因此内核源码也采用这种方式获取，并且编译后的内核也可以打成rpm包发布。注：本文参考[wiki.centos](https://wiki.centos.org/HowTos/Custom_Kernel)中构建内核相关的步骤。
+> 因为工作需求，要修改一下 Centos7 的内核，然后替换原有的内核。因为 Centos7 采用 rpm 包进行管理，因此内核源码也采用这种方式获取，并且编译后的内核也可以打成 rpm 包发布。注：本文参考[wiki.centos](https://wiki.centos.org/HowTos/Custom_Kernel)中构建内核相关的步骤。
 
-# 1、获取src.rpm
+# 1、获取 src.rpm
 
-官方不建议使用root用户构建内核，同时初学者也应该避免使用root用户。
+官方不建议使用 root 用户构建内核，同时初学者也应该避免使用 root 用户。
 
 1. 创建内核构建工作目录
 
@@ -46,9 +46,9 @@ comment: true
    $ rpmbuild -bp --target=$(uname -m) kernel.spec
    ```
 
-# 2、打个patch
+# 2、打个 patch
 
-我们使用`diff`命令为想要做的修改打个patch，在这里我们修改了`net/bridge/br_private.h`文件中的一个宏。
+我们使用`diff`命令为想要做的修改打个 patch，在这里我们修改了`net/bridge/br_private.h`文件中的一个宏。
 
 1. 复制想要修改的文件，并修改该文件
 
@@ -57,16 +57,16 @@ comment: true
    $ vim b/net/bridge/br_private.h  #修改文件
    ```
 
-   注意：这里的`a`和`b`目录为内核源码根目录，在使用patch时，这两个目录一般用ab表示。
+   注意：这里的`a`和`b`目录为内核源码根目录，在使用 patch 时，这两个目录一般用 ab 表示。
 
-2. 打个patch，将patch添加到`SOURCE`下
+2. 打个 patch，将 patch 添加到`SOURCE`下
 
    ```bash
    $ diff -Naur a/ b/ > br_private.patch
    $ mv br_private.patch ~/rpmbuild/SOURCE
    ```
 
-3. 备份一下`.spec`文件，添加patch文件
+3. 备份一下`.spec`文件，添加 patch 文件
 
    ```bash
    $ cd ~/rpmbuild/SPECS
@@ -76,21 +76,21 @@ comment: true
 
    修改`%define buildid .your_identifier`一行；
 
-   找到`#empty final patch to facilitate testing of kernel patches`，在下面添加你要的patch：
+   找到`#empty final patch to facilitate testing of kernel patches`，在下面添加你要的 patch：
 
-   ```
+   ```plain
    Patch40000: br_private.patch
    ```
 
-   找到`ApplyOptionalPatch linux-kernel-test.patch`，在相应的位置添加你的patch：
+   找到`ApplyOptionalPatch linux-kernel-test.patch`，在相应的位置添加你的 patch：
 
-   ```
+   ```plain
    ApplyOptionalPatch br_private.patch
    ```
 
 # 3、创建构建配置文件
 
-将本机当前的kernel配置文件复制出来，在此基础上进行修改；
+将本机当前的 kernel 配置文件复制出来，在此基础上进行修改；
 
 1. 复制`.config`文件
 
@@ -107,7 +107,7 @@ comment: true
 
    在文件头部添加
 
-   ```
+   ```plain
    # x86_64
    ```
 

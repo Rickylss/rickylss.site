@@ -14,13 +14,13 @@ categories: [C]
 
 ## 2、实现原理
 
-由编译器、连接器和解释器组成的综合开发环境。交叉编译工具主要由binutils、gcc和glibc几部分组成。
+由编译器、连接器和解释器组成的综合开发环境。交叉编译工具主要由 binutils、gcc 和 glibc 几部分组成。
 
 **建立一个交叉编译工具链**。
 
-## 3、Linux上编译arm目标文件
+## 3、Linux 上编译 arm 目标文件
 
-## 4、win7上编译arm目标文件
+## 4、win7 上编译 arm 目标文件
 
-## 5、winxp上编译arm目标文件
+## 5、winxp 上编译 arm 目标文件
 

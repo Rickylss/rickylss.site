@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "QEMU迁移xbzrle压缩"
+title:  "QEMU 迁移 xbzrle 压缩"
 subtitle: ""
 date:   2020-5-25 19:13:45 +0800
 tags:
@@ -10,35 +10,35 @@ categories: [QEMU]
 comment: true
 ---
 
-xbzrle技术可以减少VM停机和热迁移的时间，当VM存在密集型写内存的工作负载时这种优化尤其明显。对于大型的企业应用如：SAP和ERP系统，或者说任何使用稀疏内存模型的系统来说都有很好的优化作用。
+xbzrle 技术可以减少 VM 停机和热迁移的时间，当 VM 存在密集型写内存的工作负载时这种优化尤其明显。对于大型的企业应用如：SAP 和 ERP 系统，或者说任何使用稀疏内存模型的系统来说都有很好的优化作用。
 
-# 1、xbzrle简介
+# 1、xbzrle 简介
 
-xbzrle，全称Xor Based Zero Run Length Encoding，它是一种差异压缩算法，用来计算前后内存页差异，并对差异生成压缩数据的一种算法。
+xbzrle，全称 Xor Based Zero Run Length Encoding，它是一种差异压缩算法，用来计算前后内存页差异，并对差异生成压缩数据的一种算法。
 
-热迁移和VM downtime操作需要将虚拟机内存迁移到另一台物理机或者保存到磁盘中。
+热迁移和 VM downtime 操作需要将虚拟机内存迁移到另一台物理机或者保存到磁盘中。
 
-- 传统的做法是，不断地同步在热迁移或downtime过程中出现的脏页（dirty pages）数据，每个脏页数据通常为4K；
+- 传统的做法是，不断地同步在热迁移或 downtime 过程中出现的脏页（dirty pages）数据，每个脏页数据通常为 4K；
 
-但是如果VM上运行着一个频繁**写内存**的工作负载，传统的移动内存方式会遇到性能瓶颈，脏页不断产生，不断同步。
+但是如果 VM 上运行着一个频繁**写内存**的工作负载，传统的移动内存方式会遇到性能瓶颈，脏页不断产生，不断同步。
 
-- xbzrle的做法是，在一个脏页中通常被修改的只是一小部分数据，4K中绝大部分数据未被修改，xbzrle计算上次传输和当前内存的差异，获得一个差异update，通过LEB128编码方式将该update整合为xbzrle格式，之后只需要在目标机上同步该差异数据即可。
+- xbzrle 的做法是，在一个脏页中通常被修改的只是一小部分数据，4K 中绝大部分数据未被修改，xbzrle 计算上次传输和当前内存的差异，获得一个差异 update，通过 LEB128 编码方式将该 update 整合为 xbzrle 格式，之后只需要在目标机上同步该差异数据即可。
 
-使用xbzrle方式同步内存，需要在源VM上保存之前内存页的cache，用来和当前内存页比较计算updates。该cache是一个hash table，并可以通过地址对其进行访问。
+使用 xbzrle 方式同步内存，需要在源 VM 上保存之前内存页的 cache，用来和当前内存页比较计算 updates。该 cache 是一个 hash table，并可以通过地址对其进行访问。
 
-cache越大，越有机会遇到要更新的内存；反之cache越小，越容易发生缓存miss。
+cache 越大，越有机会遇到要更新的内存；反之 cache 越小，越容易发生缓存 miss。
 
-这个cache的值在热迁移期间也是可以修改的。
+这个 cache 的值在热迁移期间也是可以修改的。
 
 # 2、xbzrle压缩格式
 
-xbzrle压缩格式需要体现出之前和当前的内存页差异，zero用来表示未改变的值。页面数据增量就是使用zero runs和non zero runs来表示。
+xbzrle 压缩格式需要体现出之前和当前的内存页差异，zero 用来表示未改变的值。页面数据增量就是使用 zero runs 和 non zero runs 来表示。
 
-- zero run使用它的长度（以bytes为单位）来表示
-- non zero run使用它的长度（以bytes为单位）和修改后的新数据来表示
-- run长度使用ULEB128进行编码
+- zero run 使用它的长度（以 bytes 为单位）来表示
+- non zero run 使用它的长度（以 bytes 为单位）和修改后的新数据来表示
+- run 长度使用 ULEB128 进行编码
 
-xbzrle可以有多个有效编码，但是发送方为了减少计算成本会选择发送更长的编码。
+xbzrle 可以有多个有效编码，但是发送方为了减少计算成本会选择发送更长的编码。
 
 ```c
 # zrun和nzrun是交替的，并且一个page一定以zrun开头
@@ -54,18 +54,18 @@ nzrun = length byte...
 length = uleb128 encoded integer
 ```
 
-- 以发送方的角度来看，从cache（默认64MB）的旧内存页中检索信息，并使用xbzrle来压缩内存页的增量updates；
-- 以接收方的角度来看，将updates通过xbzrle解压缩并合并到已有的内存页中。
+- 以发送方的角度来看，从 cache（默认 64MB）的旧内存页中检索信息，并使用 xbzrle 来压缩内存页的增量 updates；
+- 以接收方的角度来看，将 updates 通过 xbzrle 解压缩并合并到已有的内存页中。
 
 该项工作是基于一项公开的研究结果：`VEE 2011: Evaluation of Delta Compression Techniques for Efficient Live Migration of Large Virtual Machines by Benoit, Svard, Tordsson and Elmroth`
 
-在此之上，采用XBZRLE对增量编码器XBRLE进行了改进。
+在此之上，采用 XBZRLE 对增量编码器 XBRLE 进行了改进。
 
-对于典型的工作负载，xbzrle可实现2-2.5 GB/s的持续带宽，这使得它非常适合在线实时编码，例如面对热迁移所需的编码。
+对于典型的工作负载，xbzrle 可实现 2-2.5 GB/s 的持续带宽，这使得它非常适合在线实时编码，例如面对热迁移所需的编码。
 
 示例：
 
-```
+```plain
 old buffer:
 1001 zeros
 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 68 00 00 6b 00 6d
@@ -82,22 +82,22 @@ encoded length 24
 e9 07 0f [01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f] 03 01 [67] 01 01 [69]
 ```
 
-# 3、Cache更新策略
+# 3、Cache 更新策略
 
-将热迁移的内存页面持续缓存在cache中以减少缓存丢失是有效的。xbzrle使用一个counter记录每个page的年龄。每当内存的脏位图同步，counter就增加。若检测到cache冲突，xbzrle将会驱逐年龄超过阈值的page。
+将热迁移的内存页面持续缓存在 cache 中以减少缓存丢失是有效的。xbzrle 使用一个 counter 记录每个 page 的年龄。每当内存的脏位图同步，counter 就增加。若检测到 cache 冲突，xbzrle 将会驱逐年龄超过阈值的 page。
 
-# 4、在QEMU中使用xbzrle
+# 4、在 QEMU 中使用 xbzrle
 
-在QEMU monitor中可以直接使用hmp命令查看当前qemu对migrate_capabilities支持能力:
+在 QEMU monitor 中可以直接使用 hmp 命令查看当前 qemu 对 migrate_capabilities 支持能力:
 
 ```bash
 {qemu} info migrate_capabilities
 {qemu} xbzrle: off , ...
 ```
 
-virsh中没有直接查看migrate_capabilities的API，可以使用qmp的`query-migrate-capabilities`指令（所有与migration相关的的指令可在/dapi/migration.json中查找）
+virsh 中没有直接查看 migrate_capabilities 的 API，可以使用 qmp 的`query-migrate-capabilities`指令（所有与 migration 相关的的指令可在/dapi/migration.json 中查找）
 
-```
+```plain
 virsh # qemu-monitor-command a229570dd59145ef8545a4cf381cb8c8 {\"execute\": \"query-migrate-capabilities\"}
 
 {"return":"xbzrle: off\r\nrdma-pin-all: off\r\nauto-converge: off\r\nzero-blocks: off\r\ncompress: off\r\nevents: on\r\npostcopy-ram: off\r\nx-colo: off\r\nrelease-ram: off\r\nreturn-path: off\r\npause-before-switchover: off\r\nx-multifd: off\r\ndirty-bitmaps: off\r\nlate-block-activate: off\r\n","id":"libvirt-684"}
@@ -105,29 +105,29 @@ virsh # qemu-monitor-command a229570dd59145ef8545a4cf381cb8c8 {\"execute\": \"qu
 
 之后的所有做法与此类似。
 
-> 在virsh中可以在迁移时直接指定`--comp-methods`为xbzrle，并使用`--comp-xbzrle-cache`设置page cache。
+> 在 virsh 中可以在迁移时直接指定`--comp-methods`为 xbzrle，并使用`--comp-xbzrle-cache`设置 page cache。
 
-在我的实验环境中QEMU的xbzrle功能是关闭的。使用hmp命令开启它：
+在我的实验环境中 QEMU 的 xbzrle 功能是关闭的。使用 hmp 命令开启它：
 
-```
+```plain
 {qemu} migrate_set_capability xbzrle on
 ```
 
-设置cache大小，
+设置 cache 大小，
 
-```
+```plain
 {qemu} migrate_set_cache_size 256m
 ```
 
-注意在v2.11.0中`migrate_set_cache_size`被弃用了，使用新的方式指定：
+注意在 v2.11.0 中`migrate_set_cache_size`被弃用了，使用新的方式指定：
 
-```
+```plain
 {qemu} migrate_set_parameter xbzrle-cache-size 256m
 ```
 
 开始迁移：
 
-```
+```plain
     {qemu} migrate -d tcp:destination.host:4444
     {qemu} info migrate
     capabilities: xbzrle: on
@@ -146,20 +146,20 @@ virsh # qemu-monitor-command a229570dd59145ef8545a4cf381cb8c8 {\"execute\": \"qu
     xbzrle overflow: L
 ```
 
-virsh下可直接使用`virsh migrate`命令
+virsh 下可直接使用`virsh migrate`命令
 
 注意一下迁移过程中的一些参数：
 
-- xbzrle cache-miss：到目前为止缓存丢失的次数，缓存丢失率高意味着cache size太低；
-- xbzrle overflow：译码中溢出的次数，在此情况下增量不能被压缩，当内存页的更改过大或者存在太多小更改的时候会出现这种情况，例如每隔一个byte修改一个byte。
+- xbzrle cache-miss：到目前为止缓存丢失的次数，缓存丢失率高意味着 cache size 太低；
+- xbzrle overflow：译码中溢出的次数，在此情况下增量不能被压缩，当内存页的更改过大或者存在太多小更改的时候会出现这种情况，例如每隔一个 byte 修改一个 byte。
 
-> 更多有关qemu migrate的信息可参考另一篇博文：`libvirt->QEMU热迁移`
+> 更多有关 qemu migrate 的信息可参考另一篇博文：`libvirt->QEMU热迁移`
 
-# 5、xbzrle算法实现（QEMU）
+# 5、xbzrle 算法实现（QEMU）
 
 ## 5.1、源码分析
 
-QEMU中实现了xbzrle，并且一共只有两个函数：`xbzrle_encode_buffer`和`xbzrle_decode_buffer`
+QEMU 中实现了 xbzrle，并且一共只有两个函数：`xbzrle_encode_buffer`和`xbzrle_decode_buffer`
 
 `qemu/migrate/xbzrle.h`头文件非常简单，只暴露了两个函数定义：
 
@@ -342,17 +342,17 @@ int xbzrle_decode_buffer(uint8_t *src, int slen, uint8_t *dst, int dlen)
 }
 ```
 
-xbzrle算法实现关键在于`xbzrle_encode_buffer`中xor的计算方式，以及`uleb128_decode_small`和`uleb128_encode_small`。
+xbzrle 算法实现关键在于`xbzrle_encode_buffer`中 xor 的计算方式，以及`uleb128_decode_small`和`uleb128_encode_small`。
 
-ULEB128算法的作用在于，在解码的时候可以根据最后一字节的第8位（0x80）判断是否已经完成一个`run`的解析。
+ULEB128 算法的作用在于，在解码的时候可以根据最后一字节的第 8 位（0x80）判断是否已经完成一个`run`的解析。
 
-> QEMU中在`util/cutils.c`下实现了`uleb128_decode_small`和`uleb128_encode_small`，具体的ULEB128算法分析可参考我之前的博客LEB128编码。
+> QEMU 中在`util/cutils.c`下实现了`uleb128_decode_small`和`uleb128_encode_small`，具体的 ULEB128 算法分析可参考我之前的博客 LEB128 编码。
 
 ## 5.2、示例讲解
 
-下面结合第2节的示例来讲解：
+下面结合第 2 节的示例来讲解：
 
-```
+```plain
 old buffer:
 1001 zeros
 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 68 00 00 6b 00 6d
@@ -364,11 +364,11 @@ new buffer:
 3074 zeros
 ```
 
-新旧buffer之间头1001个字节和后3074个字节完全相同，即`1001 zeros`和`3074`zeros。
+新旧 buffer 之间头 1001 个字节和后 3074 个字节完全相同，即`1001 zeros`和`3074`zeros。
 
-从第1002个字节到1016字节处不同，1017 1018字节相同，1019不同，1020相同，1021又不同，排列如下：
+从第 1002 个字节到 1016 字节处不同，1017 1018 字节相同，1019 不同，1020 相同，1021 又不同，排列如下：
 
-```
+```plain
 old:
 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 68 [00 00] 6b [00] 6d
 
@@ -378,22 +378,22 @@ new:
 
 相同处使用`[]`括起来。下面开始计算：
 
-1. 对zrun的长度1001，进行ULEB128编码，得到`0xe9 07`；
-2. 从01到0f长度为16，对nzrun的长度16进行编码，得到`0x0f`；
-3. 将16字节长度的xor（差异）原样保存；
-4. 对接下来的两个字节的zrun编码，得到`0x3`；
-5. 接下来是一个nzrun字节，得到`0x1`，将一个字节的差异原样保存`0x67`；
+1. 对 zrun 的长度 1001，进行 ULEB128 编码，得到`0xe9 07`；
+2. 从 01 到 0f 长度为 16，对 nzrun 的长度 16 进行编码，得到`0x0f`；
+3. 将 16 字节长度的 xor（差异）原样保存；
+4. 对接下来的两个字节的 zrun 编码，得到`0x3`；
+5. 接下来是一个 nzrun 字节，得到`0x1`，将一个字节的差异原样保存`0x67`；
 6. 以下同理
 
-最终得到结果如下，zrun部分使用`()`，nzrun部分使用`{}`，xor部分使用`[]`。
+最终得到结果如下，zrun 部分使用`()`，nzrun 部分使用`{}`，xor 部分使用`[]`。
 
-```
+```plain
 (e9 07) {0f [01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f]} (03) {01 [67]} (01) {01 [69]}
 ```
 
-# 6、xbzrle性能优化测试
+# 6、xbzrle 性能优化测试
 
-对xbzrle性能优化测试，测试环境为：
+对 xbzrle 性能优化测试，测试环境为：
 
 1. guestVM:
    1. machine pc-i440fx-rhel7.6.0,accel=kvm
@@ -401,7 +401,7 @@ new:
 2. Host：
    1. 两台主机均为虚拟主机，但两台虚拟主机所在物理机不同。
    2. cpu 8，mem 16G
-3. QEMU migrate设置：
+3. QEMU migrate 设置：
 4. 对比设置
 
 启动命令行如下：
@@ -485,13 +485,13 @@ xbzrle cache miss rate: 0.00		# cache miss率：0.0
 xbzrle overflow : 0					# 溢出次数：0
 ```
 
-两者差异不大，且xbzrle未能转运任何字节。
+两者差异不大，且 xbzrle 未能转运任何字节。
 
-## 6.2、mem_write测试
+## 6.2、mem_write 测试
 
 ### 6.2.1、低负载
 
-使用简单的`写内存`程序`mem_test`来验证开启xbzrle前后性能的优化效果：
+使用简单的`写内存`程序`mem_test`来验证开启 xbzrle 前后性能的优化效果：
 
 ```c
 #include <stdio.h>
@@ -566,7 +566,7 @@ dirty sync count: 6
 page size: 4 kbytes
 ```
 
-相比无负载时，总时间更久，脏页同步次数更多，downtime实际相差不大，setup相差较大，吞吐量等相差不大。
+相比无负载时，总时间更久，脏页同步次数更多，downtime 实际相差不大，setup 相差较大，吞吐量等相差不大。
 
 xbzrle on：
 
@@ -604,13 +604,13 @@ xbzrle cache miss rate: 0.86
 xbzrle overflow : 888
 ```
 
-由xbzrle实际转发的数据量为37kbytes，但是其中修改了81次脏页。downtime时间显著减少，总迁移时间变化不大。
+由 xbzrle 实际转发的数据量为 37kbytes，但是其中修改了 81 次脏页。downtime 时间显著减少，总迁移时间变化不大。
 
 ### 6.2.2、高负载
 
-分析上面的测试结果，脏页产生速度不够快，xbzrle只转发了81页，未能体现优势。我们加大脏页产生速度，将程序线程数加到200；
+分析上面的测试结果，脏页产生速度不够快，xbzrle 只转发了 81 页，未能体现优势。我们加大脏页产生速度，将程序线程数加到 200；
 
-> 注意高负载需要使用-d参数，当脏页产生速度大于传输速度的时候，可能会出现无法完成传输的情况
+> 注意高负载需要使用-d 参数，当脏页产生速度大于传输速度的时候，可能会出现无法完成传输的情况
 
 xbzrle off：
 
@@ -641,7 +641,7 @@ dirty sync count: 13597
 page size: 4 kbytes
 ```
 
-```
+```plain
 (qemu) info migrate
 globals:
 store-global-state: on
@@ -671,7 +671,7 @@ dirty pages rate: 10003 pages
 
 xbzrle on：
 
-```
+```plain
 (qemu) info migrate
 globals:
 store-global-state: on
@@ -709,7 +709,7 @@ xbzrle overflow : 470
 
 ### 6.2.3、极高负载
 
-## 6.3、mem_balloon测试
+## 6.3、mem_balloon 测试
 
 ```bash
 $ ./mem_balloon 200 &
@@ -717,7 +717,7 @@ $ ./mem_balloon 200 &
 
 xbzrle off:
 
-```
+```plain
 (qemu) info migrate
 globals:
 store-global-state: on
@@ -746,7 +746,7 @@ page size: 4 kbytes
 
 xbzrle on:
 
-```
+```plain
 (qemu) info migrate
 globals:
 store-global-state: on
@@ -785,15 +785,13 @@ $ ./mem_balloon 500 &
 
 xbzrle off:
 
-```
 
-```
 
 
 
 ## 6.4、总结
 
-迁移的性能其实就是VM迁移总字节流大小（初始字节流和脏页字节流）、迁移速度、脏页生成速度之间的关系。
+迁移的性能其实就是 VM 迁移总字节流大小（初始字节流和脏页字节流）、迁移速度、脏页生成速度之间的关系。
 
 各数据之间的关系如下：
 
@@ -801,15 +799,15 @@ xbzrle off:
 
    `total_time = setup_time + migrate_time + down_time`
 
-2. 迁移时间等于总迁移字节流除以平均吞吐速度，平均吞吐速度可配置，但是它受物理因素限制（如I/O速度、网络速度）
+2. 迁移时间等于总迁移字节流除以平均吞吐速度，平均吞吐速度可配置，但是它受物理因素限制（如 I/O 速度、网络速度）
 
    `migrate_time = total_ram_size / throughput`
 
-3. 总迁移字节流等于初始迁移字节流（即开始迁移时，固定的内存数，之后内存变动标记为dirty）加上脏数据字节流，初始内存字节流由VM实际使用的内存数决定，未使用的内存数为duplicate，默认为0不进行迁移。
+3. 总迁移字节流等于初始迁移字节流（即开始迁移时，固定的内存数，之后内存变动标记为 dirty）加上脏数据字节流，初始内存字节流由 VM 实际使用的内存数决定，未使用的内存数为 duplicate，默认为 0 不进行迁移。
 
    `total_ram_size = origin_ram_size + dirty_ram_size`
 
-4. 脏字节流大小由脏页生成速度决定和迁移时间决定，准备时间和停机时间不生成脏页，脏页生成速度由VM中写内存的频率决定，若存在密集型写内存应用，生成脏页速度过快，迁移速度不够，则可能永远无法迁移成功。
+4. 脏字节流大小由脏页生成速度决定和迁移时间决定，准备时间和停机时间不生成脏页，脏页生成速度由 VM 中写内存的频率决定，若存在密集型写内存应用，生成脏页速度过快，迁移速度不够，则可能永远无法迁移成功。
 
    `dirty_ram_size = dirty_ram_speed * migrate_time`
 
@@ -823,9 +821,9 @@ $$
 $$
    可以得出结论如果迁移速度大于脏页生成速度，那么随着时间的增加，总能迁移完，如果迁移速度小于脏页生成速度，那么则永远无法完成迁移。
 
-6. 优化方式，优化方式有多种，使用xbzrle编码，压缩脏页数据，即减小`drSpeed`，或者降低srvVM的cpu频率，同样也减小`drSpeed`。
+6. 优化方式，优化方式有多种，使用 xbzrle 编码，压缩脏页数据，即减小`drSpeed`，或者降低 srvVM 的 cpu 频率，同样也减小`drSpeed`。
 
->注意：在完成初始字节流的传输之前，不会使用到xbzrle，因此在将origin_ram_size传输完成之前，不会有xbzrle字节流传输。
+>注意：在完成初始字节流的传输之前，不会使用到 xbzrle，因此在将 origin_ram_size 传输完成之前，不会有 xbzrle 字节流传输。
 
    
 

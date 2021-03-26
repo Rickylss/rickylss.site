@@ -10,13 +10,13 @@ categories: [Windows, Linux]
 comment: true
 ---
 
-今天在对之前Cygwin下编译调用Windows动态链接库的项目()进行调试的时候发现有一个数据结构里的值总是出错,经过一番调试之后发现是不同环境对结构体内存布局解析不同导致的.
+今天在对之前 Cygwin 下编译调用 Windows 动态链接库的项目()进行调试的时候发现有一个数据结构里的值总是出错,经过一番调试之后发现是不同环境对结构体内存布局解析不同导致的.
 
-# 问题1
+# 问题 1
 
 ## 描述
 
-现在我有这么一个结构体`student`,我用它在DLL(Windows编译)和APP(Cygwin编译)之间交换数据;
+现在我有这么一个结构体`student`,我用它在 DLL(Windows 编译)和 APP(Cygwin 编译)之间交换数据;
 
 ```c
 typedef struct class
@@ -39,7 +39,7 @@ typedef struct student
 } STUDENT, * STUDENT_P;
 ```
 
-现在我在DLL中对其进行赋值,并随后在APP调用DLL方法时,将该结构体的某个实例返回给APP.
+现在我在 DLL 中对其进行赋值,并随后在 APP 调用 DLL 方法时,将该结构体的某个实例返回给 APP.
 
 ```c
 /* DLL: */
@@ -85,19 +85,19 @@ print("%p", val)
 
 依据对结构体内存的分析:
 
-`name`为指针类型,在x86机器上为64位,8Byte;
+`name`为指针类型,在 x86 机器上为 64 位,8Byte;
 
-`age`为int类型,32位,4Byte;
+`age`为 int 类型,32 位,4Byte;
 
-`gender`本质为int类型,32位,4Byte;
+`gender`本质为 int 类型,32 位,4Byte;
 
-`class`为CLASS类型,大小存疑;
+`class`为 CLASS 类型,大小存疑;
 
-`score`为int类型,32位,4Byte;
+`score`为 int 类型,32 位,4Byte;
 
 实际两边地址打印如下:
 
-```
+```plain
 DLL:
 0000 0008 0008 74a0
 0000 0008 0008 74a8
@@ -106,7 +106,7 @@ DLL:
 0000 0008 0008 74b4
 ```
 
-```
+```plain
 APP:
 0000 0008 0008 74a0
 0000 0008 0008 74a8
@@ -115,13 +115,13 @@ APP:
 0000 0008 0008 74b0				// different
 ```
 
-问题就出在score,在APP(Cygwin编译)中去score的值时,由于CLASS为空,它直接取了CLASS的值,而在DLL(windows编译)则为其保留了4Byte空间.
+问题就出在 score,在 APP(Cygwin 编译)中去 score 的值时,由于 CLASS 为空,它直接取了 CLASS 的值,而在 DLL(windows 编译)则为其保留了 4Byte 空间.
 
-# 问题2
+# 问题 2
 
 ## 描述
 
-由于再Windows下和Cygwin下对结构体位域的处理不同,导致的数据解析失败,结构体示例如下:
+由于再 Windows 下和 Cygwin 下对结构体位域的处理不同,导致的数据解析失败,结构体示例如下:
 
 ```c
 typedef struct student
@@ -135,9 +135,9 @@ typedef struct student
 } STUDENT, * STUDENT_P;
 ```
 
-内存分布如下:(注意,%p无法打印位域的地址)
+内存分布如下:(注意,%p 无法打印位域的地址)
 
-```
+```plain
 DLL:
 0000 0008 0008 9910			//student 地址
 0000 0008 0008 9912			//student.score地址
@@ -146,5 +146,5 @@ APP:
 0000 0008 0008 9911			//student.score地址
 ```
 
-由此可见,在Windows下编译的DLL给位域分配了两个字节,而cygwin 下只分配了一个.
+由此可见,在 Windows 下编译的 DLL 给位域分配了两个字节,而 cygwin 下只分配了一个.
 

@@ -1,0 +1,1 @@
+https://blogs.arubanetworks.com/solutions/network-topologies-logical-vs-physical/

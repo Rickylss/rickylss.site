@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hammerdb开启time profile"
+title:  "Hammerdb 开启 time profile"
 subtitle: ""
 date:   2020-6-25 19:13:45 +0800
 tags:
@@ -11,9 +11,9 @@ comment: true
 
 > In addition to performance profiles based on throughput you should also take note of transaction response times. Whereas performance profiles show the cumulative performance of all of the virtual users running on the system, response times show performance based on the experience of the individual user. When comparing systems both throughput and response time are important comparative measurements. HammerDB includes a time profiling package called etprof that enables you to select an individual user and measure the response times. This functionality is enabled by selecting Time Profile checkbox in the driver options. When enabled the time profile will report response time percentile values at 10 second intervals as well as cumulative values for all of the test at the end of the test run. The time profile values are recorded in microseconds.
 
-衡量数据库的性能指标除了吞吐另一个更重要的是事务的响应时间，事务的响应快慢直接影响用户的体验。HammerDB使用etprof库来统计一次测试中某个独立用户面对的响应时间。
+衡量数据库的性能指标除了吞吐另一个更重要的是事务的响应时间，事务的响应快慢直接影响用户的体验。HammerDB 使用 etprof 库来统计一次测试中某个独立用户面对的响应时间。
 
-# 1、开启time profile
+# 1、开启 time profile
 
 要开启`Time Profile`，只需要在`Driver Script->Options`下勾选`Time Profile`，或者在`hammerdbcli`使用命令：
 
@@ -51,15 +51,15 @@ tpcc       {
 }
 ```
 
-开启之后，hammerdb会每隔10s打印一次当前响应时间情况，并在执行完测试之后统计。统计结果时间以微秒（microseconds）为单位。
+开启之后，hammerdb 会每隔 10s 打印一次当前响应时间情况，并在执行完测试之后统计。统计结果时间以微秒（microseconds）为单位。
 
 > 建议同时开启`logtotemp`，否则数据比较难查找。
 
 # 2、统计结果与分析
 
-hammerdb完成测试之后，最终将打印如下结果：
+hammerdb 完成测试之后，最终将打印如下结果：
 
-```
+```plain
 Vuser 1:TEST RESULT : System achieved 66511 Oracle TPM at 22273 NOPM
 Vuser 2:+-----------------+--------------+------+--------+--------------+--------------+
 Vuser 2:|PROCNAME | EXCLUSIVETOT| %| CALLNUM| AVGPERCALL| CUMULTOT|
@@ -94,7 +94,7 @@ Vuser 2:+-----------------+--------------+------+--------+--------------+-------
    7. `TOPLEVEL`，`etprof`开销
    8. `prep_statement`，开启数据库连接，预处理`SQL`语句
 
-简单分析上面的打印结果，`new order`被调用49910次，每次耗时4.421 ms。`prep_statement`，执行5次，5种交易情况。
+简单分析上面的打印结果，`new order`被调用 49910 次，每次耗时 4.421 ms。`prep_statement`，执行 5 次，5 种交易情况。
 
 # 3、etprof
 
@@ -125,7 +125,7 @@ That's a test for the profiler. From the output it seems working (I also tested 
 
 The test output is the following (with Tcl8.4 under Linux/Intel):
 
-```
+```plain
  +------------------------+--------------+--------+--------------+--------------+
  |PROCNAME                |  EXCLUSIVETOT| CALLNUM|    AVGPERCALL|      CUMULTOT|
  +------------------------+--------------+--------+--------------+--------------+
@@ -136,7 +136,7 @@ The test output is the following (with Tcl8.4 under Linux/Intel):
  +------------------------+--------------+--------+--------------+--------------+
 ```
 
-> 这是`etprof`官网的示例，after方法使程序执行延迟指定的时间(ms，毫秒)。请**重点关注**`EXCLUSIVETOT`和`CUMULTOT`之间的关系。
+> 这是`etprof`官网的示例，after 方法使程序执行延迟指定的时间(ms，毫秒)。请**重点关注**`EXCLUSIVETOT`和`CUMULTOT`之间的关系。
 
 # 4、响应时间分析
 
@@ -181,18 +181,18 @@ orafetch  $curn_no -datavariable output
 在`neword`这个过程中，包含的操作有：
 
 1. 准备随机数;
-2. `orabind`填充预处理SQL语句;
-3. `oraexec`执行SQL语句;
+2. `orabind`填充预处理 SQL 语句;
+3. `oraexec`执行 SQL 语句;
 
-通常通过网络访问数据库服务，因此在执行SQL时，包含了发送SQL语句的网络延时、SQL语句解析耗时、执行数据库查找修改的耗时、处理结果返回的网络延时。
+通常通过网络访问数据库服务，因此在执行 SQL 时，包含了发送 SQL 语句的网络延时、SQL 语句解析耗时、执行数据库查找修改的耗时、处理结果返回的网络延时。
 
 在考虑优化响应时间时，需考虑：
 
-1. SQL语句的优化（作为虚拟化平台不考虑该工作，应由用户优化）；
+1. SQL 语句的优化（作为虚拟化平台不考虑该工作，应由用户优化）；
 2. 网络延迟的优化；
-3. CPU的时间片分配、拓扑结构等优化（是否有足够的cpu资源）
-4. 内存缓存的I/O性能优化；
-5. 存储介质的I/O性能优化（通常更关注IOPS指标）；
+3. CPU 的时间片分配、拓扑结构等优化（是否有足够的 cpu 资源）
+4. 内存缓存的 I/O 性能优化；
+5. 存储介质的 I/O 性能优化（通常更关注 IOPS 指标）；
 
 # 5、Reference 
 
@@ -200,7 +200,7 @@ HammerDB：https://hammerdb.com/docs/ch03s07.html
 
 etprof：https://wiki.tcl-lang.org/page/etprof
 
-MySQL prepare原理：https://www.cnblogs.com/justfortaste/p/3920140.html
+MySQL prepare 原理：https://www.cnblogs.com/justfortaste/p/3920140.html
 
 
 

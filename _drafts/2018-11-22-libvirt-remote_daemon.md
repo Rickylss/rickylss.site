@@ -10,15 +10,15 @@ categories: [libvirt]
 
 # remote_daemon.c->main()
 
-该程序包含一个标准的守护进程创建过程，是一个非常好的学习linux编程的入门选择。因此本文将详细（啰嗦）地对源码进行分析，读者可选择性阅读。
+该程序包含一个标准的守护进程创建过程，是一个非常好的学习 linux 编程的入门选择。因此本文将详细（啰嗦）地对源码进行分析，读者可选择性阅读。
 
 ## 1、基本信息
 
-> remote_daemon.c是libvirt守护进程（libvirtd）的源码入口，在早期版本中（**v4.1-maint之前**），libvirtd源码入口在`/libvirt/daemon/libvirtd.c`中。现已更新为`/libvirt/src/remote/remote_daemon.c`。
+> remote_daemon.c 是 libvirt 守护进程（libvirtd）的源码入口，在早期版本中（**v4.1-maint 之前**），libvirtd 源码入口在`/libvirt/daemon/libvirtd.c`中。现已更新为`/libvirt/src/remote/remote_daemon.c`。
 
 - 源码版本：v4.5-maint
 - 文件路径：`/libvirt/src/remote/remote_daemon.c`
-- 源码作用：libvirtd程序启动入口
+- 源码作用：libvirtd 程序启动入口
 - 使用说明：
 
 ```shell
@@ -59,11 +59,11 @@ libvirt management daemon:
 
 ## 2、源码分析
 
-> 概述：该程序做的主要工作包括：获取options，设置环境变量开启国际化编程语言转换，读取配置文件，设置logger，将进程转换为守护进程（设置信号，pid，多次fork等），注册远程HypervisorDrivers，开启套接字端口，开启事件循环，开启监听。
+> 概述：该程序做的主要工作包括：获取 options，设置环境变量开启国际化编程语言转换，读取配置文件，设置 logger，将进程转换为守护进程（设置信号，pid，多次 fork 等），注册远程 HypervisorDrivers，开启套接字端口，开启事件循环，开启监听。
 
-### 2.1、getoption读取参数
+### 2.1、getoption 读取参数
 
-getopt是标准的posix库，用来解析options。
+getopt 是标准的 posix 库，用来解析 options。
 
 ``` c
 /libvirt/src/remote/remote_daemon.c
@@ -155,11 +155,11 @@ int main(int argc, char **argv) {
 }
 ```
 
-在whil(1)死循环中使用getopt_long循环获取options参数，直至所有参数都被读取，break跳出循环。保存options的值或状态，在后续的设置中使用。
+在 whil(1)死循环中使用 getopt_long 循环获取 options 参数，直至所有参数都被读取，break 跳出循环。保存 options 的值或状态，在后续的设置中使用。
 
-### 2.2、gettext，注册HypervisorDrivers
+### 2.2、gettext，注册 HypervisorDrivers
 
-gettext参考[国际化和本地化编程](https://www.ibm.com/developerworks/cn/linux/l-cn-linuxglb/index.html)
+gettext 参考[国际化和本地化编程](https://www.ibm.com/developerworks/cn/linux/l-cn-linuxglb/index.html)
 
 ``` c
 /libvirt/src/remote/remote_daemon.c
@@ -205,7 +205,7 @@ virGettextInitialize(void)
 }
 ```
 
-使用宏定义查看是否安装libint（gettext所依赖的库），若已安装则可进行本地化设置。
+使用宏定义查看是否安装 libint（gettext 所依赖的库），若已安装则可进行本地化设置。
 
 - `setlocale(LC_ALL, "")`将程序环境设置成与系统环境一致，
 
@@ -215,7 +215,7 @@ virGettextInitialize(void)
 
 本地化语言设置之后，初始化库`virInitialize()`。
 
-> 从1.0.0版本开始，virInitialize()会被virConnectOpen()和virGetVersion()自动调用，除非当你将virEventRegisterImpl()或virSetErrorFunc()当作第一个调用的API时，你需要手动调用一次。
+> 从 1.0.0 版本开始，virInitialize()会被 virConnectOpen()和 virGetVersion()自动调用，除非当你将 virEventRegisterImpl()或 virSetErrorFunc()当作第一个调用的 API 时，你需要手动调用一次。
 
 ``` c
 /libvirt/src/libvirt.c
@@ -238,7 +238,7 @@ int virOnce(virOnceControlPtr once, virOnceFunc init)
 }
 ```
 
-[pthread_once](https://linux.die.net/man/3/pthread_once)函数，调用线程运行virGlobalInit，并且只运行一次(virGlobalOnce)。
+[pthread_once](https://linux.die.net/man/3/pthread_once)函数，调用线程运行 virGlobalInit，并且只运行一次(virGlobalOnce)。
 
 ### 2.3、virGlobalInit
 
@@ -310,7 +310,7 @@ virGlobalInit(void)
 
 #### 2.3.1、virThreadInitialize() || virErrorInitialize()
 
-virThreadInitialize()返回恒为0，无需对pthread做特殊初始化：
+virThreadInitialize()返回恒为 0，无需对 pthread 做特殊初始化：
 
 ``` c
 int virThreadInitialize(void)
@@ -319,7 +319,7 @@ int virThreadInitialize(void)
 }
 ```
 
-virErrorInitialize()初始化error data，为每个线程创建一个单独error:
+virErrorInitialize()初始化 error data，为每个线程创建一个单独 error:
 
 ``` c
 int
@@ -376,7 +376,7 @@ virLogSetFromEnv(void)
 }
 ```
 
-其中virLogInitialize()是由VIR_ONCE_GLOBAL_INIT(virLog)宏定义展开生成的。**VIR_ONCE_GLOBAL_INIT函数在后面经常出现，在这里需要详细解释一下。**
+其中 virLogInitialize()是由 VIR_ONCE_GLOBAL_INIT(virLog)宏定义展开生成的。**VIR_ONCE_GLOBAL_INIT 函数在后面经常出现，在这里需要详细解释一下。**
 
 ```c
 /**
@@ -456,17 +456,17 @@ static int virLogInitialize(void)
 }
 ```
 
-展开后发现与前面的pthread_create_once相同，即对virLog初始化一次。在这里出现了一个关键的virSaveLastError()，这个就是2.3.1中设置了的单独存储的变量。跟踪到`virCopyLastError()->virLastErrorObject()->virThreadLocalSet()->pthread_setspecific()`。virSaveLastError尝试通过pthread_getspecific()获取LastError这个线程key值，若获取为NULL，则通过pthread_setSpecific()设置该key值。**注意**：该lastError实际上是[errno](http://man7.org/linux/man-pages/man3/errno.3.html)。
+展开后发现与前面的 pthread_create_once 相同，即对 virLog 初始化一次。在这里出现了一个关键的 virSaveLastError()，这个就是 2.3.1 中设置了的单独存储的变量。跟踪到`virCopyLastError()->virLastErrorObject()->virThreadLocalSet()->pthread_setspecific()`。virSaveLastError 尝试通过 pthread_getspecific()获取 LastError 这个线程 key 值，若获取为 NULL，则通过 pthread_setSpecific()设置该 key 值。**注意**：该 lastError 实际上是[errno](http://man7.org/linux/man-pages/man3/errno.3.html)。
 
 #### 2.3.4、virNetTLSInit & virWinSockInit
 
-通过环境变量，设置[gnutls](https://www.gnutls.org/)将要使用的日志程序，在这里是指virNetTLSLog。
+通过环境变量，设置[gnutls](https://www.gnutls.org/)将要使用的日志程序，在这里是指 virNetTLSLog。
 
-初始化[Winsock2](https://docs.microsoft.com/en-us/windows/desktop/winsock/windows-sockets-start-page-2)，可理解为windows下的sock编程接口。
+初始化[Winsock2](https://docs.microsoft.com/en-us/windows/desktop/winsock/windows-sockets-start-page-2)，可理解为 windows 下的 sock 编程接口。
 
 #### 2.3.5、virt-login-shell
 
-注意这个宏：LIBVIRT_SETUID_RPC_CLIENT。在virGlobalInit中，如果定义了该宏，则无需virIsSUID()，同时也无需初始化除remote以外的其他Driver。全局查找后发现与virt-login-shell有关，在编译时，只有该程序定义了LIBVIRT_SETUID_RPC_CLIENT:
+注意这个宏：LIBVIRT_SETUID_RPC_CLIENT。在 virGlobalInit 中，如果定义了该宏，则无需 virIsSUID()，同时也无需初始化除 remote 以外的其他 Driver。全局查找后发现与 virt-login-shell 有关，在编译时，只有该程序定义了 LIBVIRT_SETUID_RPC_CLIENT:
 
 ``` makefile
 virt_login_shell_CFLAGS = \
@@ -484,11 +484,11 @@ virt_login_shell_CFLAGS = \
  * Copyright (C) 2013-2014 Red Hat, Inc.
 ```
 
-该程序是一个连接容器的shell，自然就不需要其他的Driver，因为所有的容器都是通过remote连接的，该部分内容在后文会有提及。
+该程序是一个连接容器的 shell，自然就不需要其他的 Driver，因为所有的容器都是通过 remote 连接的，该部分内容在后文会有提及。
 
-#### 2.3.6、注册driver
+#### 2.3.6、注册 driver
 
-标准的注册driver以testRegister()为例：
+标准的注册 driver 以 testRegister()为例：
 
 ``` c
 static virConnectDriver testConnectDriver = {
@@ -552,7 +552,7 @@ virRegisterConnectDriver(virConnectDriverPtr driver,
 }
 ```
 
-所谓的注册就是将该driver放入到一个virConnectDriverTab中，在后续的connect连接时，循环该table，取出对应的Driver，进行连接尝试。
+所谓的注册就是将该 driver 放入到一个 virConnectDriverTab 中，在后续的 connect 连接时，循环该 table，取出对应的 Driver，进行连接尝试。
 
 ### 2.4、virUpdateSelfLastChanged & virFileActivateDirOverride
 
@@ -572,7 +572,7 @@ void virUpdateSelfLastChanged(const char *path)
 }
 ```
 
-[stat()](http://man7.org/linux/man-pages/man2/stat.2.html)函数获取文件状态stat结构体如下：
+[stat()](http://man7.org/linux/man-pages/man2/stat.2.html)函数获取文件状态 stat 结构体如下：
 
 ``` c
 struct stat {
@@ -601,19 +601,19 @@ struct stat {
            };
 ```
 
-argv[0]为程序可执行文件，该程序的目的是更新selfLastChanged值为可执行文件最后一次状态改变 的时间。
+argv[0]为程序可执行文件，该程序的目的是更新 selfLastChanged 值为可执行文件最后一次状态改变 的时间。
 
-virFileActivateDirOverride函数判断是否运行构建目录下的程序（查找该目录下是否有/.libs/），如果是，那么将useDirOverride设置为true。
+virFileActivateDirOverride 函数判断是否运行构建目录下的程序（查找该目录下是否有/.libs/），如果是，那么将 useDirOverride 设置为 true。
 
-### 2.5、读取配置文件libvirtd.conf
+### 2.5、读取配置文件 libvirtd.conf
 
 读取配置文件的策略非常简单：
 
-1. 通过daemonConfigNew(privileged)在结构体daemonConfig中写入默认的配置参数。
-2. 判断在getoption时，是否设置了remote_config_file，如果没有设置，则去默认位置读取文件。
-3. 如果指定了remote_config_file，则读取该路径下的配置文件。
+1. 通过 daemonConfigNew(privileged)在结构体 daemonConfig 中写入默认的配置参数。
+2. 判断在 getoption 时，是否设置了 remote_config_file，如果没有设置，则去默认位置读取文件。
+3. 如果指定了 remote_config_file，则读取该路径下的配置文件。
 
-### 2.6、合并profile文件
+### 2.6、合并 profile 文件
 
 
 
