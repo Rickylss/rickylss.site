@@ -73,7 +73,7 @@ $ systemctl status libvirtd
 6. qemu-ga：qemu-ga-2.5.0移植，qemu guest agent，虚拟机与宿主机通信通道，详细内容可参考[GuestAgent](G:\博客产出\QEMU\GuestAgent.md)；
 7. kvm-tools：容器虚拟化，正在移植中。
 
-***目前swvm与qemu-system-sw64内核未能合并，同时hmcode不兼容，因此在同一台服务器上只能使用swvm或者qemu-system-sw64，如果想要替换为另一个hypervisor则需要为服务器刷[hmcode](G:\博客产出\申威\hmcode.md)。*** 
+***目前swvm与qemu-system-sw64内核未能合并，同时hmcode不兼容，因此在同一台服务器上只能使用swvm或者qemu-system-sw64，如果想要替换为另一个hypervisor则需要为服务器刷[hmcode](./2018-11-12-hmcode.md)。*** 
 
 ​	选择qemu-system-sw64需要修改qemuHypervisorDriver相关内容，选择swvm则需要自行添加一个全新的driver，这是由于libvirt的项目结构导致的，这种模块化的结构极大的方便了不同hypervisor开发者的工作，他们只需要专注于自己要开发的模块即可，无需关注其他模块。但是无论你选择那种Hypervisor，即便是未来要添加的kvm-tools，**有一部分内容是一定要修改的，那就是架构相关的代码**。
 
