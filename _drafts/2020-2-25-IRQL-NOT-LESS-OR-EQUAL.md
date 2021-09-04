@@ -12,4 +12,4 @@ comment: true
 
 https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-0xa--irql-not-less-or-equal
 
-注意驱动中PAGED_CODE的作用含义。
+注意驱动中 PAGED_CODE 的作用含义。

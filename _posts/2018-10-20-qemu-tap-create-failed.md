@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "qemu创建tap设备时/dev/net/tun读取失败"
+title:  "qemu 创建 tap 设备时/dev/net/tun 读取失败"
 subtitle: ""
 date:   2018-10-20 16:45:16 +0800
 tags:
@@ -9,16 +9,16 @@ tags:
 categories: [libvirt]
 ---
 
-​	在申威平台上移植libvirt4.5时，遇到一个奇怪的问题，在虚拟机定义文件中无法使用-netdev tap选项。但是将命令行复制出来手动执行时，却没有问题。
+​	在申威平台上移植 libvirt4.5 时，遇到一个奇怪的问题，在虚拟机定义文件中无法使用-netdev tap 选项。但是将命令行复制出来手动执行时，却没有问题。
 
-``` 
+```plain
 -netdev tap,br=,helper=,id=
 -device virtio-net-dev,netdev=
 ```
 
 报错：
 
-``` 
+```plain
 could not open file /dev/net/tun no such file or ...
 ```
 
@@ -26,7 +26,7 @@ could not open file /dev/net/tun no such file or ...
 
 经过多番查找，终于找到一个解决方法
 
-``` 
+```plain
 Thanks for the suggestion, Matt!
 
 I just tried it on a RHEL system and it does indeed solve the problem.
@@ -53,4 +53,4 @@ Since each of these steps is decreasing security on the system, we obviously can
 
 [原文](https://bugzilla.redhat.com/show_bug.cgi?id=770020) 
 
-重启libvirtd后，成功。
+重启 libvirtd 后，成功。

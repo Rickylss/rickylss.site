@@ -35,6 +35,9 @@
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
 
+{% if site.adsense %}
+  <script data-ad-client="{{ site.adsense.data-ad-client }}" async src="{{ site.adsense.async_src }}"></script>
+{% endif %}
 
 {% if site.yandex_site_verification %}
   <meta name="yandex-verification" content="{{ site.yandex_site_verification }}" />

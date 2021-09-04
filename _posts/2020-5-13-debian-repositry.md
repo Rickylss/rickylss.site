@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "搭建Debian仓库"
+title:  "搭建 Debian 仓库"
 subtitle: "以及管理"
 date:   2020-5-12 19:13:45 +0800
 tags:
@@ -9,24 +9,26 @@ categories: [OS, Linux]
 comment: true
 ---
 
-> Debian仓库本质上就是把一堆*.deb包放到一个文件夹里面，在此基础上，为了方便apt工具的管理，将这些deb包按照一定的格式要求存放，同时额外提供一些元数据文件来协助apt工具快速地读取deb包。
+> Debian 仓库本质上就是把一堆*.deb 包放到一个文件夹，在此基础上，为了方便 apt 工具的管理，将这些 deb 包按照一定的规则存放，并额外提供一些元数据文件来协助 apt 工具快速地访问 deb 包。
 
-Debian支持通过不同的协议访问，如http协议、ftp协议或者普通的file访问。所有访问的目录只需要满足[debian仓库格式](https://wiki.debian.org/DebianRepository/Format)即可。
+Debian 仓库支持通过不同的协议访问，如 http 协议、ftp 协议或者普通的 file 访问。所有访问的目录只需要满足[debian 仓库格式](https://wiki.debian.org/DebianRepository/Format)即可。
 
-# 1、Debian仓库搭建
+# 1、Debian 仓库搭建
 
-构建Debian仓库有很多[工具](https://wiki.debian.org/DebianRepository/Setup#apt-ftparchive)，主要分类两类：生成Debian仓库的工具、制作Debian镜像的工具。制作镜像的工具主要用于复制其他仓库的源码，并更新到本地的仓库。
+构建 Debian 仓库有很多[工具](https://wiki.debian.org/DebianRepository/Setup#apt-ftparchive)，主要分为两类：生成 Debian 仓库的工具、制作 Debian 镜像库的工具。制作镜像库的工具从其他仓库复制，之后更新到本地的仓库。
 
-## 1.1、Debian仓库的类型
+## 1.1、Debian 仓库的类型
 
-apt仓库有两种类型：
+Debian 仓库有两种类型：
 
-- official archive，“deb http://example.org/debian unstable main”，支持apt-pinning，支持secure APT；
-- trivial archive， “deb http://example.org/debian ./”，不支持apt-pinning，支持secure APT。
+- official archive，“deb http://example.org/debian unstable main”，支持 apt-pinning，支持 secure APT；
+- trivial archive， “deb http://example.org/debian ./”，不支持 apt-pinning，支持 secure APT。
 
-简单地来说，trivial archive就是简单的APT仓库，official archive是复杂的APT仓库，这里的简单和复杂是指仓库组织结构。trivial archive不采用pool结构，形式如下：
+总地来说，trivial archive 就是简单的 Debian 仓库，official archive 是复杂的 Debian 仓库，这里的简单和复杂是指仓库组织结构。
 
-```
+trivial archive 不采用 pool 结构，对 trivial archive 仓库文件夹使用`tree`命令，查看文件组织结构如下：
+
+```plain
 .
 ..
 |-- Packages
@@ -38,13 +40,13 @@ apt仓库有两种类型：
 
 使用时只需要在`/etc/apt/sources.list`中添加：
 
-```
+```plain
 deb http://example.org/debian ./
 ```
 
-对应的official archive结构如下：
+而 official archive 文件组织结构如下：
 
-```
+```plain
 ├── dists/
 │   ├── buster/
 │   ├── jessie/
@@ -75,13 +77,13 @@ deb http://example.org/debian ./
 
 对应的`/etc/apt/sources.list`配置如下：
 
-```
+```plain
 deb http://example.org/debian jessie main
 ```
 
-## 1.2、构建trivial archive仓库
+## 1.2、构建 trivial archive 仓库
 
-构建trivial archive类型仓库很简单，只需要将想要的deb包放到同一个目录下，再使用dpkg工具构建出Packages文件和Release文件，使用gpg工具创建密钥对，用于访问仓库的验证即可。
+构建 trivial archive 类型仓库很简单，将想要的 deb 包放仓库目录下，再使用 dpkg 工具构建出 Packages 文件和 Release 文件，使用 gpg 工具创建密钥对，用于访问仓库的验证即可。
 
 1. 将下载好的包放入仓库中：
 
@@ -90,23 +92,23 @@ deb http://example.org/debian jessie main
    $ cp ~/Downloads/*.deb /debian-mirror
    ```
 
-2. 创建Packages文件：
+2. 创建 Packages 文件：
 
    ```bash
    $ dpkg-scanpackages -m .> Packages
    ```
 
-   APT会从每个软件源导入Packages文件（或者它的各种压缩）（若是二进制包的仓库）和Sources文件（若是软件包源的仓库）。APT将根据Packages文件中的内容了解仓库中包的版本状态。
+   APT 工具会从每个软件源导入 Packages 文件（或者它的各种压缩）（若是二进制包的仓库）和 Sources 文件（若是软件包源的仓库）。APT 将根据 Packages 文件中的内容了解仓库中包的版本状态。
 
-3. 创建Release文件：
+3. 创建 Release 文件：
 
    ```bash
    $ apt-ftparchive release . &gt; Release
    ```
 
-   用户端Ubuntu16.04/Devian 8（jessie)或者更高版本，需要提供Release文件。release文件包含了Packages等文件的大小和校验和。
+   用户端 Ubuntu16.04/Devian 8（jessie)或者更高版本，需要提供 Release 文件。release 文件包含了 Packages 等文件的大小和校验和。
 
-4. 创建gpg密钥：
+4. 创建 gpg 密钥：
 
    ```bash
    # 创建私钥，用于签名
@@ -118,16 +120,16 @@ deb http://example.org/debian jessie main
    $ gpg --clearsign -o InRelease Release
    ```
 
-5. 在客户端上使用自建的trivial仓库：
+5. 在客户端上使用自建的 trivial 仓库：
 
    ```bash
    $ cp file:/debian-mmirror/my-repo.gpg-key.asc ./ && sudo apt-key add my-repo.gpg-key.asc
    $ echo "deb file:/debian-mmirror ./" | sudo tee /etc/apt/sources.list.d/my-repo.list
    ```
 
-## 1.3、使用`reprepro`构建official archive仓库
+## 1.3、使用`reprepro`构建 official archive 仓库
 
-使用reprepro构建仓库的方式与1.2相似，只不过使用reprepro构建，让仓库使用official archive。
+使用 reprepro 构建仓库的方式与 1.2 相似，只不过使用 reprepro 构建，可以以 official archive 的文件组织结构存放软件包，将软件包信息存入对应的源文件。
 
 1. 创建私钥
 
@@ -143,7 +145,7 @@ deb http://example.org/debian jessie main
    $ gpg --armor --export dev@zstack.io --output zstack-vyos.key
    ```
 
-3. 使用`dpkg-sig`给deb包签名（也可以不签）
+3. 使用`dpkg-sig`给 deb 包签名（也可以不签）
 
    ```bash
    $ dpkg-sig --sign [builder] mypackage.deb
@@ -155,7 +157,7 @@ deb http://example.org/debian jessie main
    $ export GPG_TTY=$(tty)
    ```
 
-   这是由于gpg在当前终端无法弹出密码输入窗口。
+   这是由于 gpg 在当前终端无法弹出密码输入窗口。
 
 4. 创建仓库目录，设置配置文件
 
@@ -164,7 +166,7 @@ deb http://example.org/debian jessie main
    $ vim /debian-mirror/conf/distributions
    ```
 
-   distributions文件中填写如下：
+   distributions 文件中填写如下：
 
    ```bash
    Origin: ZStack
@@ -176,13 +178,13 @@ deb http://example.org/debian jessie main
    SignWith: yes
    ```
 
-5. 使用reprepro创建official目录
+5. 使用 reprepro 创建 official 目录
 
    ```bash
    $ reprepro --ask-passphrase -Vb . includedeb vyos ~/Downloads/*.deb
    ```
 
-## 1.4、使用apache2发布本地仓库
+## 1.4、使用 apache2 发布本地仓库
 
 ```bash
 # 安装apache2
@@ -213,7 +215,7 @@ $ systemctl restart apache2
 
 ## 1.5、修改或替换本地仓库中的包
 
-修改或者替换本地仓库中的包可以同样可以使用reprepro命令。
+修改或者替换本地仓库中的包可以同样可以使用 reprepro 命令。
 
 ```bash
 $ reprepro --help
@@ -268,13 +270,13 @@ actions (selection, for more see manpage):
 
 ```
 
-通过actions下的指令可以对分支，包进行管理。
+通过 actions 下的指令可以对分支，包进行管理。
 
 ## 1.6、镜像一个仓库
 
-> 很多时候我们并不想自己从头创建一个仓库，或者我们只想把公有仓库拉到自己的公司的企业网中。将deb包一个个从公有仓库中下载下来是不切实际的，我们可以使用apt-mirror工具来协助我们。
+> 很多时候我们并不想自己从头创建一个仓库，或者我们只想把公有仓库拉到自己的公司的企业网中。将 deb 包一个个从公有仓库中下载下来是不切实际的，我们可以使用 apt-mirror 工具来协助我们。
 
-1. 首先安装apt-mirror工具，完成安装后会发现`/etc/apt/`目录下会多出一个mirror.list文件:
+1. 首先安装 apt-mirror 工具，完成安装后会发现`/etc/apt/`目录下会多出一个 mirror.list 文件:
 
    ```bash
    $ apt install apt-mirror
@@ -283,7 +285,7 @@ actions (selection, for more see manpage):
    auth.conf.d  mirror.list       sources.list   sources.list.d  trusted.gpg.d
    ```
 
-2. 修改mirror.list文件
+2. 修改 mirror.list 文件
 
    ```bash
    ############# config ##################
@@ -340,7 +342,7 @@ actions (selection, for more see manpage):
    
    ```
 
-3. 运行apt-mirror指令，等待同步公有仓库
+3. 运行 apt-mirror 指令，等待同步公有仓库
 
    ```bash
    $ apt-mirror
@@ -348,17 +350,17 @@ actions (selection, for more see manpage):
 
 等待同步完成，需要较长时间。
 
-**镜像仓库的发布方式与一般的仓库相同，也可以使用apache2发布。**
+**镜像仓库的发布方式与一般的仓库相同，也可以使用 apache2 发布。**
 
 ## 1.7、为镜像仓库添加新的包
 
-> 在完成对一个公共仓库的镜像之后，我们往往也想要为仓库添加新的、自制的deb包。这个时候，我们可以通过1.3中提到的rerepro工具来实现添加新包。
+> 在完成对一个公共仓库的镜像之后，我们往往也想要为仓库添加新的、自制的 deb 包。这个时候，我们可以通过 1.3 中提到的 rerepro 工具来实现添加新包。
 
-注意：首先要进入到对应分支的`dists/`和`pool/`所在的目录，创建`conf/distrabution`配置文件，再添加deb包时，指定`distribution`类型的时候将其指定成该分支的名称。
+注意：首先要进入到对应分支的`dists/`和`pool/`所在的目录，创建`conf/distrabution`配置文件，再添加 deb 包时，指定`distribution`类型的时候将其指定成该分支的名称。
 
 如：
 
-```
+```plain
 current/
 |_ conf
 |    |_ distrabution
@@ -372,5 +374,5 @@ current/
 $ reprepro --ask-passphrase -Vb . includedeb current ~/Downloads/*.deb
 ```
 
-**注意：**在使用这种方式为镜像仓库添加新的包之后，如果再次从公共仓库拉去更新，则会覆盖reprepro所做的更改，同时conf文件夹将被删除。
+**注意：**在使用这种方式为镜像仓库添加新的包之后，如果再次从公共仓库拉去更新，则会覆盖 reprepro 所做的更改，同时 conf 文件夹将被删除。
 

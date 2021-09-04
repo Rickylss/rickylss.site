@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "gcc预定义宏"
+title:  "gcc 预定义宏"
 subtitle: ""
 date:   2018-10-12 20:13:45 +0800
 tags:
@@ -10,7 +10,7 @@ tags:
 categories: [libvirt]
 ---
 
- 在linux环境下编写代码时，会经常遇到想要根据不同的机器架构（arch）或者不同的操作系统，针对性地编译一段代码的情况。
+ 在 linux 环境下编写代码时，会经常遇到想要根据不同的机器架构（arch）或者不同的操作系统，针对性地编译一段代码的情况。
 
 ### 针对性地编译一段代码
 
@@ -28,11 +28,11 @@ categories: [libvirt]
 #endif
 ```
 
-在make程序的时候，gcc会根据某个宏是否已定义来判断是否需要编译该部分代码块。
+在 make 程序的时候，gcc 会根据某个宏是否已定义来判断是否需要编译该部分代码块。
 
-那么问题来了，**C中宏要么在程序源码中定义，要么在编译时Makefile文件中定义（如：--with-qemu），这里使用的宏是在哪里定义的呢** ？
+那么问题来了，**C 中宏要么在程序源码中定义，要么在编译时 Makefile 文件中定义（如：--with-qemu），这里使用的宏是在哪里定义的呢** ？
 
-答案是：gcc预定义的宏。
+答案是：gcc 预定义的宏。
 
 ### 查看预定义宏
 
@@ -40,11 +40,11 @@ categories: [libvirt]
 $ gcc -posix -E -dM - </dev/null
 ```
 
-在终端输入这条命令就可以把gcc中预定义的宏全都打印出来了。
+在终端输入这条命令就可以把 gcc 中预定义的宏全都打印出来了。
 
-### 在libvirt中的实际应用
+### 在 libvirt 中的实际应用
 
-在virsysinfo.c中的virSysinfoRead方法中：
+在 virsysinfo.c 中的 virSysinfoRead 方法中：
 
 ``` c
 virSysinfoDefPtr
@@ -79,4 +79,4 @@ virSysinfoRead(void)
 }
 ```
 
-在这里由于sw架构的原因（不支持dmicode），要为其单独加入一个系统信息读取方式。这就需要判断当前架构是否为sw_64，因此在这里使用gcc-sw的预定义宏，以此来实现功能。
+在这里由于 sw 架构的原因（不支持 dmicode），要为其单独加入一个系统信息读取方式。这就需要判断当前架构是否为 sw_64，因此在这里使用 gcc-sw 的预定义宏，以此来实现功能。

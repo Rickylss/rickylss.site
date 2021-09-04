@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "deb打包工作流"
+title:  "deb 打包工作流"
 subtitle: ""
 date:   2018-10-10 14:15:38 +0800
 tags:
@@ -8,11 +8,11 @@ tags:
 categories: [Linux]
 ---
 
- 本文介绍从源码打包deb的主要流程，对debain文件夹内容的配置细节不做深究，只对规则做介绍。
+ 本文介绍从源码打包 deb 的主要流程，对 debain 文件夹内容的配置细节不做深究，只对规则做介绍。
 
-## 依然是HelloWorld
+## 依然是 HelloWorld
 
-我们创建一个简单的helloworld程序来做打包，简化细枝末节，突出主流程。
+我们创建一个简单的 helloworld 程序来做打包，简化细枝末节，突出主流程。
 
 ``` shell
 $ mkdir -p hello-sh/hello-sh-1.0
@@ -27,11 +27,11 @@ $ cd ..
 $ tar -cvzf hello-sh-1.0.tar.gz hello-sh-1.0
 ```
 
-假装我们下载了一个helloworld程序源码包，现在开始将它打包。
+假装我们下载了一个 helloworld 程序源码包，现在开始将它打包。
 
 ## 鼎鼎大名
 
-在对程序进行打包之前，我们先设置两个环境变量，这两个环境变量可以让大多数Debian维护工具（前面说过，debian有很多维护工具）正确识别你用于维护该软件包的姓名与电子邮件地址
+在对程序进行打包之前，我们先设置两个环境变量，这两个环境变量可以让大多数 Debian 维护工具（前面说过，debian 有很多维护工具）正确识别你用于维护该软件包的姓名与电子邮件地址
 
 ``` shell
 $ cat >> ~/.bashrc <<EOF
@@ -42,9 +42,9 @@ EOF
 $ source ~/.bashrc
 ```
 
-## 初始化Debian软件包
+## 初始化 Debian 软件包
 
-当你想要使用源码创建一个debian软件包，你可以在它的基础上对它进行初始化（如果是已有的deb包，则不需要初始化，可以下载对应的三个文件）：
+当你想要使用源码创建一个 debian 软件包，你可以在它的基础上对它进行初始化（如果是已有的 deb 包，则不需要初始化，可以下载对应的三个文件）：
 
 ``` shell
 $ cd ~/hello-sh
@@ -54,39 +54,39 @@ $ dh_make -f ../hello-sh-1.0.tar.gz
 
 接下来会询问你想要创建什么类型的软件包，这里有四种类型：
 
-我们选择创建一个单一二进制包，即单个.deb文件，执行dh_make之后，上级目录中自动创建了一份上游tarball副本，名为hello-sh_1.0.orig.tar.gz，这个文件与稍后要介绍的debian.tar.gz合在一起便满足了一部分Debian非本土源码包的要求。
+我们选择创建一个单一二进制包，即单个.deb 文件，执行 dh_make 之后，上级目录中自动创建了一份上游 tarball 副本，名为 hello-sh_1.0.orig.tar.gz，这个文件与稍后要介绍的 debian.tar.gz 合在一起便满足了一部分 Debian 非本土源码包的要求。
 
-**同时，当前目录下创建了一个debian目录** ，这个目录下已经有了许多模板，在后续的文章中将加以说明。
+**同时，当前目录下创建了一个 debian 目录** ，这个目录下已经有了许多模板，在后续的文章中将加以说明。
 
-## Debian目录下有什么
+## Debian 目录下有什么
 
 > 在程序源代码目录下有一个叫做 `debian` 的新的子目录。这个目录中存放着许多文件，我们将要修改这些文件来定制软件包行为。其中最重要的文件当属 `control`, `changelog`,`copyright`, 以及 `rules`, 所有的软件包都必须有这几个文件。
 
 ### control
 
-该文件中包含了很多供包管理工具进行管理时所使用的许多变量。dh_make将会为源码创建一个默认的模板，具体的control内容解析可参考官方文档。
+该文件中包含了很多供包管理工具进行管理时所使用的许多变量。dh_make 将会为源码创建一个默认的模板，具体的 control 内容解析可参考官方文档。
 
 ### copyright
 
-这个文件包含了上游软件（源码）的版权以及许可证信息。dh_make为其提供了一个copyright文件模板，可使用--copyright参数来进行修改。或者你也可以直接将其指向/usr/share/common-licenses/目录下的文件，这个目录保存了多种许可文件，否则，你需要将完整的许可证文本放入其中。
+这个文件包含了上游软件（源码）的版权以及许可证信息。dh_make 为其提供了一个 copyright 文件模板，可使用--copyright 参数来进行修改。或者你也可以直接将其指向/usr/share/common-licenses/目录下的文件，这个目录保存了多种许可文件，否则，你需要将完整的许可证文本放入其中。
 
 ### changelog
 
-这是一个必须有的文件，文件保存了你所做的更改详细信息，它将帮助下载你的软件包的人了解该软件包。同样的dh_make将创建一个默认的文件。
+这是一个必须有的文件，文件保存了你所做的更改详细信息，它将帮助下载你的软件包的人了解该软件包。同样的 dh_make 将创建一个默认的文件。
 
 ### rules
 
-rules文件是dpkg-buildpackage(后文将提及)需要使用的实际创建软件包的脚本，该文件可理解为另一个Makefile文件，但不同于上游代码中的那个。该文件需要被标记为可执行。
+rules 文件是 dpkg-buildpackage(后文将提及)需要使用的实际创建软件包的脚本，该文件可理解为另一个 Makefile 文件，但不同于上游代码中的那个。该文件需要被标记为可执行。
 
-1. rules文件中的Target
+1. rules 文件中的 Target
 
-   每个rules文件中都包含了若干的规则（rules），如同Makefile中一样，对于每个规则都定义了一个target及具体操作，新的rule以自己的target声明开头，该rule中后续的每行都以TAB字符开头，以指示target的具体行为。空行和#号开头的行都将视为注释忽略。
+   每个 rules 文件中都包含了若干的规则（rules），如同 Makefile 中一样，对于每个规则都定义了一个 target 及具体操作，新的 rule 以自己的 target 声明开头，该 rule 中后续的每行都以 TAB 字符开头，以指示 target 的具体行为。空行和#号开头的行都将视为注释忽略。
 
-   当你想要执行一个rule时，就将target作为命令行参数调用。如，debian/rules build以及fakeroot make -f debian/rules binary将分别执行build和binary两个target。**该使用方法与Makefile相似。** 
+   当你想要执行一个 rule 时，就将 target 作为命令行参数调用。如，debian/rules build 以及 fakeroot make -f debian/rules binary 将分别执行 build 和 binary 两个 target。**该使用方法与 Makefile 相似。** 
 
-2. 默认的rules文件
+2. 默认的 rules 文件
 
-   新版本的dh_make会生成一个使用dh命令的非常简单但强大的默认的rules文件：
+   新版本的 dh_make 会生成一个使用 dh 命令的非常简单但强大的默认的 rules 文件：
 
    ``` shell
     1 #!/usr/bin/make -f
@@ -108,46 +108,45 @@ rules文件是dpkg-buildpackage(后文将提及)需要使用的实际创建软�
    17         dh $@ 
    ```
 
-   第一行告诉操作系统这个文件使用/usr/bin/make处理，取消第四行的注释，设置DH_VERBOSE变量为1，dh命令将输出它要使用的dh_*命令。这将帮助你理解这个rules文件背后做了什么，同时帮助你调试。
+   第一行告诉操作系统这个文件使用`/usr/bin/make` 处理，取消第四行的注释，设置 DH_VERBOSE 变量为 1，dh 命令将输出它要使用的 dh_*命令。这将帮助你理解这个 rules 文件背后做了什么，同时帮助你调试。
 
-   第16和17行使用了pattern rule，百分号意味着“任何target”，它会以 target 名称作参数调用单个程序 **dh**。**dh** 命令是一个包装脚本，它会根据参数执行妥当的 **dh_\*** 程序序列。
+   第 16 和 17 行使用了 pattern rule，百分号意味着“任何 target”，它会以 target 名称作参数调用单个程序 **dh**。**dh** 命令是一个包装脚本，它会根据参数执行妥当的 **dh_\*** 程序序列。
 
-   ```
-0、清理源代码树(debian/rules clean)
+   ```plain
+   0、清理源代码树(debian/rules clean)
    
    1、构建源代码包(dpkg-source -b)
    
    2、构建程序(debian/rules build)
-   
-   ```
 
-3、构建二进制包(fakeroot debian/rules binary)
+   3、构建二进制包(fakeroot debian/rules binary)
 
-4、使用 gpg 签署 .dsc 文件
+   4、使用 gpg 签署 .dsc 文件
 
    5、使用 dpkg-genchanges 和 gpg 创建并签署上传用的 .changes 文件 
+
    ```
    
    - `debian/rules clean` 运行了 `dh clean`，接下来实际执行的命令为：
    
-   ```
+   ```plain
      dh_testdir
-  dh_auto_clean
+     dh_auto_clean
      dh_clean
-     ```
+   ```
 
    - `debian/rules build` 运行了 `dh build`，其实际执行的命令为：
    
-     ```
+   ```plain
      dh_testdir
      dh_auto_configure
      dh_auto_build
      dh_auto_test
-     ```
+   ```
    
    - `fakeroot debian/rules binary` 执行了 `fakeroot dh binary`，其实际执行的命令为：
    
-     ```
+   ```plain
      dh_testroot
      dh_prep
      dh_installdirs
@@ -190,9 +189,9 @@ rules文件是dpkg-buildpackage(后文将提及)需要使用的实际创建软�
      dh_gencontrol
      dh_md5sums
      dh_builddeb
-     ```
+   ```
 
-## debian目录下还有什么
+## debian 目录下还有什么
 
 ## dpkg-buildpackage
 
@@ -200,7 +199,7 @@ rules文件是dpkg-buildpackage(后文将提及)需要使用的实际创建软�
 $ dpkg-buildpackage -rfakeroot
 ```
 
-运行dpkg-buildpackage命令生产deb安装包。
+运行 dpkg-buildpackage 命令生产 deb 安装包。
 
 这样会自动完成所有从源代码包构建二进制包的工作，包括：
 

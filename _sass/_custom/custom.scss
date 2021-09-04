@@ -1,5 +1,30 @@
 // Custom styles.
 
+//广告内容
+.ads-content-wrap {
+    background: rgba(255, 255, 255, 0.8);
+    float: right;
+    box-sizing: border-box;
+    padding: 0px 0px 0px 0px;
+    padding-top: 0px;
+    width: $content-desktop;
+    background: white;
+    min-height: 200px;
+    box-shadow: $box-shadow-inner;
+    border-radius: $border-radius-inner;
+    margin-top: 30px;
+  
+    @include tablet() {
+      width: 100%;
+      padding: 0px 0px 0px 0px;
+    }
+    @include mobile() {
+      width: 100%;
+      padding: 0px 0px 0px 0px;
+      min-height: auto;
+    }
+}
+
 //评论内容
 .comments-content-wrap {
     background: rgba(255, 255, 255, 0.8);

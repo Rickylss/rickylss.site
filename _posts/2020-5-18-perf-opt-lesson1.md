@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "性能分析课程笔记1"
-subtitle: "zstack培训"
+title:  "性能分析课程笔记 1"
+subtitle: "zstack 培训"
 date:   2020-5-18 13:13:45 +0800
 tags:
   - zstack
@@ -9,13 +9,13 @@ categories: [OS]
 comment: true
 ---
 
-> zstack最近想要在性能优化上有所动作，所以大牛们给我们这些小渣渣搞了的个性能分析的培训课程。这篇博客是我自己对课程内容的思考和总结，其中还包括了一些扩展内容。注：本文内容主要来自于[ZStack](https://www.zstack.io/)内部的性能分析课程。
+> zstack 最近想要在性能优化上有所动作，所以大牛们给我们这些小渣渣搞了的个性能分析的培训课程。这篇博客是我自己对课程内容的思考和总结，其中还包括了一些扩展内容。注：本文内容主要来自于[ZStack](https://www.zstack.io/)内部的性能分析课程。
 
 第一节课并没有涉及到具体的性能分析操作或者实践，所讲的东西比较形而上学，比较抽象。但是却能够为我们提供一些新的思维方式，对我们之后的生活学习都会有一些帮助。
 
 # 1、Unknown unknowns
 
-这是前美国国防部长拉姆斯菲尔德的一句名言，我第一次听到这句话是群总和我做weekly one to one的时候，原文是这样的：
+这是前美国国防部长拉姆斯菲尔德的一句名言，我第一次听到这句话是群总和我做 weekly one to one 的时候，原文是这样的：
 
 *Reports that say that something hasn't happened are always interesting to me, because as we know, **there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns—the ones we don't know we don't know.** And if one looks throughout the history of our country and other free countries, it is the latter category that tend to be the difficult ones.*
 
@@ -31,7 +31,7 @@ comment: true
 
 ![DK效应](\pictures\DK-effect.png)
 
-# 2、什么是优化？
+# 2、什么是优化
 
 在讨论性能优化之前，首先要注意两个问题：
 
@@ -40,7 +40,7 @@ comment: true
 
 性能是个系统问题，前面提到计算机系统是个非常庞大的体系，它包含了很多东西，它里面的结构错综复杂，各个部分互相牵制影响，如果不能理清你要优化部分的系统部件关系，就会出现按下葫芦浮起瓢的情况（事实上，有时候就算你理清了也避免不了）；
 
-同样的，性能也是个动态问题，对于图形工作者或者游戏爱好者来说，性能好坏更多取决于GPU性能好坏；对于科学计算研究员来说，性能好坏更多由CPU性能决定；对于数据库来说，I/O性能，内存可能更为重要。因此，性能其实是个动态问题，优化某种程度来说就是一种为特定场景的调优。
+同样的，性能也是个动态问题，对于图形工作者或者游戏爱好者来说，性能好坏更多取决于 GPU 性能好坏；对于科学计算研究员来说，性能好坏更多由 CPU 性能决定；对于数据库来说，I/O 性能，内存可能更为重要。因此，性能其实是个动态问题，优化某种程度来说就是一种为特定场景的调优。
 
 因此在进行性能优化之前，你需要考虑清楚，你要优化的是什么。
 
@@ -48,11 +48,11 @@ comment: true
 
 ## 3.1、观测
 
-要分析系统的性能，就要对系统进行观测，对系统进行观测有很多手段，常用的工具有：top、perf等，红帽也有非常优秀的[性能工程软件](https://github.com/redhat-performance)。
+要分析系统的性能，就要对系统进行观测，对系统进行观测有很多手段，常用的工具有：top、perf 等，红帽也有非常优秀的[性能工程软件](https://github.com/redhat-performance)。
 
 但是在我们对一个系统施加观测的时候，我们需要注意一些东西：
 
-1. 观测会对系统添加影响，观测工具同样会使用到系统的一些计算资源，因此我们在使用观测工具的时候，也会对系统照成一定的影响，例如，当你在使用top工具的时候，你可能偶尔会发现top进程居然是资源消耗最高的进程:)；
+1. 观测会对系统添加影响，观测工具同样会使用到系统的一些计算资源，因此我们在使用观测工具的时候，也会对系统照成一定的影响，例如，当你在使用 top 工具的时候，你可能偶尔会发现 top 进程居然是资源消耗最高的进程:)；
 2. 所见非所想，由于缺乏对系统的整体认知，在观测系统的时候难免会陷入盲人摸象的境地，即是说你看到的现象未必是反应出来的事实，也未必就是问题的真相；
 
 ## 3.2、 瞎猜
@@ -111,7 +111,7 @@ Contributions
 Visual comparison chart: http://i.imgur.com/k0t1e.png
 ```
 
-> 群总：免费的午餐也是有的，比如，Linux新版本的内核对某个东西进行了优化，这就是免费的午餐==。
+> 群总：免费的午餐也是有的，比如，Linux 新版本的内核对某个东西进行了优化，这就是免费的午餐==。
 
 # 4、常见的优化手段及一些思考题
 
@@ -119,7 +119,7 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
 
 1. 多队列、零拷贝；
 2. 大页内存；
-3. CPU隔离和NUMA绑定；
+3. CPU 隔离和 NUMA 绑定；
 4. 硬件直通；
 5. Kernel bypass ；
 6. 通用 vs. 特定；
@@ -127,9 +127,22 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
 
 思考题：
 
-1. 内核使用MMX指令实现memcpy()会更快吗？
-2. Zero Copy Xmit一定能够提高虚拟机网络性能么？
-3. 如何科学地测试I/O性能？
+1. 内核使用 MMX 指令实现 memcpy()会更快吗？
+
+   > MMX 是由[英特尔](https://zh.wikipedia.org/wiki/英特尔)开发的一种**[SIMD](https://zh.wikipedia.org/wiki/单指令流多数据流)**[多媒体](https://zh.wikipedia.org/wiki/多媒体)[指令集](https://zh.wikipedia.org/wiki/指令集)，共有 57 条指令。它于 1996 年集成在英特尔[奔腾](https://zh.wikipedia.org/wiki/奔腾)（Pentium）MMX[处理器](https://zh.wikipedia.org/wiki/处理器)上，以提高其多媒体数据的处理能力。
+   >
+   > MMX 寄存器，称作 MM0~7，实际上是对处理器内部 80 比特字长的浮点寄存器栈 st0~7 的尾数部分（64 比特）的复用。由于浮点栈寄存器的高 16 位未被 MMX 技术使用，因此这 16 位都置为 1，因此从栈寄存器的角度看，其浮点值为 NaN 或 Infinities，这可用于区分寄存器是处于浮点栈状态还是 MMX 状态。
+   >
+   > MMX 技术占用 FPU 寄存器进行运算，因此 MMX 指令和浮点数运算操作不能同时工作。
+
+   答：使用 MMX 指令实现 memcpy()未必会更快。原因在于，在一般情况下，FPU 指令集是很少被使用到的，即便被使用到也是非常简单且惰性的，并不会影响进程和线程的快速切换。若你使用 FPU 指令集做 memcpy，那么每次进程或线程切换，你都需要保存/恢复一次 i387，而这个开销是非常大的。即便你在用户程序中没有明确的使用 i387 指令，内核也会帮你调用。
+
+2. Zero Copy Xmit 一定能够提高虚拟机网络性能么？
+
+   > 需要了解虚拟机网络的实现。
+
+3. 如何科学地测试 I/O 性能？
+
 4. 如何确定多线程程序的最佳线程数？
 
 参考阅读：
@@ -140,13 +153,13 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
 
 # 5、小实验
 
-1. ssh远程到一台服务器上
+1. ssh 远程到一台服务器上
 
    ```bash
    $ ssh root@xxx.xxx.xxx.xxx
    ```
 
-1. 使用cat命令打印一个超大的log日志
+1. 使用 cat 命令打印一个超大的 log 日志
 
    ```bash
    $ cat /var/a_huge_log.log
@@ -154,13 +167,13 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
 
 2. 发现打印速度很慢
 
-3. 分析原因，打印输出慢是否为I/O问题
+3. 分析原因，打印输出慢是否为 I/O 问题
 
    ```bash 
    $ echo /var/a_huge_log.log > /var/temp_log.log
    ```
 
-4. 得出结论，输出慢是由于ssh需要对输出文本进行处理。
+4. 得出结论，输出慢是由于 ssh 需要对输出文本进行处理。
 
 
 

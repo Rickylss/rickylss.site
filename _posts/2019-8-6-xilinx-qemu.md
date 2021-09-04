@@ -10,13 +10,13 @@ tags:
 categories: [QEMU]
 comment: true
 ---
- 本文描述如何在QEMU中启动xilinx设备，并启动xilinx官方提供的系统镜像
+ 本文描述如何在 QEMU 中启动 xilinx 设备，并启动 xilinx 官方提供的系统镜像
 
-## 1. xilinx是什么
+## 1. xilinx 是什么
 
-## 2. xilinx QEMU编译部署
+## 2. xilinx QEMU 编译部署
 
-从github下载Xilinx qemu源码：
+从 github 下载 Xilinx qemu 源码：
 
 ```shell
 $ git clone git://github.com/Xilinx/qemu.git
@@ -29,9 +29,9 @@ $ cd qemu
 $ sudo apt install libglib2.0-dev libgcrypt20-dev zlib1g-dev autoconf automake libtool bison flex libpixman-1-dev libsd1.2-dev
 ```
 
-创建`compile/build`、`compile/install`目录，在`compile/build`下创建build.sh编译脚本：
+创建`compile/build`、`compile/install`目录，在`compile/build`下创建 build.sh 编译脚本：
 
-```
+```plain
 ../../configure --prefix="/qemu/compile/install" --target-list="aarch64-softmmu,microblazeel-softmmu" --enable-fdt --disable-kvm --disable-xen
 
 make -j4 install
@@ -39,13 +39,13 @@ make -j4 install
 
 运行脚本，若出现报错：
 
-```
+```plain
 warning: cannot parse SRV response: Message too long
 ```
 
-则可能是submodule获取路径错误，修改`./git/config`或.gitsubmodules如下：
+则可能是 submodule 获取路径错误，修改`./git/config`或.gitsubmodules 如下：
 
-```
+```plain
 [core]
         repositoryformatversion = 0
         filemode = true
@@ -68,9 +68,9 @@ warning: cannot parse SRV response: Message too long
         url = https://github.com/qemu/keycodemapdb.git
 ```
 
-再次运行编译脚本。更多git submodule的信息可参考[Git-工具-子模块](https://git-scm.com/book/zh/v1/Git-工具-子模块)。
+再次运行编译脚本。更多 git submodule 的信息可参考[Git-工具-子模块](https://git-scm.com/book/zh/v1/Git-工具-子模块)。
 
-使用help命令查看machine支持
+使用 help 命令查看 machine 支持
 
 ```shell
 $ ./qemu-system-aarch64 -M help | grep arm-generic-fdt-plnx
@@ -102,13 +102,13 @@ $ ./aarch64-softmmu/qemu-system-aarch64 \
 
 ## 4.文件传输
 
-1. 使用dd创建一个文件，作为虚拟机和宿主机之间传输桥梁
+1. 使用 dd 创建一个文件，作为虚拟机和宿主机之间传输桥梁
  dd if=/dev/zero of=/opt/share.img bs=1M count=200
-2. 格式化share.img文件
+2. 格式化 share.img 文件
     mkfs.ext4 /opt/share.img
 3. 在宿主机上创建一个文件夹，
    mkdir /tmp/share
    mount -o loop /opt/share.img /tmp/share
 这样，在宿主机上把需要传输给虚拟机的文件放到/tmp/share 下即可。
-4. 启动qemu-kvm虚拟机，添加上/opt/share.img文件。
-5. 在虚拟机中 mount上添加的一块硬盘。即可以获得宿主机上放在/tmp/share文件夹下的文件
+4. 启动 qemu-kvm 虚拟机，添加上/opt/share.img 文件。
+5. 在虚拟机中 mount 上添加的一块硬盘。即可以获得宿主机上放在/tmp/share 文件夹下的文件

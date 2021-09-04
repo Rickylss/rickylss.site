@@ -104,6 +104,12 @@ copyright: true
 # Tips: Before you open this tag, remember set up your URL in _config.yml ( ex. url: http://yourdomain.com )
 canonical: true
 
+# AdSense, add google AdSense
+adsense:
+  data-ad-client: ca-pub-8486812108421010
+  async_src: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
+  inner_ads: true
+
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
 seo: false
 
@@ -215,7 +221,6 @@ font:
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
 social:
   GitHub: https://github.com/Rickylss
-  longtao: https://longtao.fun/
 
 
 # Social Links Icons
@@ -267,7 +272,7 @@ sidebar:
   #  - remove  Totally remove sidebar including sidebar toggle.
   #display: post
   #display: always
-  display: hide
+  display: post
   #display: remove
 
   # Sidebar offset from top menubar in pixels.
