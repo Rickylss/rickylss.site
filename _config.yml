@@ -128,6 +128,7 @@ menu:
   categories: /categories/
   tags: /tags/
   about: /about/
+  friends: /friends/
   # sitemap: /sitemap.xml
   # commonweal: /404.html
 
@@ -146,6 +147,7 @@ menu_icons:
   schedule: calendar
   tags: tags
   archives: archive
+  friends: star
   sitemap: sitemap
   commonweal: heartbeat
 
