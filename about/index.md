@@ -18,4 +18,6 @@ title: About
 - QQ：1451120922
 - 微信：xiaohb-wx
 
+<image src="\pictures\wechat.jpg" style="zoom:50%"/>
+
 ***
