@@ -1,0 +1,27 @@
+<script type="text/javascript" src="{{ site.js | relative_url }}/src/adjustIframe.js?v={{ site.version }}"></script>
+
+<div id="posts" class="posts-expand">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Games</h1>
+    </header>
+
+    <div id="game">
+
+        <style>
+            #game {
+                margin-top: 5rem;
+            }
+
+            .game_iframe {
+                width: 100%;
+                height: 700px;
+            }
+        </style>
+
+        {% for game in page.games %}
+            <h2 class="post-tile">{{ game.name }}</h2>
+            <iframe class="game_iframe" onload="adjustIframe();" frameborder="0" scrolling="no" src="{{ game.src }}">{{ game.name }}</iframe>
+        {% endfor %}
+    </div>
+
+</div>

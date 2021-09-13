@@ -8,6 +8,7 @@ title:
   tags: 标签
   about: 关于
   friends: 友链
+  games: 小游戏
 
 author: 博主
 
@@ -22,6 +23,7 @@ menu:
   sitemap: 站点地图
   commonweal: 公益404
   friends: 友链
+  games: 小游戏
 
 sidebar:
   overview: 站点概览

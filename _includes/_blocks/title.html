@@ -26,6 +26,8 @@
   {% capture title %}{{ __.title.schedule }} | {{ site.title }}{% endcapture %}
 {% when 'friends' %}
   {% capture title %}{{ __.title.friends }} | {{ site.title }}{% endcapture %}
+{% when 'games' %}
+  {% capture title %}{{ __.title.games }} | {{ site.title }}{% endcapture %}
 {% endcase %}
 
 {% assign title = title | strip_newlines %}

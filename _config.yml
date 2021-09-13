@@ -127,8 +127,9 @@ menu:
   archives: /archives/
   categories: /categories/
   tags: /tags/
-  about: /about/
+  games: /games/
   friends: /friends/
+  about: /about/
   # sitemap: /sitemap.xml
   # commonweal: /404.html
 
@@ -150,6 +151,7 @@ menu_icons:
   friends: star
   sitemap: sitemap
   commonweal: heartbeat
+  games: gamepad
 
 
 
