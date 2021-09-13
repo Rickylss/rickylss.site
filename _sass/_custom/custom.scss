@@ -73,6 +73,11 @@
 	background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 2px 6px #dbdbdb;
     border-radius: $border-radius-inner;
+    
+    &.affix {
+        position: fixed;
+        top: $sidebar-offset-float;
+      }
 }
 .header-inner {
     background: rgba(255, 255, 255, 0.8);

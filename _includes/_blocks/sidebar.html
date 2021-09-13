@@ -20,4 +20,7 @@
 {% when 'schedule' %}
   {% assign is_post = false %}
   {% capture sidebar %}{% include _macro/sidebar.html %}{% endcapture %}
+{% when 'friends' %}
+  {% assign is_post = false %}
+  {% capture sidebar %}{% include _macro/sidebar.html %}{% endcapture %}
 {% endcase %}
