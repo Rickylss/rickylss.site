@@ -12,6 +12,9 @@ comment: true
 ---
  本文描述如何在 QEMU 中启动 xilinx 设备，并启动 xilinx 官方提供的系统镜像
 
+ <!-- more -->
+
+
 ## 1. xilinx 是什么
 
 ## 2. xilinx QEMU 编译部署

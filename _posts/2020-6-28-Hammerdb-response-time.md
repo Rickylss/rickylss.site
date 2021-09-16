@@ -13,6 +13,8 @@ comment: true
 
 衡量数据库的性能指标除了吞吐另一个更重要的是事务的响应时间，事务的响应快慢直接影响用户的体验。HammerDB 使用 etprof 库来统计一次测试中某个独立用户面对的响应时间。
 
+<!-- more -->
+
 # 1、开启 time profile
 
 要开启`Time Profile`，只需要在`Driver Script->Options`下勾选`Time Profile`，或者在`hammerdbcli`使用命令：

@@ -11,7 +11,7 @@ comment: true
 ---
 
 xbzrle 技术可以减少 VM 停机和热迁移的时间，当 VM 存在密集型写内存的工作负载时这种优化尤其明显。对于大型的企业应用如：SAP 和 ERP 系统，或者说任何使用稀疏内存模型的系统来说都有很好的优化作用。
-
+<!-- more -->
 # 1、xbzrle 简介
 
 xbzrle，全称 Xor Based Zero Run Length Encoding，它是一种差异压缩算法，用来计算前后内存页差异，并对差异生成压缩数据的一种算法。

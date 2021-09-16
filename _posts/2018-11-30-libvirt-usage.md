@@ -10,6 +10,8 @@ categories: [libvirt]
 
  想要学习 libvirt，首先要学习如何使用 libvirt。具体的使用方式在官网可以查询到完整的资料，因此本文不会对此进行详细的讲解，本文目的是让读者快速地、低成本地学会 libvirt 的基本使用并学会如何查询相应资料。
 
+<!-- more -->
+
 ## libvirt 是什么
 
 **官方文档上对[libvirt](https://libvirt.org/)的描述：**

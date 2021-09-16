@@ -11,6 +11,8 @@ categories: [libvirt]
 
  libvirt 提供了安全访问的机制，TLS 是典型的用来保护网络安全的方式，同时 SASL 则用来提供验证。[blog](http://blog.51cto.com/foxhound/2051024) 。在 libvirt 官网上有详细的使用教程[libvirt](https://libvirt.org/auth.html#ACL_server_sasl) 
 
+ <!-- more -->
+
 ## 准备工作
 
 ​	在为 libvirt 设置 SASL 验证之前，首先要对 SASL 有一定的了解，并且学会简单地使用 SASL。具体的内容可查看[SASL](G:\博客产出\技术概念\SASL.md)。

@@ -12,7 +12,7 @@ comment: true
 > Debian 仓库本质上就是把一堆*.deb 包放到一个文件夹，在此基础上，为了方便 apt 工具的管理，将这些 deb 包按照一定的规则存放，并额外提供一些元数据文件来协助 apt 工具快速地访问 deb 包。
 
 Debian 仓库支持通过不同的协议访问，如 http 协议、ftp 协议或者普通的 file 访问。所有访问的目录只需要满足[debian 仓库格式](https://wiki.debian.org/DebianRepository/Format)即可。
-
+<!-- more -->
 # 1、Debian 仓库搭建
 
 构建 Debian 仓库有很多[工具](https://wiki.debian.org/DebianRepository/Setup#apt-ftparchive)，主要分为两类：生成 Debian 仓库的工具、制作 Debian 镜像库的工具。制作镜像库的工具从其他仓库复制，之后更新到本地的仓库。

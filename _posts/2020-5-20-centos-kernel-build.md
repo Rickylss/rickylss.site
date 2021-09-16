@@ -10,7 +10,7 @@ comment: true
 ---
 
 > 因为工作需求，要修改一下 Centos7 的内核，然后替换原有的内核。因为 Centos7 采用 rpm 包进行管理，因此内核源码也采用这种方式获取，并且编译后的内核也可以打成 rpm 包发布。注：本文参考[wiki.centos](https://wiki.centos.org/HowTos/Custom_Kernel)中构建内核相关的步骤。
-
+<!-- more -->
 # 1、获取 src.rpm
 
 官方不建议使用 root 用户构建内核，同时初学者也应该避免使用 root 用户。

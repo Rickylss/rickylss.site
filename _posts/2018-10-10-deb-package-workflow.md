@@ -10,6 +10,8 @@ categories: [Linux]
 
  本文介绍从源码打包 deb 的主要流程，对 debain 文件夹内容的配置细节不做深究，只对规则做介绍。
 
+ <!-- more -->
+
 ## 依然是 HelloWorld
 
 我们创建一个简单的 helloworld 程序来做打包，简化细枝末节，突出主流程。

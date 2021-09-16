@@ -12,6 +12,7 @@ categories: [DK]
 
  本文基于[Wikipedia](https://en.wikipedia.org/wiki/RADIUS)，只做学习了解目的。
 
+<!-- more -->
 ## 协议简介
 
 RADIUS 是一种 C/S 结构的网络应用层协议，工作在 1812、1813 端口上，它是目前应用最广泛的 AAA(认证 Authentication、授权 Authorization、计费 Accounting)协议。

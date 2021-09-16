@@ -22,7 +22,7 @@ comment: true
 1. 协作开发代码时很容易导致冲突；
 2. 很容易将有 bug 的版本部署到生成环境；
 3. 很难维护干净的代码；
-
+<!-- more -->
 ## 2、Git Feature Branch Workflow
 
 当有多名开发者在同一个代码库上工作时，`Git Feature Branch Workflow`模式是必须的。

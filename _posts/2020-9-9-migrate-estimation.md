@@ -17,6 +17,8 @@ comment: true
 
 > 脏页生成速率的问题目前无法解决，该实验只能作为参考，无实际意义。
 
+<!-- more -->
+
 # QEMU 热迁移流程
 
 本节描述 QEMU pre-copy 流程，该流程在其他 hyperviosr 中会有不同，而不同的流程将会影响到预测模型，最终会对预测结果产生影响，这里只讨论 QEMU post-migrate 的情况。

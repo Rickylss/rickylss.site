@@ -18,6 +18,8 @@ comment: true
 >
 > Accuracy is inversely related to the length of the time interval how far prediction reaches into the future, which is called the failure prediction lead time.
 
+<!-- more -->
+
 # 虚拟机热迁移过程（pre-copy）
 
 虚拟机热迁移可大致分为两个阶段，细分为三个阶段：

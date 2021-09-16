@@ -11,7 +11,7 @@ comment: true
 ---
 
 项目背景：最近做了一个需要跨平台的项目，要求能够支持 Linux 系统和 Windows 系统并且调用不同操作系统上的硬件驱动，为了减少工作量，我在 Linux 系统上开发了原型，并使用 cygwin/msys2 将其移植到 Windows 系统上。
-
+<!-- more -->
 # 1、Cygwin 简介
 
 通常来说，我们在 Linux 下编程遵循 posix 标准，并且调用的是 Linux 提供的系统调用，使用 libc 函数库；但是在 Windows 下编程的时候我们需要使用 Windows 提供的系统调用，并且使用 Windows 提供的函数库。比如，在使用 socket 库编程的时候，在 Linux 中，你只需要`#include <sys/socket.h>`就可以使用 socket 库了，但是在 Windows 下，你需要：

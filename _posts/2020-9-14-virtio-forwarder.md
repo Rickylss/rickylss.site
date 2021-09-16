@@ -19,7 +19,7 @@ virtio-forwarder（VIO4WD）是一个用户空间网络应用，它可以在 SR-
 > virtio-forwarder 使用 libdpdk 开发，因此 VIO4WD 是一个运行在用户空间的应用，同样的 QEMU 端只能够使用 vhost-user 模式。
 
 VIO4WD 最多支持 64 个转发实例（即一个 VF<->virtio 对），VFs 接收到数据包，然后发送到对应的 virtio 后端，反之亦然。中继原理可以从 NICs 和 virtio 网络驱动程序提供的技术中获益。NIC 可以下放部分或全部网络功能，而 virtio 支持 VM 实时迁移，并且对底层硬件不可见。
-
+<!-- more -->
 # 系统要求
 
 - 要求 QEMU 版本在 2.5 以上；

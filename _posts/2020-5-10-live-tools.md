@@ -14,7 +14,7 @@ comment: true
 - live-build，是一组用于构建 live system 的脚本的集合。你可以在`/usr/lib/live/build`下找到它们，并在`/usr/share/live/build`下找到这些脚本使用的 functions；
 - live-boot，是一组用于为**initramfs-tools**提供钩子的脚本的集合，用于生成一个能够引导 live system 的 initramfs；
 - live-config，是一组用于在**live-boot**之后自动配置 live system 的脚本的集合，它能够处理类似于设置 hostname，locales 和 timezone，创建用户等。
-
+<!-- more -->
 # live-build
 
 live-build 的理念是使用一个配置目录来完全自动化和客制化一个 live image 的各个方面。它和用于构建 Debian 包的*debhelper*在使用上有很多相似值出：

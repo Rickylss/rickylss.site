@@ -11,6 +11,8 @@ categories: [QEMU]
 
   ubuntu18.06 中的 qemu 版本不带 CAN，因此需要自己编译最新版的 qemu。
 
+<!-- more -->
+
 ## 1. QEMU 编译
 
 1. 安装依赖

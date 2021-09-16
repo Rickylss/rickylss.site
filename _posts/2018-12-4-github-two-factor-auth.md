@@ -11,6 +11,8 @@ categories: [DK]
 
  本节介绍如何在 GitHub 上使用双因子验证，让大家对双因子验证有一个客观的认识。
 
+ <!-- more -->
+
 ## 在手机上下载谷歌 Authenticator
 
 略。。。。

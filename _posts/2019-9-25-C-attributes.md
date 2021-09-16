@@ -11,6 +11,8 @@ categories: [C]
 
 `__attributes__()`是 GNU C 支持的一个机制，因此使用该机制需要确保 GNU C 标准适用于你的编译器，`__attributes__()`可放置在函数、变量或类型的声明前，从而使得编译器对该内容进行某些特殊处理。
 
+<!-- more -->
+
 例如：在 Function 前使用
 
 constructor

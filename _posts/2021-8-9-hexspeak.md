@@ -16,7 +16,7 @@ wiki上对Hexspeak的解释如下：
 > **Hexspeak**, like [leetspeak](https://en.wikipedia.org/wiki/Leet), is a novelty form of variant [English](https://en.wikipedia.org/wiki/English_language) spelling using the hexadecimal digits. Created by programmers as memorable [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)), hexspeak words can serve as a clear and unique identifier with which to mark memory or data.
 
 简而言之，hexspeak，就是一种程序员发明的，用16进制数来表达的一种变体的英文拼写。
-
+<!-- more -->
 ## 翻译规则
 
 16进制的书写由`0123456789ABCDEF`15个字符来完成，仅仅使用`ABCDEF`几个字母就已经可以拼写出很多单词了。剩余的`0123456789`可以将它们转化成对应的字母，比如：

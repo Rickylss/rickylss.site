@@ -11,6 +11,8 @@ categories: [QEMU]
 
  qemu 中所有的与时间相关的模块都基于`timer.h`和`qemu-timer.c`实现，包括 arm 的计时器`arm_timer.c`以及通用的倒数计时器`ptimer.c`，本文分析 timer.h 文件，探究 qemu 中 timer 的机制和原理，再实现一个自己的加数计时器`itimer.c`
 
+ <!-- more -->
+
 # QEMUClock
 
 ## QEMUClockType

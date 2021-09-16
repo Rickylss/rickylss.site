@@ -10,7 +10,7 @@ comment: true
 ---
 
 本文将对 SCSI 命令的基本结构进行简单的讲解，详细介绍 SCSI persistent reservations 机制的原理，并演示如何使用`sg_persist`命令查看 reservation 状态。
-
+<!-- more -->
 # SCSI 与 SCSI 命令
 
 SCSI（Small Computer System Interface），通过 Client-Server 模式使主机和存储设备交换数据信息。主机为 Client 端（initiator）向作为 Server 端的存储设备（Target）发出例如：读写数据的请求。这类请求就是`SCSI command`。`SCSI command`体系结构最初是为并行 SCSI 总线设计的，但在进行小小的修改之后也可以与 FC、iSCSI、串行附加 SCSI 和其他传输层一起使用。

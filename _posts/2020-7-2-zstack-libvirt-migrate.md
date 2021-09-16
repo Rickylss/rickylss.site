@@ -11,6 +11,8 @@ comment: true
 
 在 zstack 环境下，通过 virsh 直接迁移虚拟机，测试不同选项对虚拟机迁移的影响。
 
+<!-- more -->
+
 # 默认迁移
 
 默认的迁移方式即`managed direct migration`方式，迁移命令：

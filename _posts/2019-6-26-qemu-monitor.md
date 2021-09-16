@@ -12,6 +12,8 @@ categories: [QEMU]
 
  由于 QEMU 版本不同可能会导致具体的内容不同，因此本文只介绍 QEMU monitor 和 QMP 的概念与使用，详细的命令建议查阅相应版本的指导手册。
 
+ <!-- more -->
+
 # QEMU monitor
 
 当用户启动一个 QEMU 进程之后，QEMU 进程会为用户提供一个 monitor 用于交互。通过使用一些命令，用户可以监控正在运行的 guestOS，更改可移除的媒体设备和 USB 设备，截图或者捕获音频，甚至控制虚拟机。

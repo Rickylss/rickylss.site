@@ -13,6 +13,8 @@ comment: true
 
 一看目录结构和 LICENSE，是个标准的 GNU 项目，GNU 项目一般使用`getopt`解析参数。
 
+<!-- more -->
+
 打开源码一看，这个 options 参数有点奇怪，源码：`/pciutils/lspci.c`
 
 ```c

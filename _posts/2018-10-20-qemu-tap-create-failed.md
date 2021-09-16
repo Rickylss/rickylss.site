@@ -11,6 +11,8 @@ categories: [libvirt]
 
 ​	在申威平台上移植 libvirt4.5 时，遇到一个奇怪的问题，在虚拟机定义文件中无法使用-netdev tap 选项。但是将命令行复制出来手动执行时，却没有问题。
 
+<!-- more -->
+
 ```plain
 -netdev tap,br=,helper=,id=
 -device virtio-net-dev,netdev=

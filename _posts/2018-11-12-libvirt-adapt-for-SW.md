@@ -11,6 +11,8 @@ categories: [libvirt]
 
  本文主要讲解 libvirt 在申威平台上的移植方法和需要注意的一些细节。目前已完成基本适配的版本为 libvirt3.2+swvm 和 libvirt4.5.0+qemu2.11.0。
 
+ <!-- more -->
+
 ## 申威平台编译 libvirt
 
 ​	获取 libvirt 源码，进入源码目录切换到你想要移植的分支，再依据该分支创建新的 sw 分支：
