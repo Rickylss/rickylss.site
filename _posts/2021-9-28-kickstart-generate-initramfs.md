@@ -18,6 +18,8 @@ comment: true
 
 并且%post默认在chroot环境下运行，而%pre不在chroot下运行，这一点在后文调试中会解释。
 
+<!-- more -->
+
 # 调试iso安装过程
 
 调试iso安装过程，首先选iso启动，进到安装界面，你可以选text mode（不带UI的字符安装界面）或者带UI的界面。
@@ -77,3 +79,5 @@ $ /sbin/dracut -f /boot/initramfs-${KERNEL_VERSION}.img ${KERNEL_VERSION}
 CentOS install guide: https://docs.centos.org/en-US/centos/install-guide/Kickstart2/
 
 Red Hat How to: https://access.redhat.com/solutions/5498341
+
+
