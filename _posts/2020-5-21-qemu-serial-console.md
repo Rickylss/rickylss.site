@@ -3,6 +3,7 @@ layout: post
 title:  "libvirt vm boot 信息重定向"
 subtitle: ""
 date:   2020-5-21 19:13:45 +0800
+updated: 2021-12-2 13:20:23 +0800
 tags:
   - virsh
   - qemu
@@ -294,3 +295,14 @@ virDomainDefAddConsoleCompat(virDomainDefPtr def)
 
 为了保证兼容，第一个 serial 的配置保留给了 console，所以，如果第一个配置的 serial 类型如果不是 pty，那么 virsh console 可能会有问题。因此，我们添加的 file 类型的串口输出需要放到 pty 配置的下面。。。。
 
+# 5、最终解决方案
+
+实际上有一种方法可以达到既能使用 virsh console 又能输出到本地文件。使用这种方法不需要开启两个serial，参考libvirt xml如下：
+
+![image-20211202132516353](../pictures/image-20211202132516353.png)
+
+实际效果如下：
+
+![image2021-12-1_18-14-21.png](../pictures/image2021-12-1_18-14-21.png)
+
+这种方法实际上使用的是同一个serial，因此不会有开多个serial的困扰。
