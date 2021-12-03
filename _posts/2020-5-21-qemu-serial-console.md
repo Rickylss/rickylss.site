@@ -299,10 +299,10 @@ virDomainDefAddConsoleCompat(virDomainDefPtr def)
 
 实际上有一种方法可以达到既能使用 virsh console 又能输出到本地文件。使用这种方法不需要开启两个serial，参考libvirt xml如下：
 
-![image-20211202132516353](../pictures/image-20211202132516353.png)
+![image-20211202132516353](https://raw.githubusercontent.com/Rickylss/pics/main/img/image-20211202132516353.png)
 
 实际效果如下：
 
-![image2021-12-1_18-14-21.png](../pictures/image2021-12-1_18-14-21.png)
+![image2021-12-1_18-14-21.png](https://raw.githubusercontent.com/Rickylss/pics/main/img/image2021-12-1_18-14-21.png)
 
 这种方法实际上使用的是同一个serial，因此不会有开多个serial的困扰。
