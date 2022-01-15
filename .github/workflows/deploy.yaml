@@ -1,0 +1,28 @@
+name: Deploy Site
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Build page with Jekyll
+        uses: actions/jekyll-build-pages@v1-beta
+
+      - name: Deploy to Server
+        uses: AEnterprise/rsync-deploy@v1.0 # Use a third party action (https://github.com/AEnterprise/rsync-deploy)
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          ARGS: -avzecr --delete
+          SERVER_PORT: "22"
+          FOLDER: "_site"
+          SERVER_IP: ${{ secrets.SSH_HOST }}
+          USERNAME: ${{ secrets.SSH_USERNAME }}
+          SERVER_DESTINATION: ${{secrets.SERVER_DESTINATION}}
