@@ -20,7 +20,7 @@ jobs:
         uses: AEnterprise/rsync-deploy@v1.0 # Use a third party action (https://github.com/AEnterprise/rsync-deploy)
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          ARGS: -avzecr --delete
+          ARGS: -avz --delete
           SERVER_PORT: "22"
           FOLDER: "_site"
           SERVER_IP: ${{ secrets.SSH_HOST }}
