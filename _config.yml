@@ -539,7 +539,7 @@ leancloud_visitors:
   enable: true
   app_id: XsQs4FEQUdy1ciCwYTQWYfhd-gzGzoHsz
   app_key: irO2QTtEq3oa72lQVhG2lj8f
-  server_url: http://www.rickylss.site/
+  server_url: https://api.rickylss.site
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
