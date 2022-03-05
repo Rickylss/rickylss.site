@@ -9,7 +9,7 @@ categories: [translation, linux]
 comment: true
 ---
 
-原文链接：https://tuhrig.de/my-logging-best-practices/
+原文链接：[https://tuhrig.de/my-logging-best-practices/](https://tuhrig.de/my-logging-best-practices/)
 
 如果你和我一样是一个后端研发，那么日志对你来说就是一扇面向你的应用的窗户。和前端不一样，后端除了日志以外基本看不到太多东西。以下是一些我在写日志时的个人指导方针。
 
