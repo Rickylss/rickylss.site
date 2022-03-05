@@ -77,7 +77,7 @@ Vincent Driessen 首先发布了这个工作流模式，并使之流行起来，
 
 ## 5、Git Fork Workflow
 
-> [[zstack]]目前使用的工作流就是这种。
+> [[zstack]] 目前使用的工作流就是这种。
 
 这种工作流在开源软件开发组很受欢迎。
 

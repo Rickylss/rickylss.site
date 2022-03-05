@@ -9,9 +9,9 @@ categories: [haproxy]
 comment: true
 ---
 
-在我们对 haproxy1.6.9 进行性能测试的时候，为了提升性能，测试出 haproxy 的极限，我们启用了 haproxy**不建议使用**的多进程(nbproc)。结果遇到了一些比较麻烦的问题，由于 haproxy 上的统计信息都是存放在 stats 上，但是 stats 只能绑定到一个进程上，这就意味着我们无法统计所有负载均衡进程上的信息。
+在我们对 haproxy1.6.9 进行性能测试的时候，为了提升性能，测试出 haproxy 的极限，我们启用了 haproxy**不建议使用**的多进程 (nbproc)。结果遇到了一些比较麻烦的问题，由于 haproxy 上的统计信息都是存放在 stats 上，但是 stats 只能绑定到一个进程上，这就意味着我们无法统计所有负载均衡进程上的信息。
 
-为了解决这个问题，我们尝试过将多个进程的数据流合并到一个用于统计的进程上，但是这种方式无法解决 haproxy 性能问题（因为最终所有的流都要流向同一个进程）。最后决定通过增大进程可用 fd 数和开启多线程(nbthread)。
+为了解决这个问题，我们尝试过将多个进程的数据流合并到一个用于统计的进程上，但是这种方式无法解决 haproxy 性能问题（因为最终所有的流都要流向同一个进程）。最后决定通过增大进程可用 fd 数和开启多线程 (nbthread)。
 <!-- more -->
 # haproxy 静态编译概览
 
@@ -54,7 +54,7 @@ v2.2.0~master 中遇到的 STT_GNU_IFUNC 问题是由于`indirect function`导�
    ```bash
    # 解压安装
    $ rpm -i http://vault.centos.org/centos/glibc.src.rpm
-   # 修改spec文件，增加--enable-static-nss，替换--enable-nss-crypt为--disable-nss-crypt
+   # 修改 spec 文件，增加--enable-static-nss，替换--enable-nss-crypt 为--disable-nss-crypt
    $ vim glibc.spec
    ../configure CC="$GCC" CXX="$GXX" CFLAGS="$configure_CFLAGS" \
            --prefix=%{_prefix} \
@@ -89,7 +89,7 @@ v2.2.0~master 中遇到的 STT_GNU_IFUNC 问题是由于`indirect function`导�
    { cat config.log; false; }
    # 编译
    $ rpmbuild -bb glibc.spec
-   # 安装glibc-static./config --prefix=/tmp/staticlibssl -fPIC no-shared
+   # 安装 glibc-static./config --prefix=/tmp/staticlibssl -fPIC no-shared
    $ rpm --force -i glibc-static-xxxxx.rpm
    ```
 

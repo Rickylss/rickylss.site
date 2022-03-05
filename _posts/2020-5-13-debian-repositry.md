@@ -106,7 +106,7 @@ deb http://example.org/debian jessie main
    $ apt-ftparchive release . &gt; Release
    ```
 
-   用户端 Ubuntu16.04/Devian 8（jessie)或者更高版本，需要提供 Release 文件。release 文件包含了 Packages 等文件的大小和校验和。
+   用户端 Ubuntu16.04/Devian 8（jessie) 或者更高版本，需要提供 Release 文件。release 文件包含了 Packages 等文件的大小和校验和。
 
 4. 创建 gpg 密钥：
 
@@ -187,11 +187,11 @@ deb http://example.org/debian jessie main
 ## 1.4、使用 apache2 发布本地仓库
 
 ```bash
-# 安装apache2
+# 安装 apache2
 $ apt install apache2
 # 将仓库目录链接到/var/www/下
 $ ln -s /debian-mirror /var/www/packages/vyos
-# 设置apache2
+# 设置 apache2
 $ cat /etc/apache2/site-enabled/apt-mirror.conf
  
 <VirtualHost *:80>
@@ -276,7 +276,7 @@ actions (selection, for more see manpage):
 
 > 很多时候我们并不想自己从头创建一个仓库，或者我们只想把公有仓库拉到自己的公司的企业网中。将 deb 包一个个从公有仓库中下载下来是不切实际的，我们可以使用 apt-mirror 工具来协助我们。
 
-1. 首先安装 apt-mirror 工具，完成安装后会发现`/etc/apt/`目录下会多出一个 mirror.list 文件:
+1. 首先安装 apt-mirror 工具，完成安装后会发现`/etc/apt/`目录下会多出一个 mirror.list 文件：
 
    ```bash
    $ apt install apt-mirror
@@ -293,8 +293,8 @@ actions (selection, for more see manpage):
    # set base_path    /var/spool/apt-mirror			# 镜像仓库基地址
    #
    # set mirror_path  $base_path/mirror				# 镜像仓库地址
-   # set skel_path    $base_path/skel					# 镜像仓库skel地址
-   # set var_path     $base_path/var					# 镜像仓库var地址
+   # set skel_path    $base_path/skel					# 镜像仓库 skel 地址
+   # set var_path     $base_path/var					# 镜像仓库 var 地址
    # set cleanscript $var_path/clean.sh				# 清理脚本，默认为空
    # set defaultarch  <running host architecture>		# 默认的仓库包架构类型
    # set postmirror_script $var_path/postmirror.sh		# 镜像发布脚本，一般用于更新镜像仓库

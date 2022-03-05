@@ -138,7 +138,7 @@ if (err != NULL)
 dlclose(libHandle);
 ```
 
-目前尝试静态加载的方式似乎是行不通的.
+目前尝试静态加载的方式似乎是行不通的。
 
 使用`ProcessExplorer`查看 DLL 未能自动加载
 

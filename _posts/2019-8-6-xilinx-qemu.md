@@ -71,7 +71,7 @@ warning: cannot parse SRV response: Message too long
         url = https://github.com/qemu/keycodemapdb.git
 ```
 
-再次运行编译脚本。更多 git submodule 的信息可参考[Git-工具-子模块](https://git-scm.com/book/zh/v1/Git-工具-子模块)。
+再次运行编译脚本。更多 git submodule 的信息可参考[Git-工具 - 子模块](https://git-scm.com/book/zh/v1/Git-工具-子模块)。
 
 使用 help 命令查看 machine 支持
 

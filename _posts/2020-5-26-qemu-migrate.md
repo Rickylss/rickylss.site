@@ -40,7 +40,7 @@ qemu-monitor 中提供了 Migration 命令。使用者可以通过该命令将 V
 >
 > [-i] for migration without shared storage with incremental copy of disk (base image shared between src and destination)
 >
-> ​		用于在没有具备磁盘增量副本的共享存储时迁移(在 src 和目标之间共享基本映像)
+> ​		用于在没有具备磁盘增量副本的共享存储时迁移 (在 src 和目标之间共享基本映像)
 
 >补充：新版本的 QEMU 编译时不支持老的 blk、inc 方法，提供了 driver_mirror+NBD 的方式（同时也是 libvirt 使用的方式）。
 >
@@ -113,7 +113,7 @@ $ ./scripts/analyze_migration.py -f mig
    
    /path_to_share/ *(rw,no_root_squash,async)
    
-   # 注意如果不设置防火墙，可能无法远程mount共享文件夹
+   # 注意如果不设置防火墙，可能无法远程 mount 共享文件夹
    $ firewall-cmd --permanent --add-service=nfs
    $ firewall-cmd --permanent --add-service=rpc-bind
    $ firewall-cmd --permanent --add-service=mountd
@@ -172,7 +172,7 @@ $ ./scripts/analyze_migration.py -f mig
 
    ```bash
    # srcHost
-   # 查看migration状态
+   # 查看 migration 状态
    (qemu) info migrate
    globals:
    store-global-state: on
@@ -180,7 +180,7 @@ $ ./scripts/analyze_migration.py -f mig
    send-configuration: on
    send-section-footer: on
    decompress-error-check: on
-   # 查看capabilities
+   # 查看 capabilities
    (qemu) info migrate_capabilities
    xbzrle: off
    rdma-pin-all: off

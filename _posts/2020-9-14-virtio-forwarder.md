@@ -11,7 +11,7 @@ categories: [QEMU]
 comment: true
 ---
 
-virtio-forwarder（VIO4WD）是一个用户空间网络应用，它可以在 SR-IOV virtual functions（VFs）和 QEMU 的 virtio 网络设备之间转发流量。virtio-forwarder 通过 DPDK 轮询模式驱动程序(PMD)机制，使用 DPDK 的 vhost-user 库和指定的 VFs 实现 virtio 后端驱动程序。
+virtio-forwarder（VIO4WD）是一个用户空间网络应用，它可以在 SR-IOV virtual functions（VFs）和 QEMU 的 virtio 网络设备之间转发流量。virtio-forwarder 通过 DPDK 轮询模式驱动程序 (PMD) 机制，使用 DPDK 的 vhost-user 库和指定的 VFs 实现 virtio 后端驱动程序。
 
 这意味着，virtio-forward 既采用了 DPDK 和 VFs 来保证网络性能，又通过添加中间层的方式解耦了和 QEMU 虚拟机网卡的绑定，提供了更高的灵活性。
 
@@ -60,10 +60,10 @@ $ ldconfig
 
 > 注意：最新的 dpdk 使用 meson 和 ninja 作为构建工具，旧版本使用的是 make 工具。这里使用的是新的版本。
 
-完成 libdpdk 的编译和安装之后，编译一个应用示例进行测试[^ 1]：
+完成 libdpdk 的编译和安装之后，编译一个应用示例进行测试 [^ 1]：
 
 ```bash
-# 将dpdk.pc添加到pkg-config路径下，否则无法找到libdpdk
+# 将 dpdk.pc 添加到 pkg-config 路径下，否则无法找到 libdpdk
 $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib64/pkgconfig/
 $ cd dpdk/examples/helloworld
 $ meson build
@@ -95,7 +95,7 @@ $ grub2-mkconfig > /boot/grub2/grub.cfg
 
 ```bash
 $ cat /proc/sys/vm/max_map_count
-# 若max_map_count数量不足则需修改
+# 若 max_map_count 数量不足则需修改
 $ echo $num > /proc/sys/vm/max_map_count  # $num > 2 * nr_hugepages
 ```
 
@@ -119,7 +119,7 @@ $ chown [libvirt-]qemu:kvm -R /dev/hugepages/libvirt
 
 > 注意几个细节：
 >
-> 1. 2M 大页的 pages 为 1375，这是在只有一个 numa 节点的情况下，如果你有多个 numa 节点（可通过 cpuinfo 查看），那么 2M 大页会平分到多个 numa 节点上[^ 2]；VIO4WD 的默认策略会在一个 socket 上使用 1375*2MB 的内存，那么你就需要将 2M 大页的数量翻倍；
+> 1. 2M 大页的 pages 为 1375，这是在只有一个 numa 节点的情况下，如果你有多个 numa 节点（可通过 cpuinfo 查看），那么 2M 大页会平分到多个 numa 节点上 [^ 2]；VIO4WD 的默认策略会在一个 socket 上使用 1375*2MB 的内存，那么你就需要将 2M 大页的数量翻倍；
 > 2. DPDK 通过`/proc/mount`判断挂载点，若在同一个路径下挂载两次（`/proc/mount`中会有两条记录），那么就会出现锁死的情况；以 CentOS7 为例，若向内核参数添加了大页内存支持，重启后会自动挂载一个`/dev/hugepages`，这时候你需要先卸载它，或者直接换一个地方挂载并在后续的`/etc/default/virtioforwarder`配置中修改即可。
 > 3. 注意系统中 libvirt 的权限问题。
 > 4. 在`/etc/default/grub`的内核参数中修改`intel_iommu=on`为`intel_iommu=pt`，否则会出现如下错误：
@@ -208,7 +208,7 @@ VIRTIOFWD_ZMQ_CONFIG_EP=ipc:///var/run/virtio-forwarder/config
 
 # 设置 CPU
 
-负载均衡器和亲和性[^ 3]。
+负载均衡器和亲和性 [^ 3]。
 
 略。
 
@@ -305,7 +305,7 @@ netdev=hostnet1,id=net1,mac=52:54:00:bf:e3:ae,bus=pci.0,addr=0x6
 </interface>
 ```
 
-# 调优[^4]
+# 调优 [^4]
 
 由于 VIO4WD 使用的是 polling 的方式，因此它需要占用掉几个 CPU，调优的关键在 CPU 和内存 NUMA 的亲和性，通常有以下一些地方可以调优：
 
@@ -342,9 +342,9 @@ netdev=hostnet1,id=net1,mac=52:54:00:bf:e3:ae,bus=pci.0,addr=0x6
 
 vhost 零丢包 23wpps,
 
-VIO4WD+kernel 零丢包 70wpps，0.5%丢包 105wpps
+VIO4WD+kernel 零丢包 70wpps，0.5% 丢包 105wpps
 
-VIO4WD+vpp 零丢包 20wpps，0.5%丢包 258wpps
+VIO4WD+vpp 零丢包 20wpps，0.5% 丢包 258wpps
 
 ## tcp 带宽测试
 

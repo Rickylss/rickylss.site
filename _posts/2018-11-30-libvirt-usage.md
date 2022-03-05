@@ -14,7 +14,7 @@ categories: [libvirt]
 
 ## libvirt 是什么
 
-**官方文档上对[libvirt](https://libvirt.org/)的描述：**
+**官方文档上对 [libvirt](https://libvirt.org/) 的描述：**
 
 The libvirt project:
 
@@ -25,7 +25,7 @@ The libvirt project:
 - targets Linux, FreeBSD, [Windows](https://libvirt.org/windows.html) and OS-X
 - is used by many [applications](https://libvirt.org/apps.html)
 
-**wikipedia 对[libvirt](https://en.wikipedia.org/wiki/Libvirt)的描述：**
+**wikipedia 对 [libvirt](https://en.wikipedia.org/wiki/Libvirt) 的描述：**
 
 *libvirt is a [C](https://en.wikipedia.org/wiki/C_(programming_language)) library with bindings in other languages, notably in [Python](https://en.wikipedia.org/wiki/Python_(programming_language)),[Perl](https://en.wikipedia.org/wiki/Perl), [OCaml](https://en.wikipedia.org/wiki/OCaml),[Ruby](https://en.wikipedia.org/wiki/Ruby_(programming_language)),[Java](https://en.wikipedia.org/wiki/Java_(programming_language)),[JavaScript](https://en.wikipedia.org/wiki/JavaScript) (via [Node.js](https://en.wikipedia.org/wiki/Node.js))and [PHP](https://en.wikipedia.org/wiki/PHP).libvirt for these programming languages is composed of wrappers around another class/package called **libvirtmod**. libvirtmod's implementation is closely associated with its counterpart in C/C++ in syntax and functionality.*
 
@@ -84,7 +84,7 @@ virsh #
 
 ### URI
 
-​	virsh 终端一进去就会自动连接到`qemu:///system`，这是由于在 libvirt 中将这个 uri 设置成了默认的连接(connection)。我们可以在`/etc/libvirt/libvirt.conf`中修改默认的连接。
+​	virsh 终端一进去就会自动连接到`qemu:///system`，这是由于在 libvirt 中将这个 uri 设置成了默认的连接 (connection)。我们可以在`/etc/libvirt/libvirt.conf`中修改默认的连接。
 
 ```plain
 # cat /etc/libvirt/libvirt.conf
@@ -140,7 +140,7 @@ virsh #
 ```
 
 ​	test 是一个测试用的 hypervisor，并没有实际的作用，只是用来测试接口。为什么可以不开启 libvirtd 守护进程，就涉及到 libvirt 的两种 HypervisorDriver。
-![libvirt连接方式](\pictures\libvirt-daemon-arch.png)
+![libvirt 连接方式](\pictures\libvirt-daemon-arch.png)
 
 ​	只有当需要连接到远程（remote）的 hypervisor 才需要连接 libvirtd，而部分本地的 Driver 是不需要远程连接的（上图有部分错误，qemu 是必须远程连接的）。详情见代码。
 

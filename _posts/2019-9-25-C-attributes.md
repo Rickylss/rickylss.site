@@ -18,7 +18,7 @@ categories: [C]
 constructor
 destructor
 
-使用 constructor（构造）会使该方法在运行 main()方法前被自动调用，相同的 destructor 会使该方法在 main()方法运行后或者 exit()方法运行之后被自动调用（注：atexit()方法也可做到 main 执行后调用）。
+使用 constructor（构造）会使该方法在运行 main() 方法前被自动调用，相同的 destructor 会使该方法在 main() 方法运行后或者 exit() 方法运行之后被自动调用（注：atexit() 方法也可做到 main 执行后调用）。
 
 linux 运行 elf 程序链接、启动过程如下图：
 

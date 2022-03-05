@@ -83,7 +83,7 @@ static void do_cpu_reset(void *opaque)
 static const MemoryRegionOps pl011_ops = {
     .read = pl011_read,
     .write = pl011_write,
-    .endianness = DEVICE_NATIVE_ENDIAN,//修改为DEVICE_BIG_ENDIAN或DEVICE_LITTLE_ENDIAN
+    .endianness = DEVICE_NATIVE_ENDIAN,//修改为 DEVICE_BIG_ENDIAN 或 DEVICE_LITTLE_ENDIAN
 };
 ```
 
@@ -122,7 +122,7 @@ static const MemoryRegionOps pl011_ops = {
 
 tms570 是大端机，但是它属于大端的那个模式呢，在 tms570 手册中，它可以使用 be32 模式，但是在 cortexr4f 的文档中，我发现，它是不能使用 be32 模式，只能使用 be8 模式。
 
-![cortexr4f手册](\pictures\cortexr4f-bigendian.png)
+![cortexr4f 手册](\pictures\cortexr4f-bigendian.png)
 
 同时，当我在网上查询这个问题的时候，发现早也有人对此提出疑问，在 QMEU[开发邮件](<https://lists.gnu.org/archive/html/qemu-devel/2013-03/msg00033.html>)中可看到详细信息。
 

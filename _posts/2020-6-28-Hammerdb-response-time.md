@@ -138,7 +138,7 @@ The test output is the following (with Tcl8.4 under Linux/Intel):
  +------------------------+--------------+--------+--------------+--------------+
 ```
 
-> 这是`etprof`官网的示例，after 方法使程序执行延迟指定的时间(ms，毫秒)。请**重点关注**`EXCLUSIVETOT`和`CUMULTOT`之间的关系。
+> 这是`etprof`官网的示例，after 方法使程序执行延迟指定的时间 (ms，毫秒)。请**重点关注**`EXCLUSIVETOT`和`CUMULTOT`之间的关系。
 
 # 4、响应时间分析
 

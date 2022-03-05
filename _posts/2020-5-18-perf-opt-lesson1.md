@@ -29,7 +29,7 @@ comment: true
 
 性能调优的优先条件是，性能分析，只有分析出系统的瓶颈，才能进行调优。而分析一个系统的性能，就要面对上面提到的三种情况。计算机系统是非常庞大的，包含了计算机体系结构、操作系统、网络、存储等，单单拎出任何一个方向都值得我们去研究很久，因此，我们在分析系统性能的时候，是无法避免地会遇到很多`未知的未知`问题，而我们要做的事情就是要将它们变成`已知的未知`，再变成`已知的已知`。
 
-![DK效应](\pictures\DK-effect.png)
+![DK 效应](\pictures\DK-effect.png)
 
 # 2、什么是优化
 
@@ -127,7 +127,7 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
 
 思考题：
 
-1. 内核使用 MMX 指令实现 memcpy()会更快吗？
+1. 内核使用 MMX 指令实现 memcpy() 会更快吗？
 
    > MMX 是由[英特尔](https://zh.wikipedia.org/wiki/英特尔)开发的一种**[SIMD](https://zh.wikipedia.org/wiki/单指令流多数据流)**[多媒体](https://zh.wikipedia.org/wiki/多媒体)[指令集](https://zh.wikipedia.org/wiki/指令集)，共有 57 条指令。它于 1996 年集成在英特尔[奔腾](https://zh.wikipedia.org/wiki/奔腾)（Pentium）MMX[处理器](https://zh.wikipedia.org/wiki/处理器)上，以提高其多媒体数据的处理能力。
    >
@@ -135,7 +135,7 @@ Visual comparison chart: http://i.imgur.com/k0t1e.png
    >
    > MMX 技术占用 FPU 寄存器进行运算，因此 MMX 指令和浮点数运算操作不能同时工作。
 
-   答：使用 MMX 指令实现 memcpy()未必会更快。原因在于，在一般情况下，FPU 指令集是很少被使用到的，即便被使用到也是非常简单且惰性的，并不会影响进程和线程的快速切换。若你使用 FPU 指令集做 memcpy，那么每次进程或线程切换，你都需要保存/恢复一次 i387，而这个开销是非常大的。即便你在用户程序中没有明确的使用 i387 指令，内核也会帮你调用。
+   答：使用 MMX 指令实现 memcpy() 未必会更快。原因在于，在一般情况下，FPU 指令集是很少被使用到的，即便被使用到也是非常简单且惰性的，并不会影响进程和线程的快速切换。若你使用 FPU 指令集做 memcpy，那么每次进程或线程切换，你都需要保存/恢复一次 i387，而这个开销是非常大的。即便你在用户程序中没有明确的使用 i387 指令，内核也会帮你调用。
 
 2. Zero Copy Xmit 一定能够提高虚拟机网络性能么？
 

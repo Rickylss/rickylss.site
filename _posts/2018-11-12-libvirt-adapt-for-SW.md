@@ -55,7 +55,7 @@ $ systemctl restart libvirtd
 $ systemctl status libvirtd
 ```
 
-​	查看 libvirtd 状态，若需要，则安装 dnsmasq 和防火墙 iptables 或 ebtables（目前 iptable 创建网卡相关部分依然存在部分问题，在[libvirt 与 virbr0]中我们会进行详细讨论）。
+​	查看 libvirtd 状态，若需要，则安装 dnsmasq 和防火墙 iptables 或 ebtables（目前 iptable 创建网卡相关部分依然存在部分问题，在 [libvirt 与 virbr0] 中我们会进行详细讨论）。
 
 
 
@@ -75,7 +75,7 @@ $ systemctl status libvirtd
 6. qemu-ga：qemu-ga-2.5.0 移植，qemu guest agent，虚拟机与宿主机通信通道，详细内容可参考[GuestAgent](G:\博客产出\QEMU\GuestAgent.md)；
 7. kvm-tools：容器虚拟化，正在移植中。
 
-***目前 swvm 与 qemu-system-sw64 内核未能合并，同时 hmcode 不兼容，因此在同一台服务器上只能使用 swvm 或者 qemu-system-sw64，如果想要替换为另一个 hypervisor 则需要为服务器刷[hmcode](G:\博客产出\申威\hmcode.md)。*** 
+***目前 swvm 与 qemu-system-sw64 内核未能合并，同时 hmcode 不兼容，因此在同一台服务器上只能使用 swvm 或者 qemu-system-sw64，如果想要替换为另一个 hypervisor 则需要为服务器刷 [hmcode](G:\博客产出\申威\hmcode.md)。*** 
 
 ​	选择 qemu-system-sw64 需要修改 qemuHypervisorDriver 相关内容，选择 swvm 则需要自行添加一个全新的 driver，这是由于 libvirt 的项目结构导致的，这种模块化的结构极大的方便了不同 hypervisor 开发者的工作，他们只需要专注于自己要开发的模块即可，无需关注其他模块。但是无论你选择那种 Hypervisor，即便是未来要添加的 kvm-tools，**有一部分内容是一定要修改的，那就是架构相关的代码**。
 

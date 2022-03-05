@@ -150,9 +150,9 @@ categories: [QEMU]
 1. 在宿主机上创建虚拟**宿主机上 can0**
 
    ```shell
-   $ ip link add dev can0 type vcan                #创建虚拟can设备；类型vcan 名称can0
-   $ ifconfig -a / ip -details link show can0	    #查看新建虚拟can0设备
-   $ ip link set can0 up                           #启动can0，可查看此时can0设备状态改变
+   $ ip link add dev can0 type vcan                #创建虚拟 can 设备；类型 vcan 名称 can0
+   $ ifconfig -a / ip -details link show can0	    #查看新建虚拟 can0 设备
+   $ ip link set can0 up                           #启动 can0，可查看此时 can0 设备状态改变
    ```
 
 2. 启动 x86_64 目标机添加 pci-can，并连接**宿主机上 can0**

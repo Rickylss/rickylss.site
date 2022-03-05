@@ -93,7 +93,7 @@ static inline int64_t get_clock(void)
     } else {
         /* XXX: using gettimeofday leads to problems if the date
            changes, so it should be avoided. */
-        return get_clock_realtime();		// 实际上是gettimeofday()，不建议使用
+        return get_clock_realtime();		// 实际上是 gettimeofday()，不建议使用
     }
 }
 #endif
@@ -106,9 +106,9 @@ int64_t qemu_clock_get_ns(QEMUClockType type)
     default:
     case QEMU_CLOCK_VIRTUAL:
         if (use_icount) {
-            return cpu_get_icount();		// cpu cycle计数
+            return cpu_get_icount();		// cpu cycle 计数
         } else {
-            return cpu_get_clock();			// cpu时钟
+            return cpu_get_clock();			// cpu 时钟
         }
     case QEMU_CLOCK_HOST:
         return REPLAY_CLOCK(REPLAY_CLOCK_HOST, get_clock_realtime()); 
@@ -203,7 +203,7 @@ static void cpu_throttle_timer_tick(void *opaque)
 ![QEMUClock](\pictures\QEMUClock.png)
 
 1. `qemu_init_main_loop`中调用`init_clocks`初始化 4 种 Clock 类型：
-2. `qemu_clock_init`初始化 4 种 Clock 类型，并且每种 Clock 下都有一个 TimerList，将 TimerList 加入到全局的 TimerListGroup(main_loop_tlg)中。
+2. `qemu_clock_init`初始化 4 种 Clock 类型，并且每种 Clock 下都有一个 TimerList，将 TimerList 加入到全局的 TimerListGroup(main_loop_tlg) 中。
 
 ## QEMUClock 执行流程
 

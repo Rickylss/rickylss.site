@@ -9,17 +9,17 @@ categories: [translate]
 comment: true
 ---
 
-在看一些开源项目的时候，经常会遇到一些奇怪的magic numbers，比如0xdeedbeef，它们经常出现，但是有什么含义呢？
+在看一些开源项目的时候，经常会遇到一些奇怪的 magic numbers，比如 0xdeedbeef，它们经常出现，但是有什么含义呢？
 
-wiki上对Hexspeak的解释如下：
+wiki 上对 Hexspeak 的解释如下：
 
 > **Hexspeak**, like [leetspeak](https://en.wikipedia.org/wiki/Leet), is a novelty form of variant [English](https://en.wikipedia.org/wiki/English_language) spelling using the hexadecimal digits. Created by programmers as memorable [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)), hexspeak words can serve as a clear and unique identifier with which to mark memory or data.
 
-简而言之，hexspeak，就是一种程序员发明的，用16进制数来表达的一种变体的英文拼写。
+简而言之，hexspeak，就是一种程序员发明的，用 16 进制数来表达的一种变体的英文拼写。
 <!-- more -->
 ## 翻译规则
 
-16进制的书写由`0123456789ABCDEF`15个字符来完成，仅仅使用`ABCDEF`几个字母就已经可以拼写出很多单词了。剩余的`0123456789`可以将它们转化成对应的字母，比如：
+16 进制的书写由`0123456789ABCDEF`15 个字符来完成，仅仅使用`ABCDEF`几个字母就已经可以拼写出很多单词了。剩余的`0123456789`可以将它们转化成对应的字母，比如：
 
 - `0`可以当作字母`O`，
 - `1`可以当作字母`L`或者`I`，
@@ -32,9 +32,9 @@ wiki上对Hexspeak的解释如下：
 
 通过这种方式就可以表达出更多含义了。
 
-## 常见的magic numbers
+## 常见的 magic numbers
 
-许多计算机处理器、操作系统和调试器都会使用幻数，尤其是将其作为调试值。下面是wiki中收录的一些常见幻数：
+许多计算机处理器、操作系统和调试器都会使用幻数，尤其是将其作为调试值。下面是 wiki 中收录的一些常见幻数：
 
 |                  Code                  |                         Description                          |
 | :----------------------------: | :----------------------------------------------------------: |
@@ -95,10 +95,10 @@ wiki上对Hexspeak的解释如下：
 
 在某些不同的语言中，可能存在扩展的用法；
 
-- 比如在C语言中，我们经常用后缀`L`来表示一个数是`long`类型，使用`LL`来表示`long long`，这样就可以写出`0xDEADCELL`(dead cell)或者`0xFEEDBULL`(feed bull)这样的hexspeak了；
+- 比如在 C 语言中，我们经常用后缀`L`来表示一个数是`long`类型，使用`LL`来表示`long long`，这样就可以写出`0xDEADCELL`(dead cell) 或者`0xFEEDBULL`(feed bull) 这样的 hexspeak 了；
 
 ## 相关趣闻
 
-hyper-v是微软研发的一款hypervisor，在2009年的时候，有人发现在hyper-v的网络驱动代码中使用了GPL-licensed组件，并且是静态编译到闭源的二进制中，因此被要求公开相关代码。Linux从kernel2.6.32开始，都可以包含hyper-v半虚拟化支持，用来提高在windows host上的Linux guest的性能。
+hyper-v 是微软研发的一款 hypervisor，在 2009 年的时候，有人发现在 hyper-v 的网络驱动代码中使用了 GPL-licensed 组件，并且是静态编译到闭源的二进制中，因此被要求公开相关代码。Linux 从 kernel2.6.32 开始，都可以包含 hyper-v 半虚拟化支持，用来提高在 windows host 上的 Linux guest 的性能。
 
-当有人查看微软提交到Linux内核的hyper-v代码时，发现有人使用了`0x__B16B00B5__`这样的幻数，用hexspeak翻译过来就是“BIG BOOBS"。被发现之后微软道歉并修复相关代码。
+当有人查看微软提交到 Linux 内核的 hyper-v 代码时，发现有人使用了`0x__B16B00B5__`这样的幻数，用 hexspeak 翻译过来就是“BIG BOOBS"。被发现之后微软道歉并修复相关代码。

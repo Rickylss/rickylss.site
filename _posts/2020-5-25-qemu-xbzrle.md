@@ -30,7 +30,7 @@ cache 越大，越有机会遇到要更新的内存；反之 cache 越小，越�
 
 这个 cache 的值在热迁移期间也是可以修改的。
 
-# 2、xbzrle压缩格式
+# 2、xbzrle 压缩格式
 
 xbzrle 压缩格式需要体现出之前和当前的内存页差异，zero 用来表示未改变的值。页面数据增量就是使用 zero runs 和 non zero runs 来表示。
 
@@ -41,8 +41,8 @@ xbzrle 压缩格式需要体现出之前和当前的内存页差异，zero 用�
 xbzrle 可以有多个有效编码，但是发送方为了减少计算成本会选择发送更长的编码。
 
 ```c
-# zrun和nzrun是交替的，并且一个page一定以zrun开头
-# 当zrun长度为0时，在编码后以0x00代替
+# zrun 和 nzrun 是交替的，并且一个 page 一定以 zrun 开头
+# 当 zrun 长度为 0 时，在编码后以 0x00 代替
 
 page = zrun nzrun
        | zrun nzrun page
@@ -88,7 +88,7 @@ e9 07 0f [01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f] 03 01 [67] 01 01 [69]
 
 # 4、在 QEMU 中使用 xbzrle
 
-在 QEMU monitor 中可以直接使用 hmp 命令查看当前 qemu 对 migrate_capabilities 支持能力:
+在 QEMU monitor 中可以直接使用 hmp 命令查看当前 qemu 对 migrate_capabilities 支持能力：
 
 ```bash
 {qemu} info migrate_capabilities
@@ -153,7 +153,7 @@ virsh 下可直接使用`virsh migrate`命令
 - xbzrle cache-miss：到目前为止缓存丢失的次数，缓存丢失率高意味着 cache size 太低；
 - xbzrle overflow：译码中溢出的次数，在此情况下增量不能被压缩，当内存页的更改过大或者存在太多小更改的时候会出现这种情况，例如每隔一个 byte 修改一个 byte。
 
-> 更多有关 qemu migrate 的信息可参考另一篇博文：`libvirt->QEMU热迁移`
+> 更多有关 qemu migrate 的信息可参考另一篇博文：`libvirt->QEMU 热迁移`
 
 # 5、xbzrle 算法实现（QEMU）
 
@@ -179,7 +179,7 @@ int xbzrle_decode_buffer(uint8_t *src, int slen, uint8_t *dst, int dlen);
 - `ram_load()->ram_load_precopy()->load_xbzrle()->xbzrle_decode_buffer()`
 - `ram_save_iterate()/ram_save_complete()->ram_find_and_save_block()->ram_save_host_page()->ram_save_target_page()->ram_save_page->save_xbzrle_page()->xbzrle_encode_buffer()`
 
-`qemu/migrate/xbzrle.c`中就是这两个函数的具体实现:
+`qemu/migrate/xbzrle.c`中就是这两个函数的具体实现：
 
 ```c
 int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
@@ -193,9 +193,9 @@ int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
             return -1;
         }
 
-        /* 计算zero run的长度 */
+        /* 计算 zero run 的长度 */
         /* not aligned to sizeof(long) */
-        /* 未能8字节对齐的一小段，1byte 1byte增加到zrun中 */
+        /* 未能 8 字节对齐的一小段，1byte 1byte 增加到 zrun 中 */
         res = (slen - i) % sizeof(long);
         while (res && old_buf[i] == new_buf[i]) {
             zrun_len++;
@@ -204,7 +204,7 @@ int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
         }
 
         /* word at a time for speed */
-        /* 已对齐的，1word 1word增加到zrun中 */
+        /* 已对齐的，1word 1word 增加到 zrun 中 */
         if (!res) {
             while (i < slen &&
                    (*(long *)(old_buf + i)) == (*(long *)(new_buf + i))) {
@@ -213,14 +213,14 @@ int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
             }
 
             /* go over the rest */
-            /* 直到任然有一部分不同，1byte 1byte增加*/
+            /* 直到任然有一部分不同，1byte 1byte 增加*/
             while (i < slen && old_buf[i] == new_buf[i]) {
                 zrun_len++;
                 i++;
             }
         }
 
-        /* 如果已经到尾部则无需再增加zrun，即最后的zrun放弃 */
+        /* 如果已经到尾部则无需再增加 zrun，即最后的 zrun 放弃 */
         /* buffer unchanged */
         if (zrun_len == slen) {
             return 0;
@@ -231,10 +231,10 @@ int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
             return d;
         }
 
-        /* 编码计算zero run长度，放入dst中 */
+        /* 编码计算 zero run 长度，放入 dst 中 */
         d += uleb128_encode_small(dst + d, zrun_len);
 
-        /* 清零zrun，下次使用，位移到不匹配的字节处，开始计算nzrun长度 */
+        /* 清零 zrun，下次使用，位移到不匹配的字节处，开始计算 nzrun 长度 */
         zrun_len = 0;
         nzrun_start = new_buf + i;
 
@@ -256,7 +256,7 @@ int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
             unsigned long mask = (unsigned long)0x0101010101010101ULL;
             while (i < slen) {
                 unsigned long xor;
-                /* 找到字中第一个xor后为0x00的字节 */
+                /* 找到字中第一个 xor 后为 0x00 的字节 */
                 xor = *(unsigned long *)(old_buf + i)
                     ^ *(unsigned long *)(new_buf + i);
                 if ((xor - mask) & ~xor & (mask << 7)) {
@@ -273,13 +273,13 @@ int xbzrle_encode_buffer(uint8_t *old_buf, uint8_t *new_buf, int slen,
             }
         }
         
-		/* 编码计算no zero run长度，放入dst中 */
+		/* 编码计算 no zero run 长度，放入 dst 中 */
         d += uleb128_encode_small(dst + d, nzrun_len);
         /* overflow */
         if (d + nzrun_len > dlen) {
             return -1;
         }
-        /* 将差异部分原样放入dst中 */
+        /* 将差异部分原样放入 dst 中 */
         memcpy(dst + d, nzrun_start, nzrun_len);
         d += nzrun_len;
         nzrun_len = 0;
@@ -302,7 +302,7 @@ int xbzrle_decode_buffer(uint8_t *src, int slen, uint8_t *dst, int dlen)
         if ((slen - i) < 2) {
             return -1;
         }
-		/* 可以确定第一段一定是zrun，解码得到zrun长度 */
+		/* 可以确定第一段一定是 zrun，解码得到 zrun 长度 */
         ret = uleb128_decode_small(src + i, &count);
         if (ret < 0 || (i && !count)) {
             return -1;
@@ -315,7 +315,7 @@ int xbzrle_decode_buffer(uint8_t *src, int slen, uint8_t *dst, int dlen)
             return -1;
         }
 		
-        /* 可以确定在zrun后一定接着nzrun，解码得到nzrun长度 */
+        /* 可以确定在 zrun 后一定接着 nzrun，解码得到 nzrun 长度 */
         /* nzrun */
         if ((slen - i) < 2) {
             return -1;
@@ -332,7 +332,7 @@ int xbzrle_decode_buffer(uint8_t *src, int slen, uint8_t *dst, int dlen)
             return -1;
         }
 		
-        /* 将nzrun后相应长度的字节放入目标内存页 */
+        /* 将 nzrun 后相应长度的字节放入目标内存页 */
         memcpy(dst + d, src + i, count);
         d += count;
         i += count;
@@ -430,22 +430,22 @@ capabilities: xbzrle: off rdma-pin-all: off auto-converge: off zero-blocks: off 
 # common status
 Migration status: completed         # 迁移状态：完成
 total time: 15549 milliseconds      # 迁移总用时：15549ms
-downtime: 113 milliseconds          # srcVM停机时间：113ms
-setup: 170 milliseconds             # 发出qmp指令后到开启迁移之前消耗的时间：170ms
+downtime: 113 milliseconds          # srcVM 停机时间：113ms
+setup: 170 milliseconds             # 发出 qmp 指令后到开启迁移之前消耗的时间：170ms
 # ram migration status
 transferred ram: 508788 kbytes		# 已传输的字节数：496M
 throughput: 268.24 mbps				# 吞吐量：268.24mbps
-remaining ram: 0 kbytes             # 剩余未迁移ram大小： 0Kbytes
-total ram: 8405832 kbytes           # 迁移的总ram大小：8G
-duplicate: 1982121 pages            # 零页的数量（即未使用的ram数，无需迁移）：1982121页 = 7.56G 
+remaining ram: 0 kbytes             # 剩余未迁移 ram 大小： 0Kbytes
+total ram: 8405832 kbytes           # 迁移的总 ram 大小：8G
+duplicate: 1982121 pages            # 零页的数量（即未使用的 ram 数，无需迁移）：1982121 页 = 7.56G 
 skipped: 0 pages					# 跳过的零页数：0
-normal: 122602 pages				# 正常发送的页数：122602页
-normal bytes: 490408 kbytes         # 正常发送的bytes数，恰好为正常迁移页数的4倍：478.9M
-dirty sync count: 4                 # 脏页同步次数：4次
+normal: 122602 pages				# 正常发送的页数：122602 页
+normal bytes: 490408 kbytes         # 正常发送的 bytes 数，恰好为正常迁移页数的 4 倍：478.9M
+dirty sync count: 4                 # 脏页同步次数：4 次
 page size: 4 kbytes                 # 页大小：4K
 ```
 
-已传输的字节数>正常发送的字节数>（总字节数-零页的数）。
+已传输的字节数>正常发送的字节数>（总字节数 - 零页的数）。
 
 > 注意已传输字节数不等于正常发送的字节数，考虑到校验的问题。
 
@@ -463,25 +463,25 @@ capabilities: xbzrle: on rdma-pin-all: off auto-converge: off zero-blocks: off c
 
 Migration status: completed			# 迁移状态：完成
 total time: 15314 milliseconds		# 迁移总用时：15314ms
-downtime: 73 milliseconds			# srcVM停机时间：73ms
-setup: 172 milliseconds				# 发出qmp指令后到开启迁移之前消耗的时间：172ms
+downtime: 73 milliseconds			# srcVM 停机时间：73ms
+setup: 172 milliseconds				# 发出 qmp 指令后到开启迁移之前消耗的时间：172ms
 
 transferred ram: 502343 kbytes		# 已传输的字节数：502343 kbytes
 throughput: 268.91 mbps				# 吞吐量：268.91mbps
 remaining ram: 0 kbytes				# 剩余未迁移的字节数： 0Kbytes
 total ram: 8405832 kbytes			# 迁移过程中涉及到的字节数：8G
-duplicate: 1982094 pages			# 零页的数量：1982094页
+duplicate: 1982094 pages			# 零页的数量：1982094 页
 skipped: 0 pages					# 跳过的页数：0
 normal: 120994 pages				# 正常发送的页数
-normal bytes: 483976 kbytes			# 正常发送bytes数，恰好为正常发送页数的4倍
-dirty sync count: 3					# 脏页同步次数：3次
+normal bytes: 483976 kbytes			# 正常发送 bytes 数，恰好为正常发送页数的 4 倍
+dirty sync count: 3					# 脏页同步次数：3 次
 page size: 4 kbytes					# 页大小：4K
 cache size: 67108864 bytes          # xbzrle cache：64M
 
-xbzrle transferred: 0 kbytes		# 由xbzrle转发给detVM的数据：0
-xbzrle pages: 0 pages				# 由xbzrle转发给detVM的页：0
-xbzrle cache miss: 1613				# 发生cache miss次数：1613次
-xbzrle cache miss rate: 0.00		# cache miss率：0.0
+xbzrle transferred: 0 kbytes		# 由 xbzrle 转发给 detVM 的数据：0
+xbzrle pages: 0 pages				# 由 xbzrle 转发给 detVM 的页：0
+xbzrle cache miss: 1613				# 发生 cache miss 次数：1613 次
+xbzrle cache miss rate: 0.00		# cache miss 率：0.0
 xbzrle overflow : 0					# 溢出次数：0
 ```
 

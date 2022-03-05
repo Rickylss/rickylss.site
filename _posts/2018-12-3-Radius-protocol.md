@@ -15,7 +15,7 @@ categories: [DK]
 <!-- more -->
 ## 协议简介
 
-RADIUS 是一种 C/S 结构的网络应用层协议，工作在 1812、1813 端口上，它是目前应用最广泛的 AAA(认证 Authentication、授权 Authorization、计费 Accounting)协议。
+RADIUS 是一种 C/S 结构的网络应用层协议，工作在 1812、1813 端口上，它是目前应用最广泛的 AAA(认证 Authentication、授权 Authorization、计费 Accounting) 协议。
 
 Radius 协议主要针对的远程登陆类型：SLIP、PPP、telnet 和 rlogin 等。Radius 协议应用范围很广，包括普通电话、上网业务计费，对 VPN 的支持可以使不同的拨入服务器的用户具有不同权限。
 
@@ -80,7 +80,7 @@ RADIUS 使用两个包类型来管理完整的 AAA 进程：管理认证和授�
 3. 最后，当用户想要关闭一个连接的时候，client 发送一个 acct_status_type=stop 的 request 给 server，提供最终在时间、包转发、数据转发和关闭连接的原因等相关的信息。
 4. 通常，client 发送一个 Accounting-Request 之后，会等待一个 Accounting-Response 确认回复。这些数据信息的意义在于计费和监控。
 
-## 包结构(Packet structure)
+## 包结构 (Packet structure)
 
 ![](\pictures\Radius_packet_format.png)
 
@@ -120,6 +120,6 @@ RADIUS 数据包格式如上图所示，从左到右传送出去，从 code 到 
 - [RFC 2868](https://tools.ietf.org/html/rfc2868) - 通道协议中使用的 RADIUS 属性
 - [RFC 2869](https://tools.ietf.org/html/rfc2869) - RADIUS 协议拓展
 - [RFC 3162](https://tools.ietf.org/html/rfc3162) - [IPv6](https://zh.wikipedia.org/wiki/IPv6)网络中 RADIUS 协议的使用
-- [RFC 3579](https://tools.ietf.org/html/rfc3579) - RADIUS 协议中 EAP([RFC 2284](https://tools.ietf.org/html/rfc2284))的使用
+- [RFC 3579](https://tools.ietf.org/html/rfc3579) - RADIUS 协议中 EAP([RFC 2284](https://tools.ietf.org/html/rfc2284)) 的使用
 - [RFC 3580](https://tools.ietf.org/html/rfc3580) - IEEE 802.1X 中 RADIUS 协议的使用指南
 

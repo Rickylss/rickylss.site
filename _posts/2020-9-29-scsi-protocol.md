@@ -25,7 +25,7 @@ SCSI 命令封装在一个 CDB（command descriptor block）中，这个 CDB 中
 
 # SCSI 命令长度
 
-起初，SCSI 操作码的最高有效 3 位指定了 CDB 的长度。但是，当可变长度 CDB 出现之后，这种对应关系就改变了，必须检查整个操作码才能确定 CDB 的长度。长度如下:
+起初，SCSI 操作码的最高有效 3 位指定了 CDB 的长度。但是，当可变长度 CDB 出现之后，这种对应关系就改变了，必须检查整个操作码才能确定 CDB 的长度。长度如下：
 
 | Opcode (hex ) |                          Length                          |
 | :-----------: | :------------------------------------------------------: |
@@ -42,7 +42,7 @@ SCSI 命令封装在一个 CDB（command descriptor block）中，这个 CDB 中
 
 # SCSI-2 R & SCSI-3 PR
 
-SCSI-2 R & SCSI-3 PR 是用于在集群中控制某个共享设备的访问权限的命令。initiator 对一个 LUN(logical unit number)设置 reservation，以阻止其他 initiator 对该 LUN 进行修改。这和文件锁很像。SCSI reservations 通常由一个 initiator 设置，幸运的话该 LUN 会被同一个 initiator 使用 SCSI release 释放。
+SCSI-2 R & SCSI-3 PR 是用于在集群中控制某个共享设备的访问权限的命令。initiator 对一个 LUN(logical unit number) 设置 reservation，以阻止其他 initiator 对该 LUN 进行修改。这和文件锁很像。SCSI reservations 通常由一个 initiator 设置，幸运的话该 LUN 会被同一个 initiator 使用 SCSI release 释放。
 
 SCSI-2 R（SCSI-2 Reservations）是 SCSI 标准中制定的命令，有`RESERVE(6)`和`RESERVE(10)`在当前版本中已经被废弃，它的 optcode 为`16`和`56`。
 

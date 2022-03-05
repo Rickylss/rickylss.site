@@ -198,7 +198,7 @@ virDomainPtr	virDomainMigrate3	(virDomainPtr domain,
                      unsigned int flags)
 ```
 
-这三个方法是迁移要用到的主要方法,三个方法都是通过`dest connect`将虚拟机从当前的 Host 迁移到目标 Host。不同的地方在于对参数的支持。
+这三个方法是迁移要用到的主要方法，三个方法都是通过`dest connect`将虚拟机从当前的 Host 迁移到目标 Host。不同的地方在于对参数的支持。
 
 在完成虚拟机迁移之后，需调用`virDomainFree`释放不再需要的虚拟机资源。
 
@@ -248,7 +248,7 @@ int	virDomainMigrateSetCompressionCache	(virDomainPtr domain,
 						 unsigned int flags)
 ```
 
-获取/设置用于在动态迁移时压缩多次转移的内存页的缓存大小(Bytes)。（xbzrle 将用到该 API）。可在虚拟机运行时设置/修改该值。
+获取/设置用于在动态迁移时压缩多次转移的内存页的缓存大小 (Bytes)。（xbzrle 将用到该 API）。可在虚拟机运行时设置/修改该值。
 
 ```c
 int	virDomainMigrateGetMaxDowntime	(virDomainPtr domain, 

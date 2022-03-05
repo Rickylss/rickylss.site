@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "ovs dpdk多numa优化"
+title:  "ovs dpdk 多 numa 优化"
 subtitle: "Dealing with multi-NUMA"
 date:   2021-9-17 11:20:45 +0800
 tags:
@@ -9,23 +9,23 @@ categories: [OVS, DPDK]
 comment: true
 ---
 
-在网络虚拟化中，为了最大化资源利用，通常需要将功能和基础设施调度到多个NUMA上。在这种情况下该如何配置OVS DPDK以保证性能最优，则需要一些额外的分析和配置
+在网络虚拟化中，为了最大化资源利用，通常需要将功能和基础设施调度到多个 NUMA 上。在这种情况下该如何配置 OVS DPDK 以保证性能最优，则需要一些额外的分析和配置
 
 <!-- more -->
 
 # 查看当前系统状态
 
-物理网卡和与DPDK接口相连虚拟机都有对应的NUMA node。跨NUMA node的通信通常会产生更高的延迟，因此在配置OVS DPDK时了解系统当前NUMA node分布情况是非常重要的。
+物理网卡和与 DPDK 接口相连虚拟机都有对应的 NUMA node。跨 NUMA node 的通信通常会产生更高的延迟，因此在配置 OVS DPDK 时了解系统当前 NUMA node 分布情况是非常重要的。
 
 对于物理机网卡，可以通过如下命令查看：
 
 ```bash
-# 01:00.0 是网卡pci号
+# 01:00.0 是网卡 pci 号
 $ lspci -vmms 01:00.0 | grep NUMANode
 NUMANODE:	0
 ```
 
-对于使用了DPDK interface的虚拟机，如果在虚拟机定义文件中做了`vcpupin`，可以查看`<cputune>`:
+对于使用了 DPDK interface 的虚拟机，如果在虚拟机定义文件中做了`vcpupin`，可以查看`<cputune>`:
 
 ```xml
 <cputune>
@@ -48,7 +48,7 @@ node 1 cpus: 1 3 5 7 9 11 13 15
 > 注意：
 >
 > - 如果虚拟机没有做`vcpupin`，通常`vcpu`会随意调度到空闲`pcpu`上；
-> - 在这里2、4、6、8都在`node0`上；
+> - 在这里 2、4、6、8 都在`node0`上；
 
 如果系统中没有`numactl`命令，可通过查看如下地址：
 
@@ -86,17 +86,17 @@ memory104  memory125  memory146  memory44   memory63  memory83  vmstat
 
 ```
 
-包括对应的cpu和内存。
+包括对应的 cpu 和内存。
 
 # 配置
 
-对OVS DPDK的配置都保存在`Open_vSwitch`表中，每次修改该表，都需要重启`ovs-vswitchd`使设置生效。
+对 OVS DPDK 的配置都保存在`Open_vSwitch`表中，每次修改该表，都需要重启`ovs-vswitchd`使设置生效。
 
 在`ovs-vswitchd`未运行时，执行`ovs-vsctl`设置需要添加`--no-wait，`以免等待`ovs-vswitchd`导致无法返回。
 
 ## dpdk-init
 
-要使用DPDK，需要首先开启`dpdk-init`，该设置默认为`false`:
+要使用 DPDK，需要首先开启`dpdk-init`，该设置默认为`false`:
 
 ```bash
 # ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
@@ -104,28 +104,28 @@ memory104  memory125  memory146  memory44   memory63  memory83  vmstat
 
 ## pmd-cpu-mask
 
-`pmd-cpu-mask`用于设置pmd cpu位图，pmd cpu指的是OVS DPDK用于处理datapath数据包的cpu核心。
+`pmd-cpu-mask`用于设置 pmd cpu 位图，pmd cpu 指的是 OVS DPDK 用于处理 datapath 数据包的 cpu 核心。
 
-设置了这个值之后，OVS DPDK会在位图指定的cpu对应的NUMA node上轮询DPDK interface。如果在位图中指定的cpu不在某个特定的NUMA node上，那么这个NUMA node上的物理网卡或者虚拟机则无法使用。
+设置了这个值之后，OVS DPDK 会在位图指定的 cpu 对应的 NUMA node 上轮询 DPDK interface。如果在位图中指定的 cpu 不在某个特定的 NUMA node 上，那么这个 NUMA node 上的物理网卡或者虚拟机则无法使用。
 
-随着cpu的增加，通常来说OVS DPDK的性能会变得更好，在默认的情况下会使用每个NUMA node上编号最小的cpu。
+随着 cpu 的增加，通常来说 OVS DPDK 的性能会变得更好，在默认的情况下会使用每个 NUMA node 上编号最小的 cpu。
 
-该参数可在任何时间设置，即使此时OVS上已经有流量了。
+该参数可在任何时间设置，即使此时 OVS 上已经有流量了。
 
 ```bash
 $ numactl -H
 available: 2 nodes (0-1)
 node 0 cpus: 0 2 4 6 8 10 12 14
 node 1 cpus: 1 3 5 7 9 11 13 15
-# 将numa0上4和6，numa1上5和7用于datapath数据包处理
+# 将 numa0 上 4 和 6，numa1 上 5 和 7 用于 datapath 数据包处理
 $ ovs-vsctl set Open_vSwitch . other_config:pmd-cpu-mask=0xF0
 ```
 
 ## dpdk-socket-mem
 
-`dpdk-socket-mem`用于设置在不同NUMA node上的大页内存分配，如果在某个NUMA node上没有分配内存，那么在这个node上的物理网卡和虚拟机则无法使用。有关大页内存分配的计算可参考：https://blog.rickylss.site/ovs/dpdk/2021/09/15/ovs-dpdk-hugepage/#。
+`dpdk-socket-mem`用于设置在不同 NUMA node 上的大页内存分配，如果在某个 NUMA node 上没有分配内存，那么在这个 node 上的物理网卡和虚拟机则无法使用。有关大页内存分配的计算可参考：https://blog.rickylss.site/ovs/dpdk/2021/09/15/ovs-dpdk-hugepage/#。
 
-`dpdk-socket-mem`默认设置为` dpdk-socket-mem=1024,0 `，默认情况下在在NUMA node0上分配。修改该设置需重启OVS。
+`dpdk-socket-mem`默认设置为` dpdk-socket-mem=1024,0 `，默认情况下在在 NUMA node0 上分配。修改该设置需重启 OVS。
 
 ```bash
 $ ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem=1024,1024
@@ -135,7 +135,7 @@ $ ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem=1024,1024
 
 ## dpdk-lcore-mask
 
-`dpdk-lcore-mask`同样是用于设置cpu 位图，和`pmd-cpu-mask`不同的是，这些cpu是用于非datapath的OVS DPDK线程，例如handler或者revalidator。因为这些cpu不是用来处理pmd的，所以也不会在性能上带来什么提升。而且使用默认的设置有一个好处，Linux调度器可以根据当前系统负载情况自动调度这些任务到各个cpu上。
+`dpdk-lcore-mask`同样是用于设置 cpu 位图，和`pmd-cpu-mask`不同的是，这些 cpu 是用于非 datapath 的 OVS DPDK 线程，例如 handler 或者 revalidator。因为这些 cpu 不是用来处理 pmd 的，所以也不会在性能上带来什么提升。而且使用默认的设置有一个好处，Linux 调度器可以根据当前系统负载情况自动调度这些任务到各个 cpu 上。
 
 ```bash
 $ ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask=0x4
@@ -144,7 +144,7 @@ $ ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask=0x4
 > 注意：
 >
 > - 这个设置通常来说保持默认就好；
-> - 可以个给pmd-cpu-mask做cpu isolate，这样可以确保dpdk-lcore-mask上的cpu不会调度到pmd cpu上。
+> - 可以个给 pmd-cpu-mask 做 cpu isolate，这样可以确保 dpdk-lcore-mask 上的 cpu 不会调度到 pmd cpu 上。
 
 # Reference
 

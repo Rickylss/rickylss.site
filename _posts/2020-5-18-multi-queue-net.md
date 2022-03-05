@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "网卡多队列"
-subtitle: "zstack 培训-扩展阅读"
+subtitle: "zstack 培训 - 扩展阅读"
 date:   2020-5-18 18:13:45 +0800
 tags:
   - zstack
@@ -10,7 +10,7 @@ categories: [OS]
 comment: true
 ---
 
-> 本篇博文介绍一些有关网卡多队列的内容，该文为 zstack 培训-性能分析课程笔记 1 的扩展阅读。
+> 本篇博文介绍一些有关网卡多队列的内容，该文为 zstack 培训 - 性能分析课程笔记 1 的扩展阅读。
 
 网卡多队列源自于网络 QoS 问题，网络 QoS 问题提出的队列模型，对 I/O 的开发以及网络性能的调优具有很大的指导意义。
 
@@ -19,7 +19,7 @@ comment: true
 第二节讲诉在驱动和内核中是如何调度这些队列的。
 <!-- more -->
 # 1、网络 QoS[^1]
-> 该部分内容摘取自http://www.h3c.com/cn/d_201104/713021_97665_0.htm
+> 该部分内容摘取自 http://www.h3c.com/cn/d_201104/713021_97665_0.htm
 
 在看网卡多队列之前，我们先来看看 QoS（Quality of Service）。QoS 即服务质量，网络的 QoS 包含很多个方面的内容，例如：带宽、时延、丢包率等。为了提高 QoS，工程师们提出了一些行之有效的 QoS 模型。
 
@@ -97,7 +97,7 @@ CBQ 可为不同的业务定义不同的调度策略（如带宽、时延等）�
 
 ![](\pictures\multi-net-queue-RTP.jpg)
 
-RTP 优先队列(Real Time Protocol Priority Queuing) 。
+RTP 优先队列 (Real Time Protocol Priority Queuing) 。
 
 RTP 优先队列是一种保证实时业务（包括语音与视频业务）服务质量的简单队列技术。其原理就是将承载语音或视频的 RTP 报文送入高优先级队列，使其得到优先发送，保证时延和抖动降低为最低限度，从而保证了语音或视频这种对时延敏感业务的服务质量。
 
@@ -127,18 +127,18 @@ RTP 优先队列将 RTP 报文送入一个具有较高优先级的队列，RTP �
 $ lspci -vvv
 ```
 
-若出现`MSI-X：Enable+ Count`值 > 1，那么该网卡为多队列网卡。多队列网卡驱动给每个 queue 申请了 MSI。MSI-X 是 MSI 数组，Enable+指使能，TabSize 是数组大小。
+若出现`MSI-X：Enable+ Count`值 > 1，那么该网卡为多队列网卡。多队列网卡驱动给每个 queue 申请了 MSI。MSI-X 是 MSI 数组，Enable+ 指使能，TabSize 是数组大小。
 
 通过 ethtool 命令课设置网卡队列
 
 ```bash
-$ ethtool -l eth0 #查看eth0网卡channel状态
-$ ethtool -L eth0 combined 4 #将网卡队列数设置为4
+$ ethtool -l eth0 #查看 eth0 网卡 channel 状态
+$ ethtool -L eth0 combined 4 #将网卡队列数设置为 4
 ```
 
    # 4、参考
 
-[^1]: QoS的基本原理：http://www.h3c.com/cn/d_201104/713021_97665_0.htm
+[^1]: QoS 的基本原理：http://www.h3c.com/cn/d_201104/713021_97665_0.htm
 
    
 

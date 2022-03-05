@@ -28,7 +28,7 @@ Microsoft 定义 WDM 来规定驱动程序的结构，以及 windows 内核如�
 
 应用程序调用驱动的方式同样是通过设备符号链接，设备名称对应用程序来说是透明的，因此驱动程序将为设备创建一个符号链接以供应用程序使用。
 
-linux 下设备都在/dev 目录下，在 windows 下设备以/Device/[设备名]形式命名。例如磁盘分区的 C、D 盘名称就是：/Device/HarddiskVolume1 /Device/HarddiskVolume2,
+linux 下设备都在/dev 目录下，在 windows 下设备以/Device/[设备名] 形式命名。例如磁盘分区的 C、D 盘名称就是：/Device/HarddiskVolume1 /Device/HarddiskVolume2,
 
 若 IoCreateDevice 时没有指定设备名称，那么 I/O 管理器将自动分配一个数字如/Device/000000001
 
@@ -44,7 +44,7 @@ windows 驱动开发环境以 visual studio 2019 和 windows10 为例。我的�
 
 ## 3.1、安装 visual studio 2019
 
-进入[Visual Studio](https://visualstudio.microsoft.com/zh-hans/vs/) 下载页面直接下载后安装。安装完成后打开 visual studio installer 通过修改->工作负载，勾选使用 C++的桌面开发。
+进入[Visual Studio](https://visualstudio.microsoft.com/zh-hans/vs/) 下载页面直接下载后安装。安装完成后打开 visual studio installer 通过修改->工作负载，勾选使用 C++ 的桌面开发。
 
 在单个组件中根据当前使用的版本勾选 Spectre 缓解库，如下图所示：
 
@@ -84,7 +84,7 @@ https://docs.microsoft.com/zh-cn/windows-hardware/drivers/gettingstarted/provisi
 
 ## 3.4、 编写驱动程序
 
-驱动程序参考微软官方程序https://docs.microsoft.com/zh-cn/windows-hardware/drivers/gettingstarted/writing-a-very-small-kmdf--driver
+驱动程序参考微软官方程序 https://docs.microsoft.com/zh-cn/windows-hardware/drivers/gettingstarted/writing-a-very-small-kmdf--driver
 
 ## 3.5、编译驱动程序并将程序加载到虚拟机
 
@@ -126,7 +126,7 @@ https://docs.microsoft.com/zh-cn/windows-hardware/drivers/gettingstarted/provisi
 
 ![](F:\Rickylss.github.io\pictures\windows_driver_deploy.png)
 
-问题 1：在 visual studio 2019 中点击部署驱动时发生：未能找到路径“...\Microsoft.VC141.DebugCRT”的一部分错误，解决方法参考https://stackoverflow.com/questions/57092418/deploying-a-driver-fails-in-vs-2019 和 https://blog.csdn.net/qiu_pengfei/article/details/102578453
+问题 1：在 visual studio 2019 中点击部署驱动时发生：未能找到路径“...\Microsoft.VC141.DebugCRT”的一部分错误，解决方法参考 https://stackoverflow.com/questions/57092418/deploying-a-driver-fails-in-vs-2019 和 https://blog.csdn.net/qiu_pengfei/article/details/102578453
 
 # 4、使用 windbg 调试
 
@@ -149,6 +149,6 @@ port 填写`\\.\pipe\com_1`
 
 ## 4.1、windbg 设置 symbol
 
-参考http://www.xumenger.com/windbg-symbol-20160521/
+参考 http://www.xumenger.com/windbg-symbol-20160521/
 
 attach 进程后运行 ld*命令更新 symbol。
