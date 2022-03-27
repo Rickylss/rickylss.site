@@ -5,7 +5,7 @@ subtitle: ""
 date:   2022-03-17 12:52:45 +0800
 tags:
   - network
-categories: [network， docker]
+categories: [network, docker]
 comment: true
 ---
 
