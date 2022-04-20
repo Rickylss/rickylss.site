@@ -32,22 +32,24 @@
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            {{ content }}
+        <div class="content-top-wrap">
+          <div class="content-wrap">
+            <div id="content" class="content">
+              {{ content }}
+            </div>
           </div>
           {% if site.adsense.inner_ads %}
           <div class="ads-content-wrap">
             {% include _advertising/google_ads.html %}
           </div>
           {% endif %}
+          {% if page.comments %}
+          <div class="comments-content-wrap">
+            {% include _third-party/duoshuo-hot-articles.html %}
+            {% include _partials/comments.html %}
+          </div>
+          {% endif %}
         </div>
-        {% if page.comments %}
-        <div class="comments-content-wrap">
-          {% include _third-party/duoshuo-hot-articles.html %}
-          {% include _partials/comments.html %}
-        </div>
-        {% endif %}
         {% if site.sidebar.display != 'remove' %}
           {{ sidebar }}
         {% endif %}
