@@ -3,12 +3,9 @@
 //广告内容
 .ads-content-wrap {
     background: rgba(255, 255, 255, 0.8);
-    float: right;
     box-sizing: border-box;
     padding: 0px 0px 0px 0px;
     padding-top: 0px;
-    width: $content-desktop;
-    background: white;
     min-height: 200px;
     box-shadow: $box-shadow-inner;
     border-radius: $border-radius-inner;
@@ -60,9 +57,13 @@
 
 //文章内容背景改成了半透明
 .content-wrap {
-    background: rgba(255, 255, 255, 0.8);
     min-height: 900px;
 }
+
+.content {
+    background: rgba(255, 255, 255, 0.8);
+}
+
 .sidebar {
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 2px 6px #dbdbdb;
