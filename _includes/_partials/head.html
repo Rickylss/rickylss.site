@@ -36,7 +36,7 @@
 {% endif %}
 
 {% if site.adsense %}
-  <script data-ad-client="{{ site.adsense.data-ad-client }}" async src="{{ site.adsense.async_src }}"></script>
+  <script async src="{{ site.adsense.async_src }}?client={{ site.adsense.data-ad-client }}" crossorigin="anonymous"></script>
 {% endif %}
 
 {% if site.yandex_site_verification %}
