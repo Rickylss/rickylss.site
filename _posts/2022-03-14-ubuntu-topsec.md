@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "topsec for ubuntu21"
+title:  "topsec for ubuntu21/22"
 subtitle: ""
 date:   2022-03-14 12:52:45 +0800
 tags:
@@ -13,14 +13,22 @@ comment: true
 
 <!-- more -->
 
+# Ubuntu 22.04 更新
+
+unbuntu 22.04 下除了需要替换 `libgdk_pixbuf-2.0.so.0` 之外，还需要替换 `libsecret-1.so.0` ，做法和之前一样，将对应的动态链接库拷贝到 `lib` 目录下即可。
+
+解决方法：
+
+1. 下载并[该 so 文件](https://www.aliyundrive.com/s/Li7ZxvkzuQq)，将 `.so` 文件复制到 `/opt/TopSAP/lib` 下；
+
 # TL;DR
 
 ubuntu 21.10 下使用天融信 `TopSAP` 出现 `/opt/TopSAP/TopSAP: symbol lookup error: /lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so.0: undefined symbol: g_task_set_name` 报错；
 
 解决方法：
 
-1. 下载并解压[该 tar 包](http://192.168.200.100/mirror/haibiao.xiao/libgdk_pixbuf.tar.xz)，将 `.so` 文件复制到 `/opt/TopSAP/lib` 下；
-2. 下载 [`.deb` 包](http://192.168.200.100/mirror/haibiao.xiao/topsap_3.5.2.30.2_amd64.deb)并重新安装 TopSAP。 
+1. ~~下载并解压[该 tar 包](http://192.168.200.100/mirror/haibiao.xiao/libgdk_pixbuf.tar.xz)，将 `.so` 文件复制到 `/opt/TopSAP/lib` 下；~~
+2. 下载 [`.deb` 包](https://www.aliyundrive.com/s/1AFU4JJ8inm)并重新安装 TopSAP。 
 
 # 分析
 
