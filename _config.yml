@@ -6,7 +6,7 @@
 # Site
 title: ⚡️ Rickylss Blog ⚡️
 subtitle:
-description: 躲避 COVID-19 中。。。。
+description: 努力奋斗中。。。。
 author: Rickylss
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: zh-Hans
@@ -108,11 +108,11 @@ icp_record: 赣ICP备2022001754号-1
 canonical: true
 
 # AdSense, add google AdSense
-adsense:
- data-ad-client: ca-pub-8486812108421010
- async_src: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
- inner_ads: true
- slot: 6344335354
+# adsense:
+#  data-ad-client: ca-pub-8486812108421010
+#  async_src: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
+#  inner_ads: true
+#  slot: 6344335354
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
 seo: false
