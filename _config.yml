@@ -231,6 +231,7 @@ social:
   GitHub: https://github.com/Rickylss
   Navidrome: http://www.rickylss.site:4533/
   Calibre: http://www.rickylss.site:8083/
+  guozhi: http://www.rickylss.site/guozhi/
 
 
 # Social Links Icons
@@ -245,6 +246,7 @@ social_icons:
   GitHub: github
   Navidrome: music
   Calibre: book
+  guozhi: shopping-bag
   # Twitter: twitter
   # Weibo: weibo
 
