@@ -23,6 +23,7 @@ Zuler 虚拟化与存储组研发工程师，曾就职于 Zstack，毕业于南�
 - [余华](https://baike.baidu.com/item/%E4%BD%99%E5%8D%8E/6935)
 - [Isaac Asimov](https://en.wikipedia.org/wiki/Isaac_Asimov)
 - [Brandon Sanderson](https://en.wikipedia.org/wiki/Brandon_Sanderson)
+- [Greg Egan](https://zh.wikipedia.org/wiki/%E6%A0%BC%E9%9B%B7%E6%A0%BC%C2%B7%E4%BC%8A%E6%A0%B9)
 
 推荐几本小说：
 - 《平凡之路》
