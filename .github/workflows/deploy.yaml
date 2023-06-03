@@ -20,7 +20,7 @@ jobs:
         uses: actions/jekyll-build-pages@v1
 
       - name: Deploy to Server
-        uses: AEnterprise/rsync-deploy@v1.0 # Use a third party action (https://github.com/AEnterprise/rsync-deploy)
+        uses: AEnterprise/rsync-deploy@v1.0.2 # Use a third party action (https://github.com/AEnterprise/rsync-deploy)
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           ARGS: -avz --delete
