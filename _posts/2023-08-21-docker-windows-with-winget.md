@@ -71,4 +71,5 @@ RUN powershell -Command "[Environment]::SetEnvironmentVariable('Path', $Env:PATH
 # Reference
 
 https://github.com/microsoft/winget-cli/discussions/1962
+
 https://github.com/microsoft/winget-cli/discussions/1961

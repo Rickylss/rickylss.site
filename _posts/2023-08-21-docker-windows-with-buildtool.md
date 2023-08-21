@@ -239,8 +239,11 @@ RUN cd "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary
 # Reference
 
 https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/container-base-images
-https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022
-https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2022
-https://docs.microsoft.com/en-us/visualstudio/install/build-tools-container?view=vs-2022
-https://docs.microsoft.com/en-us/visualstudio/install/advanced-build-tools-container?view=vs-2022
 
+https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022
+
+https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2022
+
+https://docs.microsoft.com/en-us/visualstudio/install/build-tools-container?view=vs-2022
+
+https://docs.microsoft.com/en-us/visualstudio/install/advanced-build-tools-container?view=vs-2022
