@@ -229,9 +229,9 @@ font:
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
 social:
   GitHub: https://github.com/Rickylss
-  Navidrome: http://www.rickylss.site:4533/
-  Calibre: http://www.rickylss.site:8083/
-  guozhi: http://www.rickylss.site/guozhi/
+  # Navidrome: http://www.rickylss.site:4533/
+  # Calibre: http://www.rickylss.site:8083/
+  # guozhi: http://www.rickylss.site/guozhi/
 
 
 # Social Links Icons
@@ -244,9 +244,9 @@ social_icons:
   # Icon Mappings.
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
   GitHub: github
-  Navidrome: music
-  Calibre: book
-  guozhi: shopping-bag
+  # Navidrome: music
+  # Calibre: book
+  # guozhi: shopping-bag
   # Twitter: twitter
   # Weibo: weibo
 
